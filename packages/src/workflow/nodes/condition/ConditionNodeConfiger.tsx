@@ -1,11 +1,12 @@
 import React from 'react';
+import { NodeConfigerProps } from '../NodeConfiger';
 import NodeModel from "../NodeModel";
 import { ConditionNodeOptions } from "./ConditionNode";
 
 /**
  * 条件节点配置器属性
  */
-interface ConditionNodeConfigerProps {
+export interface ConditionNodeConfigerProps extends NodeConfigerProps {
     dataModel: NodeModel<ConditionNodeOptions>; // 节点的数据模型
 }
 

@@ -1,6 +1,6 @@
 import Node, { NodeClass, NodeOptions, NodeType } from "../Node";
-import StartNodeConfiger, { StartNodeConfigerClass } from "./StartNodeConfiger";
-import StartNodeViewer, { StartNodeViewerClass } from "./StartNodeViewer";
+import StartNodeConfiger, { StartNodeConfigerClass, StartNodeConfigerProps } from "./StartNodeConfiger";
+import StartNodeViewer, { StartNodeViewerClass, StartNodeViewerProps } from "./StartNodeViewer";
 
 /**
  * 条件节点配置
@@ -13,7 +13,7 @@ export interface StartNodeOptions extends NodeOptions {
 /**
  * 条件结点（用于函数式组件）
  */
-const StartNode: Node<StartNodeOptions> = {
+const StartNode: Node<StartNodeOptions, StartNodeViewerProps, StartNodeConfigerProps> = {
     type: NodeType.START,
     id: 'default.start',
     name: '开始',
@@ -36,7 +36,7 @@ const StartNode: Node<StartNodeOptions> = {
 /**
  * 开始结点（用于类组件）
  */
-export class StartNodeClass implements NodeClass<StartNodeOptions> {
+export class StartNodeClass implements NodeClass<StartNodeOptions, StartNodeViewerProps, StartNodeConfigerProps> {
     getType() {
        return NodeType.START; 
     }

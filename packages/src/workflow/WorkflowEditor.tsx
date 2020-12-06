@@ -5,6 +5,7 @@ import { WorkflowEditorContext, contextInitValue } from './WorkflowEditorContext
 import Node, { NodeOptions } from './nodes/Node';
 
 import "./index.less";
+import NodeModel from './nodes/NodeModel';
 
 /**
  * 流程设计器属性
@@ -12,6 +13,7 @@ import "./index.less";
 interface WorkflowEditorProps {
     editable: boolean; // 是否允许修改
     nodes?: Node<NodeOptions>[]; // 流程节点列表
+    nodeModel?: NodeModel
 }
   
 /**
@@ -20,6 +22,7 @@ interface WorkflowEditorProps {
 export default function WorkflowEditor(props: WorkflowEditorProps) {
 
     let contextValue = getInitContextValue(props);
+
 
     return (
         <WorkflowEditorContext.Provider value={contextValue}>
@@ -49,7 +52,8 @@ function getInitContextValue(props: WorkflowEditorProps) {
     }
 
     return {
-        editable: props.editable,
-        nodeMap: nodeMap
+        editable: props.editable || true,
+        nodeMap: nodeMap,
+        nodeModel: props.nodeModel,
     }
 }

@@ -19,18 +19,18 @@ export interface FlowProps {
 * @param props
 */
 export default function Flow(props: FlowProps) {
-   let { nodeMap, startNodeModel } = useContext(WorkflowEditorContext);
+   let { nodeMap, nodeModel } = useContext(WorkflowEditorContext);
 
 
    // 不存在数据模型时，使用开始结点的默认配置
-   if (!startNodeModel) {
+   if (!nodeModel) {
       let sn: Node<NodeOptions> = nodeMap[StartNode.id];
-      startNodeModel = new NodeModel(sn.name, sn.type, sn.id, sn.defaultOptions(), []);
+      nodeModel = new NodeModel(sn.name, sn.type, sn.id, sn.defaultOptions(), []);
    }
 
    return (
       <div className="flow">
-         <NodeList startNodeModel={startNodeModel}></NodeList>
+         <NodeList startNodeModel={nodeModel}></NodeList>
          <EndNode {...props}></EndNode>
       </div>
    );
@@ -44,9 +44,6 @@ function EndNode(props: FlowProps) {
       <div className="flow-end"> 
          <section className="workflowEndBox">
             <div className="workflowEnd"></div>
-            <div className="Font13 mTop10 Gray_9e">
-               流程结束
-            </div>
          </section>
       </div>
    )

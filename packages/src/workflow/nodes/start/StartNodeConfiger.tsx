@@ -1,12 +1,12 @@
 import React from 'react';
 import NodeModel from "../NodeModel";
-import NodeConfiger from "../NodeConfiger";
+import NodeConfiger, { NodeConfigerProps } from "../NodeConfiger";
 import { StartNodeOptions } from "./StartNode";
 
 /**
  * 开始节点配置器属性
  */
-interface StartNodeConfigerProps {
+export interface StartNodeConfigerProps extends NodeConfigerProps {
     dataModel: NodeModel<StartNodeOptions>; // 节点的数据模型
 }
 

@@ -1,6 +1,6 @@
 import Node, { NodeOptions, NodeType } from "../Node";
-import InputNodeConfiger from "./InputNodeConfiger";
-import InputNodeViewer from "./InputNodeViewer";
+import InputNodeConfiger, { InputNodeConfigerProps } from "./InputNodeConfiger";
+import InputNodeViewer, { InputNodeViewerProps } from "./InputNodeViewer";
 
 /**
  * 填写节点配置
@@ -13,7 +13,7 @@ export interface InputNodeOptions extends NodeOptions {
 /**
  * 填写节点
  */
-const InputNode: Node<InputNodeOptions> = {
+const InputNode: Node<InputNodeOptions, InputNodeViewerProps, InputNodeConfigerProps> = {
     type: NodeType.INPUT,
     id: 'default.Input',
     name: '填写',

@@ -4,6 +4,7 @@ Object.defineProperty(exports, '__esModule', { value: true });
 
 var React = require('react');
 var uuid = require('uuid');
+require('antd/dist/antd.css');
 
 function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
 
@@ -46,7 +47,7 @@ function styleInject(css, ref) {
   }
 }
 
-var css_248z = ".flexColumn {\n  overflow: hidden;\n  text-overflow: ellipsis;\n  white-space: nowrap;\n  vertical-align: top;\n}\n.bold {\n  font-weight: 700;\n}\n.BGYellow {\n  background: #ffa340;\n}\n.BGGreen {\n  background: #01ca83;\n}\n.Font13 {\n  font-size: 13px!important;\n}\n.Gray_9e {\n  color: #9e9e9e !important;\n}\n.mTop10 {\n  margin-top: 10px!important;\n}\n.workflow-editor {\n  display: flex;\n  flex: 1 1;\n  overflow: auto;\n}\n.workflow-editorContent {\n  overflow: auto;\n}\n.workflow-editor .flexColumn {\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n  position: relative;\n}\n.workflow-editor .workflowBox {\n  padding: 20px 50px 0;\n  position: relative;\n}\n.workflow-editor .workflowBox::before {\n  content: \"\";\n  position: absolute;\n  top: 0;\n  left: 0;\n  right: 0;\n  bottom: 0;\n  margin: auto;\n  width: 1px;\n  height: 100%;\n  background-color: #ccc;\n}\n.workflow-editor .workflowLineBtn {\n  padding: 20px 0;\n  width: 280px;\n  position: relative;\n}\n.workflow-editor .workflowLineBtn .icon-custom_add_circle {\n  width: 20px;\n  height: 20px;\n  display: block;\n  font-size: 20px;\n  cursor: pointer;\n  position: relative;\n  background: #f0f0f0;\n  color: #ccc;\n  margin: 0 auto;\n}\n.workflow-editor .workflowItem {\n  width: 280px;\n  background: #fff;\n  border-radius: 6px;\n  position: relative;\n  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.16);\n  display: flex;\n  flex-direction: column;\n  cursor: pointer;\n}\n.workflow-editor .workflowItem .workflowAvatars {\n  justify-content: center;\n  align-items: center;\n  position: absolute;\n  top: -20px;\n  left: 0;\n  right: 0;\n  height: 40px;\n  z-index: 2;\n  pointer-events: none;\n}\n.workflow-editor .workflowItem .workflowName {\n  width: 100%;\n  height: 60px;\n  position: relative;\n  border-top-left-radius: 6px;\n  border-top-right-radius: 6px;\n  font-size: 15px;\n  color: #fff;\n  padding: 26px 10px 0;\n  box-sizing: border-box;\n}\n.workflow-editor .workflowItem .workflowName .workflowNodeNameText {\n  padding: 0 6px;\n  height: 28px;\n  line-height: 28px;\n  box-sizing: border-box;\n  text-align: center;\n  border-radius: 3px;\n  display: inline-block;\n  max-width: 100%;\n}\n.workflow-editor .workflowItem .workflowContent {\n  padding: 8px;\n  display: flex;\n  flex-direction: column;\n  justify-content: center;\n  min-height: 50px;\n}\n.workflow-editor .workflowBranch {\n  display: inline-flex;\n  position: relative;\n  padding-top: 13px;\n  background-color: #f5f5f9;\n}\n.workflow-editor .workflowBranch > .flexColumn {\n  border-top: 1px solid #ccc;\n  border-bottom: 1px solid #ccc;\n}\n.workflow-editor .workflowBranch > .flexColumn .clearLeftBorder {\n  position: absolute;\n  left: 0;\n  top: 0;\n  bottom: 0;\n  width: 100%;\n}\n.workflow-editor .flow .flow-end {\n  width: 56px;\n  height: 32px;\n  background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAHAAAABACAQAAABokzttAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAAmJLR0QA/4ePzL8AAAAHdElNRQfiCAkRLQN+59ZwAAAAfUlEQVRo3u3ZwQ2AIBAAQbFn69ce7qEumWng2BDC49Z1H1s7vz6AQIEC4c/WPfwH13Dg9Nudztv+DQqsE1gnsE5gncA6gXUC6wTWCawTWCewTmCdwLo1XRa8vWOYztv+BgXWCawTWCewTmCdwDqBdQLrBNYJrBNYJ7BOYN0Dws4H6yyzXK8AAAAldEVYdGRhdGU6Y3JlYXRlADIwMTgtMDgtMDlUMTc6NDU6MDMrMDg6MDBVMAcOAAAAJXRFWHRkYXRlOm1vZGlmeQAyMDE4LTA4LTA5VDE3OjQ1OjAzKzA4OjAwJG2/sgAAAABJRU5ErkJggg==) no-repeat;\n  background-size: 56px 32px;\n  margin: 30px auto;\n}\n.workflow-editor-panel {\n  display: none;\n}\n";
+var css_248z = ".workflow-editor {\n  overflow: auto;\n}\n.workflow-editor-panel {\n  display: none;\n}\n\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy93b3JrZmxvdy9pbmRleC5sZXNzIiwiQ29uZmlnUGFuZWwubGVzcyIsInNyYy93b3JrZmxvdy9jb21wb25lbnRzL0NvbmZpZ1BhbmVsLmxlc3MiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBR0E7RUFDSSxjQUFBO0FDRko7QUNDQTtFQUNJLGFBQUE7QURDSiIsImZpbGUiOiJDb25maWdQYW5lbC5sZXNzIn0= */";
 styleInject(css_248z);
 
 function ConfigPanel(props) {
@@ -150,12 +151,7 @@ class StartNodeConfigerClass extends React__default['default'].Component {
 }
 
 function StartNodeViewer(props) {
-    return (React__default['default'].createElement("div", { className: "workflowItem" },
-        React__default['default'].createElement("div", { className: "workflowAvatars flexRow" },
-            React__default['default'].createElement("i", { className: "workflowAvatar BGYellow icon-worksheet" })),
-        React__default['default'].createElement("div", { className: "workflowName TxtCenter BGYellow" },
-            React__default['default'].createElement("div", { className: "workflowNodeNameText ellipsis bold" }, props.dataModel.name)),
-        React__default['default'].createElement("div", { className: "workflowContent" })));
+    return (React__default['default'].createElement("div", null, "\u8FD9\u662F\u4E00\u4E2AStartNodeViewer"));
 }
 class StartNodeViewerClass extends React__default['default'].Component {
     constructor() {
@@ -188,71 +184,106 @@ const StartNode = {
     }
 };
 
+function InputNodeConfiger(props) {
+    return (React__default['default'].createElement("div", null,
+        React__default['default'].createElement("p", null, "\u8FD9\u662F\u4E00\u4E2AInputNodeConfiger")));
+}
+
+function InputNodeViewer(props) {
+    return (React__default['default'].createElement("div", null,
+        React__default['default'].createElement("p", null, "\u8FD9\u662F\u4E00\u4E2AInputNodeViewer")));
+}
+
+const InputNode = {
+    type: NodeType.INPUT,
+    id: 'default.Input',
+    name: '填写',
+    color: '#fdfdfd',
+    defaultOptions: () => {
+        return {};
+    },
+    nodeConfiger: InputNodeConfiger,
+    nodeViewer: InputNodeViewer,
+    validate: (node) => {
+        return {
+            hasError: false,
+            title: '',
+            message: ''
+        };
+    }
+};
+
 const contextInitValue = {
     editable: true,
     nodeMap: {
-        [StartNode.id]: StartNode
+        [StartNode.id]: StartNode,
+        [InputNode.id]: InputNode
     }
 };
 const WorkflowEditorContext = React.createContext(contextInitValue);
-
-function Branch(props) {
-    let branchs = props.branchs;
-    return (React__default['default'].createElement("div", { className: "workflowBranch" },
-        React__default['default'].createElement("i", { className: "workflowBranchBtn icon-workflow_add" }),
-        branchs && branchs.length > 0 &&
-            branchs.map((startNodeModel) => {
-                React__default['default'].createElement(NodeList, { startNodeModel: startNodeModel });
-            })));
-}
 
 function NodeList(props) {
     let { startNodeModel } = props;
     let { nodeMap, editable } = React.useContext(WorkflowEditorContext);
     let reactNodes = [];
     for (let nodeModel of startNodeModel) {
-        let NodeViewer = nodeMap[nodeModel.subType].nodeViewer;
-        let reactNode;
-        if (nodeModel.branchs && nodeModel.branchs.length > 0) {
-            reactNode = React__default['default'].createElement(Branch, { key: nodeModel.id, branchs: nodeModel.branchs });
-        }
-        else {
-            reactNode = React__default['default'].createElement(NodeViewer, { key: nodeModel.id, dataModel: nodeModel });
-        }
-        let wrapper = (React__default['default'].createElement("div", { key: nodeModel.id, className: "flexColumn" },
-            React__default['default'].createElement("section", { className: "workflowBox", "data-id": nodeModel.id }, reactNode),
-            editable &&
-                React__default['default'].createElement("div", { className: "workflowLineBtn" },
-                    React__default['default'].createElement("i", { className: "icon-custom_add_circle" }))));
-        reactNodes.push(wrapper);
+        let isBranch = nodeModel.branchs && nodeModel.branchs.length > 0;
+        let reactNode = (React__default['default'].createElement("div", { key: nodeModel.id, className: "flow-node" },
+            React__default['default'].createElement(NodeWrapper, Object.assign({}, props, { isBranch: isBranch, nodeModel: nodeModel, "data-id": nodeModel.id }))));
+        reactNodes.push(reactNode);
     }
     return React__default['default'].createElement(React__default['default'].Fragment, null, reactNodes);
 }
+function NodeWrapper(props) {
+    let { nodeMap, editable } = React.useContext(WorkflowEditorContext);
+    let nodeModel = props.nodeModel;
+    let node = nodeMap[nodeModel.subType];
+    let NodeViewer = node.nodeViewer;
+    return (React__default['default'].createElement(React__default['default'].Fragment, null,
+        React__default['default'].createElement("div", { className: "flow-node-box" },
+            !props.isBranch &&
+                React__default['default'].createElement("div", { className: "node-header", style: { backgroundColor: node.color } }, nodeModel.name),
+            React__default['default'].createElement("div", { className: "node-content" },
+                React__default['default'].createElement(NodeViewer, { key: nodeModel.id, dataModel: nodeModel }))),
+        editable && React__default['default'].createElement(AddNodeBtn, { nodeModel: nodeModel })));
+}
+function AddNodeBtn(props) {
+    let { nodeModel } = props;
+    let { nodeMap, editable } = React.useContext(WorkflowEditorContext);
+    function handleClick(e) {
+        console.log('The addbtn was clicked.');
+        let _in = InputNode;
+        nodeModel.append(new NodeModel(_in.name, _in.type, _in.id, _in.defaultOptions(), []));
+    }
+    return (React__default['default'].createElement("div", { className: "flow-node-addbtn", onClick: handleClick }, "+"));
+}
 
 function Flow(props) {
-    let { nodeMap, startNodeModel } = React.useContext(WorkflowEditorContext);
-    if (!startNodeModel) {
+    let { nodeMap, nodeModel } = React.useContext(WorkflowEditorContext);
+    if (!nodeModel) {
         let sn = nodeMap[StartNode.id];
-        startNodeModel = new NodeModel(sn.name, sn.type, sn.id, sn.defaultOptions(), []);
+        nodeModel = new NodeModel(sn.name, sn.type, sn.id, sn.defaultOptions(), []);
     }
     return (React__default['default'].createElement("div", { className: "flow" },
-        React__default['default'].createElement(NodeList, { startNodeModel: startNodeModel }),
+        React__default['default'].createElement(NodeList, { startNodeModel: nodeModel }),
         React__default['default'].createElement(EndNode, Object.assign({}, props))));
 }
 function EndNode(props) {
     return (React__default['default'].createElement("div", { className: "flow-end" },
         React__default['default'].createElement("section", { className: "workflowEndBox" },
-            React__default['default'].createElement("div", { className: "workflowEnd" }),
-            React__default['default'].createElement("div", { className: "Font13 mTop10 Gray_9e" }, "\u6D41\u7A0B\u7ED3\u675F"))));
+            React__default['default'].createElement("div", { className: "workflowEnd" }))));
 }
 
+var css_248z$1 = ".workflow-editor-canvas {\n  display: block;\n}\n.workflow-editor-canvas .flow {\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n}\n.workflow-editor-canvas .flow .flow-node {\n  position: relative;\n}\n.workflow-editor-canvas .flow .flow-node::before {\n  position: absolute;\n  content: \"\";\n  width: 1px;\n  height: 100%;\n  background-color: #ccc;\n}\n.workflow-editor-canvas .flow .flow-node .flow-node-box {\n  width: 280px;\n  min-height: 128px;\n  border: 1px solid #ccc;\n  background: #fff;\n  border-radius: 6px;\n  /* 加了这个属性之后，才能遮住底部的1px背景线 */\n  position: relative;\n}\n.workflow-editor-canvas .flow .flow-node .flow-node-box .node-header {\n  height: 48px;\n  padding: 4px;\n  border-bottom: 1px solid #ccc;\n}\n.workflow-editor-canvas .flow .flow-node .flow-node-box .node-content {\n  padding: 6px;\n}\n.workflow-editor-canvas .flow .flow-node .flow-node-addbtn {\n  padding: 20px;\n}\n.workflow-editor-canvas .flow .flow-end {\n  width: 56px;\n  height: 32px;\n  background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAHAAAABACAQAAABokzttAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAAmJLR0QA/4ePzL8AAAAHdElNRQfiCAkRLQN+59ZwAAAAfUlEQVRo3u3ZwQ2AIBAAQbFn69ce7qEumWng2BDC49Z1H1s7vz6AQIEC4c/WPfwH13Dg9Nudztv+DQqsE1gnsE5gncA6gXUC6wTWCawTWCewTmCdwLo1XRa8vWOYztv+BgXWCawTWCewTmCdwDqBdQLrBNYJrBNYJ7BOYN0Dws4H6yyzXK8AAAAldEVYdGRhdGU6Y3JlYXRlADIwMTgtMDgtMDlUMTc6NDU6MDMrMDg6MDBVMAcOAAAAJXRFWHRkYXRlOm1vZGlmeQAyMDE4LTA4LTA5VDE3OjQ1OjAzKzA4OjAwJG2/sgAAAABJRU5ErkJggg==) no-repeat;\n  background-size: 56px 32px;\n  margin: 30px auto;\n}\n\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy93b3JrZmxvdy9jb21wb25lbnRzL0Zsb3dDYW52YXMubGVzcyIsIkZsb3dDYW52YXMubGVzcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQTtFQUNJLGNBQUE7QUNDSjtBREZBO0VBSVEsYUFBQTtFQUNBLHNCQUFBO0VBQ0EsbUJBQUE7QUNDUjtBRFBBO0VBVVksa0JBQUE7QUNBWjtBREVZO0VBQ0ksa0JBQUE7RUFDQSxXQUFBO0VBQ0EsVUFBQTtFQUNBLFlBQUE7RUFDQSxzQkFBQTtBQ0FoQjtBRGpCQTtFQXFCZ0IsWUFBQTtFQUNBLGlCQUFBO0VBQ0Esc0JBQUE7RUFDQSxnQkFBQTtFQUNBLGtCQUFBO0VDRGQsMkJBQTJCO0VER2Isa0JBQUE7QUNEaEI7QUQxQkE7RUE4Qm9CLFlBQUE7RUFDQSxZQUFBO0VBQ0EsNkJBQUE7QUNEcEI7QUQvQkE7RUFvQ29CLFlBQUE7QUNGcEI7QURsQ0E7RUF5Q2dCLGFBQUE7QUNKaEI7QURyQ0E7RUE4Q1ksV0FBQTtFQUNBLFlBQUE7RUFDQSxxaUJBQUE7RUFDQSwwQkFBQTtFQUNBLGlCQUFBO0FDTloiLCJmaWxlIjoiRmxvd0NhbnZhcy5sZXNzIn0= */";
+styleInject(css_248z$1);
+
 function FlowCanvas(props) {
-    return (React__default['default'].createElement("div", { className: "workflowEditorContent workflow-editor-canvas" },
+    return (React__default['default'].createElement("div", { className: "workflow-editor-canvas" },
         React__default['default'].createElement(Flow, null)));
 }
 
-var css_248z$1 = ".flexColumn {\n  overflow: hidden;\n  text-overflow: ellipsis;\n  white-space: nowrap;\n  vertical-align: top;\n}\n.bold {\n  font-weight: 700;\n}\n.BGYellow {\n  background: #ffa340;\n}\n.BGGreen {\n  background: #01ca83;\n}\n.Font13 {\n  font-size: 13px!important;\n}\n.Gray_9e {\n  color: #9e9e9e !important;\n}\n.mTop10 {\n  margin-top: 10px!important;\n}\n.workflow-editor {\n  display: flex;\n  flex: 1 1;\n  overflow: auto;\n}\n.workflow-editorContent {\n  overflow: auto;\n}\n.workflow-editor .flexColumn {\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n  position: relative;\n}\n.workflow-editor .workflowBox {\n  padding: 20px 50px 0;\n  position: relative;\n}\n.workflow-editor .workflowBox::before {\n  content: \"\";\n  position: absolute;\n  top: 0;\n  left: 0;\n  right: 0;\n  bottom: 0;\n  margin: auto;\n  width: 1px;\n  height: 100%;\n  background-color: #ccc;\n}\n.workflow-editor .workflowLineBtn {\n  padding: 20px 0;\n  width: 280px;\n  position: relative;\n}\n.workflow-editor .workflowLineBtn .icon-custom_add_circle {\n  width: 20px;\n  height: 20px;\n  display: block;\n  font-size: 20px;\n  cursor: pointer;\n  position: relative;\n  background: #f0f0f0;\n  color: #ccc;\n  margin: 0 auto;\n}\n.workflow-editor .workflowItem {\n  width: 280px;\n  background: #fff;\n  border-radius: 6px;\n  position: relative;\n  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.16);\n  display: flex;\n  flex-direction: column;\n  cursor: pointer;\n}\n.workflow-editor .workflowItem .workflowAvatars {\n  justify-content: center;\n  align-items: center;\n  position: absolute;\n  top: -20px;\n  left: 0;\n  right: 0;\n  height: 40px;\n  z-index: 2;\n  pointer-events: none;\n}\n.workflow-editor .workflowItem .workflowName {\n  width: 100%;\n  height: 60px;\n  position: relative;\n  border-top-left-radius: 6px;\n  border-top-right-radius: 6px;\n  font-size: 15px;\n  color: #fff;\n  padding: 26px 10px 0;\n  box-sizing: border-box;\n}\n.workflow-editor .workflowItem .workflowName .workflowNodeNameText {\n  padding: 0 6px;\n  height: 28px;\n  line-height: 28px;\n  box-sizing: border-box;\n  text-align: center;\n  border-radius: 3px;\n  display: inline-block;\n  max-width: 100%;\n}\n.workflow-editor .workflowItem .workflowContent {\n  padding: 8px;\n  display: flex;\n  flex-direction: column;\n  justify-content: center;\n  min-height: 50px;\n}\n.workflow-editor .workflowBranch {\n  display: inline-flex;\n  position: relative;\n  padding-top: 13px;\n  background-color: #f5f5f9;\n}\n.workflow-editor .workflowBranch > .flexColumn {\n  border-top: 1px solid #ccc;\n  border-bottom: 1px solid #ccc;\n}\n.workflow-editor .workflowBranch > .flexColumn .clearLeftBorder {\n  position: absolute;\n  left: 0;\n  top: 0;\n  bottom: 0;\n  width: 100%;\n}\n.workflow-editor .flow .flow-end {\n  width: 56px;\n  height: 32px;\n  background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAHAAAABACAQAAABokzttAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAAmJLR0QA/4ePzL8AAAAHdElNRQfiCAkRLQN+59ZwAAAAfUlEQVRo3u3ZwQ2AIBAAQbFn69ce7qEumWng2BDC49Z1H1s7vz6AQIEC4c/WPfwH13Dg9Nudztv+DQqsE1gnsE5gncA6gXUC6wTWCawTWCewTmCdwLo1XRa8vWOYztv+BgXWCawTWCewTmCdwDqBdQLrBNYJrBNYJ7BOYN0Dws4H6yyzXK8AAAAldEVYdGRhdGU6Y3JlYXRlADIwMTgtMDgtMDlUMTc6NDU6MDMrMDg6MDBVMAcOAAAAJXRFWHRkYXRlOm1vZGlmeQAyMDE4LTA4LTA5VDE3OjQ1OjAzKzA4OjAwJG2/sgAAAABJRU5ErkJggg==) no-repeat;\n  background-size: 56px 32px;\n  margin: 30px auto;\n}\n";
-styleInject(css_248z$1);
+var css_248z$2 = ".workflow-editor {\n  overflow: auto;\n}\n\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy93b3JrZmxvdy9pbmRleC5sZXNzIiwiaW5kZXgubGVzcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFHQTtFQUNJLGNBQUE7QUNGSiIsImZpbGUiOiJpbmRleC5sZXNzIn0= */";
+styleInject(css_248z$2);
 
 function WorkflowEditor(props) {
     let contextValue = getInitContextValue(props);
@@ -272,8 +303,9 @@ function getInitContextValue(props) {
         nodeMap = contextInitValue.nodeMap;
     }
     return {
-        editable: props.editable,
-        nodeMap: nodeMap
+        editable: props.editable || true,
+        nodeMap: nodeMap,
+        nodeModel: props.nodeModel,
     };
 }
 

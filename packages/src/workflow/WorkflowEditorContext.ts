@@ -2,6 +2,7 @@ import { createContext } from "react";
 import NodeModel from "./nodes/NodeModel";
 import StartNode from "./nodes/start/StartNode";
 import Node, { NodeOptions } from "./nodes/Node";
+import InputNode from "./nodes/input/InputNode";
 
 /**
  * 工作流编辑器上下文
@@ -10,7 +11,7 @@ export interface WorkflowEditorContextType {
     // 是否允许修改
     editable: boolean; 
     // 开始结点数据模型
-    startNodeModel?: NodeModel;
+    nodeModel?: NodeModel;
     // 节点映射
     nodeMap: {
         [key: string]: Node<NodeOptions>;
@@ -21,7 +22,8 @@ export interface WorkflowEditorContextType {
 export const contextInitValue = {
     editable: true,
     nodeMap: {
-        [StartNode.id]: StartNode
+        [StartNode.id]: StartNode,
+        [InputNode.id]: InputNode
     }
 }
 

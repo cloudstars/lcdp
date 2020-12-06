@@ -2,6 +2,8 @@
 import React from 'react';
 import Flow from './Flow';
 
+import "./FlowCanvas.less";
+
 /**
  * 流程画布属性
  */
@@ -16,7 +18,7 @@ interface FlowCanvasProps {
 export default function FlowCanvas(props: FlowCanvasProps) {
 
     return (
-        <div className="workflowEditorContent workflow-editor-canvas">
+        <div className="workflow-editor-canvas">
             <Flow></Flow>
         </div>
     );

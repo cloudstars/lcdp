@@ -13,9 +13,13 @@ export default {
     },
     plugins: [
         babel(),
-        postcss({extensions: ['.css', '.less']}),
-        typescript()/*,
-        tslint()会误解析less,报错，待解决*/
+        postcss({
+          extract: false,
+          sourceMap: true,
+          extensions: [".less", ".css"]
+        }),
+        //tslint(),
+        typescript()
     ],
     external: [
       'react'

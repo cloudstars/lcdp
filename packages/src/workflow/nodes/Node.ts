@@ -30,7 +30,7 @@ export interface ValidationError {
 /**
  * 流程节点（用于函数式组件)
  */
-export default interface Node<T extends NodeOptions> {
+export default interface Node<O extends NodeOptions = NodeOptions, V extends NodeViewerProps = NodeViewerProps, C extends NodeConfigerProps = NodeConfigerProps> {
     // 节点分类
     type: NodeType;
 
@@ -44,22 +44,22 @@ export default interface Node<T extends NodeOptions> {
     color: string;
 
     // 默认的选项
-    defaultOptions: () => T;
+    defaultOptions: () => O;
 
     // 节点的展示器
-    nodeViewer: ComponentType<NodeViewerProps>;
+    nodeViewer: ComponentType<V>;
 
     // 节点的配置器
-    nodeConfiger: ComponentType<NodeConfigerProps>;
+    nodeConfiger: ComponentType<C>;
 
     // 节点校验方法
-    validate: (node: T) => ValidationError;
+    validate: (node: O) => ValidationError;
 }
 
 /**
  * 流程节点（用于类组件继承)
  */
-export interface NodeClass<T extends NodeOptions> {
+export interface NodeClass<O extends NodeOptions, V extends NodeViewerProps, C extends NodeConfigerProps> {
     
     getType(): NodeType;
 
@@ -69,11 +69,11 @@ export interface NodeClass<T extends NodeOptions> {
 
     getColor(): string;
 
-    getDefaultOptions(): T; 
+    getDefaultOptions(): O; 
 
-    getNodeViewer(): React.ComponentClass<NodeViewerProps> & { new (props: NodeViewerProps): NodeViewer<T>};
+    getNodeViewer(): React.ComponentClass<V> & { new (props: V): NodeViewer<V>};
 
-    getNodeConfiger(): React.ComponentClass<NodeConfigerProps> & { new (props: NodeConfigerProps): NodeConfiger<T>};
+    getNodeConfiger(): React.ComponentClass<C> & { new (props: C): NodeConfiger<C>};
 
-    validate(node: T): ValidationError;
+    validate(node: O): ValidationError;
 }
