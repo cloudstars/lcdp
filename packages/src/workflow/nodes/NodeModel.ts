@@ -5,7 +5,7 @@ import { NodeOptions, NodeType } from "./Node";
 /**
  * 流程节点数据模型
  */
-export default class NodeModel<T extends NodeOptions = NodeOptions> extends LinkedList<NodeModel> implements Iterable<NodeModel> {
+export default class NodeModel<T extends NodeOptions = NodeOptions> extends LinkedList<NodeModel<T>>  {
     private _id: string; // 节点ID
     private _name: string; // 节点名称
     private _type: NodeType; // 节点类型
@@ -21,28 +21,6 @@ export default class NodeModel<T extends NodeOptions = NodeOptions> extends Link
         this._subType = subType;
         this._options = options;
         this._branchs = branchs;
-    }
-
-    // 使对象可被迭代
-    [Symbol.iterator]() {
-        let point: NodeModel = this;
-        return {
-            next(): IteratorResult<NodeModel> {
-                if (point == null) {
-                    return {
-                        done: true,
-                        value: null
-                    }
-                } else {
-                    let curr = point;
-                    point = (point.next as NodeModel)!;
-                    return {
-                        done: false,
-                        value: curr
-                    }
-                }
-            }
-        };
     }
 
     get id(): string {

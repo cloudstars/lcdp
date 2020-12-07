@@ -3,8 +3,9 @@
 Object.defineProperty(exports, '__esModule', { value: true });
 
 var React = require('react');
-var uuid = require('uuid');
 require('antd/dist/antd.css');
+var uuid = require('uuid');
+var lodash = require('lodash');
 
 function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
 
@@ -53,79 +54,6 @@ styleInject(css_248z);
 function ConfigPanel(props) {
     return (React__default['default'].createElement("div", { className: "workflow-editor-panel" },
         React__default['default'].createElement("p", null, "\u8FD9\u662F\u4E00\u4E2AConfigPanel")));
-}
-
-class LinkedList {
-    constructor() {
-        this._prev = null;
-        this._next = null;
-    }
-    get prev() {
-        return this._prev;
-    }
-    get next() {
-        return this._next;
-    }
-    append(node) {
-        node._prev = this;
-        let nodeLast = node;
-        while (nodeLast && nodeLast.next != null) {
-            nodeLast = nodeLast.next;
-        }
-        nodeLast._next = this._next;
-        this._next = node;
-    }
-}
-
-class NodeModel extends LinkedList {
-    constructor(name, type, subType, options, branchs) {
-        super();
-        this._id = uuid.v4().replace(/-/g, '');
-        this._name = name;
-        this._type = type;
-        this._subType = subType;
-        this._options = options;
-        this._branchs = branchs;
-    }
-    [Symbol.iterator]() {
-        let point = this;
-        return {
-            next() {
-                if (point == null) {
-                    return {
-                        done: true,
-                        value: null
-                    };
-                }
-                else {
-                    let curr = point;
-                    point = point.next;
-                    return {
-                        done: false,
-                        value: curr
-                    };
-                }
-            }
-        };
-    }
-    get id() {
-        return this._id;
-    }
-    get name() {
-        return this._name;
-    }
-    get type() {
-        return this._type;
-    }
-    get subType() {
-        return this._subType;
-    }
-    get options() {
-        return this._options;
-    }
-    get branchs() {
-        return this._branchs;
-    }
 }
 
 var NodeType;
@@ -213,23 +141,163 @@ const InputNode = {
     }
 };
 
+function ApproveNodeConfiger(props) {
+    return (React__default['default'].createElement("div", null,
+        React__default['default'].createElement("p", null, "\u8FD9\u662F\u4E00\u4E2AApproveNodeConfiger")));
+}
+
+function ApproveNodeViewer(props) {
+    return (React__default['default'].createElement("div", null,
+        React__default['default'].createElement("p", null, "\u8FD9\u662F\u4E00\u4E2AApproveNodeViewer")));
+}
+
+const ApproveNode = {
+    type: NodeType.APPROVE,
+    id: 'default.Approve',
+    name: '审批',
+    color: '#f1f1f1',
+    defaultOptions: () => {
+        return {};
+    },
+    nodeConfiger: ApproveNodeConfiger,
+    nodeViewer: ApproveNodeViewer,
+    validate: (node) => {
+        return {
+            hasError: false,
+            title: '',
+            message: ''
+        };
+    }
+};
+
+function ConditionNodeConfiger(props) {
+    return (React__default['default'].createElement("div", null,
+        React__default['default'].createElement("p", null, "\u8FD9\u662F\u4E00\u4E2AConditionNodeConfiger")));
+}
+
+function ConditionNodeViewer(props) {
+    return (React__default['default'].createElement("div", null,
+        React__default['default'].createElement("p", null, "\u8FD9\u662F\u4E00\u4E2AConditionNodeViewer")));
+}
+
+const ConditionNode = {
+    type: NodeType.CONDITION,
+    id: 'default.condition',
+    name: '条件',
+    color: '#fbfbfb',
+    defaultOptions: () => {
+        return {};
+    },
+    nodeConfiger: ConditionNodeConfiger,
+    nodeViewer: ConditionNodeViewer,
+    validate: (node) => {
+        return {
+            hasError: false,
+            title: '',
+            message: ''
+        };
+    }
+};
+
 const contextInitValue = {
     editable: true,
     nodeMap: {
         [StartNode.id]: StartNode,
-        [InputNode.id]: InputNode
+        [InputNode.id]: InputNode,
+        [ApproveNode.id]: ApproveNode,
+        [ConditionNode.id]: ConditionNode
     }
 };
 const WorkflowEditorContext = React.createContext(contextInitValue);
 
+class LinkedList {
+    constructor() {
+        this._prev = null;
+        this._next = null;
+    }
+    [Symbol.iterator]() {
+        let point = this;
+        return {
+            next() {
+                if (point == null) {
+                    return {
+                        done: true,
+                        value: null
+                    };
+                }
+                else {
+                    let curr = point;
+                    point = point.next;
+                    return {
+                        done: false,
+                        value: curr
+                    };
+                }
+            }
+        };
+    }
+    get prev() {
+        return this._prev;
+    }
+    get next() {
+        return this._next;
+    }
+    append(node) {
+        node._prev = this;
+        let nodeLast = node;
+        while (nodeLast && nodeLast.next != null) {
+            nodeLast = nodeLast.next;
+        }
+        nodeLast._next = this._next;
+        this._next = node;
+    }
+    trace() {
+        let p = this;
+        while (p != null) {
+            console.trace(p);
+            p = p._next;
+        }
+    }
+}
+
+class NodeModel extends LinkedList {
+    constructor(name, type, subType, options, branchs) {
+        super();
+        this._id = uuid.v4().replace(/-/g, '');
+        this._name = name;
+        this._type = type;
+        this._subType = subType;
+        this._options = options;
+        this._branchs = branchs;
+    }
+    get id() {
+        return this._id;
+    }
+    get name() {
+        return this._name;
+    }
+    get type() {
+        return this._type;
+    }
+    get subType() {
+        return this._subType;
+    }
+    get options() {
+        return this._options;
+    }
+    get branchs() {
+        return this._branchs;
+    }
+}
+
 function NodeList(props) {
     let { startNodeModel } = props;
-    let { nodeMap, editable } = React.useContext(WorkflowEditorContext);
     let reactNodes = [];
     for (let nodeModel of startNodeModel) {
-        let isBranch = nodeModel.branchs && nodeModel.branchs.length > 0;
-        let reactNode = (React__default['default'].createElement("div", { key: nodeModel.id, className: "flow-node" },
-            React__default['default'].createElement(NodeWrapper, Object.assign({}, props, { isBranch: isBranch, nodeModel: nodeModel, "data-id": nodeModel.id }))));
+        let nm = nodeModel;
+        let isBranch = nm.branchs && nm.branchs.length > 0;
+        let reactNode = (React__default['default'].createElement("div", { key: nm.id, className: "flow-node" },
+            React__default['default'].createElement(NodeWrapper, Object.assign({}, props, { isBranch: isBranch, nodeModel: nm }))));
         reactNodes.push(reactNode);
     }
     return React__default['default'].createElement(React__default['default'].Fragment, null, reactNodes);
@@ -249,21 +317,19 @@ function NodeWrapper(props) {
 }
 function AddNodeBtn(props) {
     let { nodeModel } = props;
-    let { nodeMap, editable } = React.useContext(WorkflowEditorContext);
+    let { nodeMap, refreshNodeModel } = React.useContext(WorkflowEditorContext);
     function handleClick(e) {
         console.log('The addbtn was clicked.');
-        let _in = InputNode;
-        nodeModel.append(new NodeModel(_in.name, _in.type, _in.id, _in.defaultOptions(), []));
+        let selectNodeId = InputNode.id;
+        let node = nodeMap[selectNodeId];
+        nodeModel.append(new NodeModel(node.name, node.type, node.id, node.defaultOptions(), []));
+        refreshNodeModel && refreshNodeModel();
     }
     return (React__default['default'].createElement("div", { className: "flow-node-addbtn", onClick: handleClick }, "+"));
 }
 
 function Flow(props) {
-    let { nodeMap, nodeModel } = React.useContext(WorkflowEditorContext);
-    if (!nodeModel) {
-        let sn = nodeMap[StartNode.id];
-        nodeModel = new NodeModel(sn.name, sn.type, sn.id, sn.defaultOptions(), []);
-    }
+    let { nodeModel } = React.useContext(WorkflowEditorContext);
     return (React__default['default'].createElement("div", { className: "flow" },
         React__default['default'].createElement(NodeList, { startNodeModel: nodeModel }),
         React__default['default'].createElement(EndNode, Object.assign({}, props))));
@@ -286,26 +352,48 @@ var css_248z$2 = ".workflow-editor {\n  overflow: auto;\n}\n\n/*# sourceMappingU
 styleInject(css_248z$2);
 
 function WorkflowEditor(props) {
-    let contextValue = getInitContextValue(props);
+    let nodeMap = React.useMemo(() => getNodeMap(props.nodes), []);
+    let initNodeModel = React.useMemo(() => props.startNodeModel || getDefaultStartNodeModel(nodeMap), []);
+    const [nodeModel, setNodeModel] = React.useState(initNodeModel);
+    let contextValue = React.useMemo(() => getInitContextValue(props, nodeMap, nodeModel, setNodeModel), []);
     return (React__default['default'].createElement(WorkflowEditorContext.Provider, { value: contextValue },
         React__default['default'].createElement("div", { className: "workflow-editor" },
             React__default['default'].createElement(FlowCanvas, null),
             React__default['default'].createElement(ConfigPanel, null))));
 }
-function getInitContextValue(props) {
+function getNodeMap(nodes) {
     let nodeMap = {};
-    if (props.nodes) {
-        for (let i in props.nodes) {
-            nodeMap[props.nodes[i].id] = props.nodes[i];
+    if (nodes) {
+        for (let i in nodes) {
+            let node = nodes[i];
+            nodeMap[node.id] = node;
         }
     }
     else {
         nodeMap = contextInitValue.nodeMap;
     }
+    return nodeMap;
+}
+function getDefaultStartNodeModel(nodeMap) {
+    for (let key in nodeMap) {
+        if (nodeMap[key].type == NodeType.START) {
+            let startNode = nodeMap[key];
+            return new NodeModel(startNode.name, startNode.type, startNode.id, startNode.defaultOptions(), []);
+        }
+    }
+    throw new Error("流程初始化出错，不存在开始节点！！！");
+}
+function getInitContextValue(props, nodeMap, nodeModel, setNodeModel) {
     return {
         editable: props.editable || true,
         nodeMap: nodeMap,
-        nodeModel: props.nodeModel,
+        nodeModel: nodeModel,
+        refreshNodeModel: () => {
+            setNodeModel((prevNodeModel) => {
+                console.log(prevNodeModel);
+                return lodash.cloneDeep(prevNodeModel);
+            });
+        }
     };
 }
 

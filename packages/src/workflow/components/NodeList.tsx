@@ -24,15 +24,15 @@ export interface NodeListProps {
  */
 export default function NodeList(props: NodeListProps) {
     let { startNodeModel } = props;
-    let { nodeMap, editable } = useContext(WorkflowEditorContext);
 
     // 迭代生成全部的节点结构
     let reactNodes = [];
     for (let nodeModel of startNodeModel) {
-        let isBranch = nodeModel.branchs && nodeModel.branchs.length > 0;
+        let nm = nodeModel as NodeModel;
+        let isBranch = nm.branchs && nm.branchs.length > 0;
         let reactNode = (
-            <div key={nodeModel.id} className="flow-node">                
-                <NodeWrapper {...props} isBranch={isBranch} nodeModel={nodeModel} data-id={nodeModel.id}></NodeWrapper>
+            <div key={nm.id} className="flow-node">                
+                <NodeWrapper {...props} isBranch={isBranch} nodeModel={nm}></NodeWrapper>
             </div>
         ); 
         reactNodes.push(reactNode);
@@ -68,17 +68,17 @@ function NodeWrapper(props: NodeListProps & {nodeModel: NodeModel, isBranch: boo
 
 function AddNodeBtn(props: {nodeModel: NodeModel}) {
     let { nodeModel } = props; 
-    let { nodeMap, editable } = useContext(WorkflowEditorContext);
+    let { nodeMap, refreshNodeModel } = useContext(WorkflowEditorContext);
 
     function handleClick(e: any) {
         console.log('The addbtn was clicked.');
 
         // 先写死一个节点
-        let _in: Node<NodeOptions> = InputNode;
-        nodeModel.append(new NodeModel(_in.name, _in.type, _in.id, _in.defaultOptions(), []));
-
-        // TODO 重写设置整个流程环的DataModel
-        
+        let selectNodeId = InputNode.id;
+        let node: Node<NodeOptions> = nodeMap[selectNodeId];
+        nodeModel.append(new NodeModel(node.name, node.type, node.id, node.defaultOptions(), []));
+        //nodeModel.trace();
+        refreshNodeModel && refreshNodeModel();
     }
 
     return (

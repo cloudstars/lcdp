@@ -1,13 +1,35 @@
 /**
  * 链式数据模型
  */
-export default class LinkedList<T> {
+export default class LinkedList<T> implements Iterable<LinkedList<T>> {
     private _prev: LinkedList<T> | null; // 上一个节点
     private _next: LinkedList<T> | null; // 下一个节点
     
     constructor() {
         this._prev = null;
         this._next = null;
+    }
+
+    // 使对象可被迭代
+    [Symbol.iterator]() {
+        let point: LinkedList<T> = this;
+        return {
+            next(): IteratorResult<LinkedList<T>> {
+                if (point == null) {
+                    return {
+                        done: true,
+                        value: null
+                    }
+                } else {
+                    let curr = point;
+                    point = point.next!;
+                    return {
+                        done: false,
+                        value: curr
+                    }
+                }
+            }
+        };
     }
 
     /**
@@ -39,5 +61,13 @@ export default class LinkedList<T> {
         }
         nodeLast._next = this._next;
         this._next = node;
+    }
+
+    trace() {
+        let p: LinkedList<T> | null = this;
+        while (p != null) {
+            console.trace(p);
+            p = p._next;
+        }
     }
 } 
