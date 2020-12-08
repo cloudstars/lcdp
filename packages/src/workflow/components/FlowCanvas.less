@@ -38,8 +38,17 @@
                 }
             }
 
-            .flow-node-addbtn {
+            .node-append-btn {
                 padding: 20px;
+                text-align: center;
+
+                span {
+                    position: relative;
+                    border: 1px solid grey;
+                    border-radius: 50%;
+                    cursor: pointer;
+                    outline: none;
+                }              
             }
         }
         
@@ -50,5 +59,16 @@
             background-size: 56px 32px;
             margin: 30px auto;
         }
+    }
+}
+
+.node-append-selector {
+    display: flex;
+    
+    .node-card {
+        border: 1px solid grey;
+        width: 60px;
+        height: 60px;
+        margin: 10px;
     }
 }

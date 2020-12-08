@@ -1,5 +1,6 @@
 
 import React from 'react';
+import AppendNodeModal from './append/AppendNodeModal';
 import Flow from './Flow';
 
 import "./FlowCanvas.less";
@@ -20,6 +21,7 @@ export default function FlowCanvas(props: FlowCanvasProps) {
     return (
         <div className="workflow-editor-canvas">
             <Flow></Flow>
+            <AppendNodeModal></AppendNodeModal>
         </div>
     );
 }

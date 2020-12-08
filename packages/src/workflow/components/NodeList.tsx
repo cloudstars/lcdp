@@ -2,9 +2,7 @@ import React, { useContext } from 'react';
 import { StartNodeOptions } from '../nodes/start/StartNode';
 import NodeModel from '../nodes/NodeModel';
 import { WorkflowEditorContext } from '../WorkflowEditorContext';
-import Branch from './Branch';
-import InputNode from '../nodes/input/InputNode';
-import Node, { NodeOptions } from '../nodes/Node';
+import AppendNodeButton from './append/AppendNodeButton';
 
 
 /**
@@ -61,29 +59,8 @@ function NodeWrapper(props: NodeListProps & {nodeModel: NodeModel, isBranch: boo
                     <NodeViewer key={nodeModel.id} dataModel={nodeModel}></NodeViewer>
                 </div>
             </div>
-            {editable && <AddNodeBtn nodeModel={nodeModel}></AddNodeBtn>}
+            {editable && <AppendNodeButton nodeModel={nodeModel}></AppendNodeButton>}
         </>
     );
 }
 
-function AddNodeBtn(props: {nodeModel: NodeModel}) {
-    let { nodeModel } = props; 
-    let { nodeMap, refreshNodeModel } = useContext(WorkflowEditorContext);
-
-    function handleClick(e: any) {
-        console.log('The addbtn was clicked.');
-
-        // 先写死一个节点
-        let selectNodeId = InputNode.id;
-        let node: Node<NodeOptions> = nodeMap[selectNodeId];
-        nodeModel.append(new NodeModel(node.name, node.type, node.id, node.defaultOptions(), []));
-        //nodeModel.trace();
-        refreshNodeModel && refreshNodeModel();
-    }
-
-    return (
-        <div className="flow-node-addbtn" onClick={handleClick}>
-            +
-        </div>
-    );
-}

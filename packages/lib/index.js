@@ -3,8 +3,10 @@
 Object.defineProperty(exports, '__esModule', { value: true });
 
 var React = require('react');
+var antd = require('antd');
 require('antd/dist/antd.css');
 var uuid = require('uuid');
+var icons = require('@ant-design/icons');
 var lodash = require('lodash');
 
 function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
@@ -290,6 +292,52 @@ class NodeModel extends LinkedList {
     }
 }
 
+function AppendNodeModal(props) {
+    const { nodeMap, peddingNode, refreshNodeModel } = React.useContext(WorkflowEditorContext);
+    const [isModalVisible, setModalVisible] = React.useState(!!peddingNode);
+    React.useEffect(() => {
+        setModalVisible(!!peddingNode);
+    }, [peddingNode]);
+    const handleOk = () => {
+        setModalVisible(false);
+    };
+    const handleCancel = () => {
+        setModalVisible(false);
+    };
+    const appendNode = React.useCallback((node) => {
+        peddingNode.nodeModel.append(new NodeModel(node.name, node.type, node.id, node.defaultOptions(), []));
+        refreshNodeModel && refreshNodeModel();
+    }, [peddingNode]);
+    let nodesSelector = React.useMemo(() => {
+        return getNodesSelector(nodeMap, appendNode);
+    }, [peddingNode]);
+    return (React__default['default'].createElement(antd.Modal, { visible: isModalVisible, closable: false, onOk: handleOk, onCancel: handleCancel },
+        React__default['default'].createElement("div", { className: "node-append-selector" }, nodesSelector)));
+}
+function getNodesSelector(nodeMap, appendNode) {
+    let reactNodes = [];
+    for (let key in nodeMap) {
+        let node = nodeMap[key];
+        if (node.type == NodeType.START)
+            continue;
+        let reactNode = (React__default['default'].createElement("div", { key: node.id, className: "node-card", onClick: () => appendNode(node) }, node.name));
+        reactNodes.push(reactNode);
+    }
+    return reactNodes;
+}
+
+function AppendNodeButton(props) {
+    let { nodeModel } = props;
+    let { setPeddingNode } = React.useContext(WorkflowEditorContext);
+    function handleClick(e) {
+        setPeddingNode && setPeddingNode({
+            nodeModel: nodeModel
+        });
+    }
+    return (React__default['default'].createElement("div", { className: "node-append-btn", onClick: handleClick },
+        React__default['default'].createElement(icons.PlusOutlined, null)));
+}
+
 function NodeList(props) {
     let { startNodeModel } = props;
     let reactNodes = [];
@@ -313,19 +361,7 @@ function NodeWrapper(props) {
                 React__default['default'].createElement("div", { className: "node-header", style: { backgroundColor: node.color } }, nodeModel.name),
             React__default['default'].createElement("div", { className: "node-content" },
                 React__default['default'].createElement(NodeViewer, { key: nodeModel.id, dataModel: nodeModel }))),
-        editable && React__default['default'].createElement(AddNodeBtn, { nodeModel: nodeModel })));
-}
-function AddNodeBtn(props) {
-    let { nodeModel } = props;
-    let { nodeMap, refreshNodeModel } = React.useContext(WorkflowEditorContext);
-    function handleClick(e) {
-        console.log('The addbtn was clicked.');
-        let selectNodeId = InputNode.id;
-        let node = nodeMap[selectNodeId];
-        nodeModel.append(new NodeModel(node.name, node.type, node.id, node.defaultOptions(), []));
-        refreshNodeModel && refreshNodeModel();
-    }
-    return (React__default['default'].createElement("div", { className: "flow-node-addbtn", onClick: handleClick }, "+"));
+        editable && React__default['default'].createElement(AppendNodeButton, { nodeModel: nodeModel })));
 }
 
 function Flow(props) {
@@ -340,22 +376,25 @@ function EndNode(props) {
             React__default['default'].createElement("div", { className: "workflowEnd" }))));
 }
 
-var css_248z$1 = ".workflow-editor-canvas {\n  display: block;\n}\n.workflow-editor-canvas .flow {\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n}\n.workflow-editor-canvas .flow .flow-node {\n  position: relative;\n}\n.workflow-editor-canvas .flow .flow-node::before {\n  position: absolute;\n  content: \"\";\n  width: 1px;\n  height: 100%;\n  background-color: #ccc;\n}\n.workflow-editor-canvas .flow .flow-node .flow-node-box {\n  width: 280px;\n  min-height: 128px;\n  border: 1px solid #ccc;\n  background: #fff;\n  border-radius: 6px;\n  /* 加了这个属性之后，才能遮住底部的1px背景线 */\n  position: relative;\n}\n.workflow-editor-canvas .flow .flow-node .flow-node-box .node-header {\n  height: 48px;\n  padding: 4px;\n  border-bottom: 1px solid #ccc;\n}\n.workflow-editor-canvas .flow .flow-node .flow-node-box .node-content {\n  padding: 6px;\n}\n.workflow-editor-canvas .flow .flow-node .flow-node-addbtn {\n  padding: 20px;\n}\n.workflow-editor-canvas .flow .flow-end {\n  width: 56px;\n  height: 32px;\n  background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAHAAAABACAQAAABokzttAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAAmJLR0QA/4ePzL8AAAAHdElNRQfiCAkRLQN+59ZwAAAAfUlEQVRo3u3ZwQ2AIBAAQbFn69ce7qEumWng2BDC49Z1H1s7vz6AQIEC4c/WPfwH13Dg9Nudztv+DQqsE1gnsE5gncA6gXUC6wTWCawTWCewTmCdwLo1XRa8vWOYztv+BgXWCawTWCewTmCdwDqBdQLrBNYJrBNYJ7BOYN0Dws4H6yyzXK8AAAAldEVYdGRhdGU6Y3JlYXRlADIwMTgtMDgtMDlUMTc6NDU6MDMrMDg6MDBVMAcOAAAAJXRFWHRkYXRlOm1vZGlmeQAyMDE4LTA4LTA5VDE3OjQ1OjAzKzA4OjAwJG2/sgAAAABJRU5ErkJggg==) no-repeat;\n  background-size: 56px 32px;\n  margin: 30px auto;\n}\n\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy93b3JrZmxvdy9jb21wb25lbnRzL0Zsb3dDYW52YXMubGVzcyIsIkZsb3dDYW52YXMubGVzcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQTtFQUNJLGNBQUE7QUNDSjtBREZBO0VBSVEsYUFBQTtFQUNBLHNCQUFBO0VBQ0EsbUJBQUE7QUNDUjtBRFBBO0VBVVksa0JBQUE7QUNBWjtBREVZO0VBQ0ksa0JBQUE7RUFDQSxXQUFBO0VBQ0EsVUFBQTtFQUNBLFlBQUE7RUFDQSxzQkFBQTtBQ0FoQjtBRGpCQTtFQXFCZ0IsWUFBQTtFQUNBLGlCQUFBO0VBQ0Esc0JBQUE7RUFDQSxnQkFBQTtFQUNBLGtCQUFBO0VDRGQsMkJBQTJCO0VER2Isa0JBQUE7QUNEaEI7QUQxQkE7RUE4Qm9CLFlBQUE7RUFDQSxZQUFBO0VBQ0EsNkJBQUE7QUNEcEI7QUQvQkE7RUFvQ29CLFlBQUE7QUNGcEI7QURsQ0E7RUF5Q2dCLGFBQUE7QUNKaEI7QURyQ0E7RUE4Q1ksV0FBQTtFQUNBLFlBQUE7RUFDQSxxaUJBQUE7RUFDQSwwQkFBQTtFQUNBLGlCQUFBO0FDTloiLCJmaWxlIjoiRmxvd0NhbnZhcy5sZXNzIn0= */";
+var css_248z$1 = ".workflow-editor-canvas {\n  display: block;\n}\n.workflow-editor-canvas .flow {\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n}\n.workflow-editor-canvas .flow .flow-node {\n  position: relative;\n}\n.workflow-editor-canvas .flow .flow-node::before {\n  position: absolute;\n  content: \"\";\n  width: 1px;\n  height: 100%;\n  background-color: #ccc;\n}\n.workflow-editor-canvas .flow .flow-node .flow-node-box {\n  width: 280px;\n  min-height: 128px;\n  border: 1px solid #ccc;\n  background: #fff;\n  border-radius: 6px;\n  /* 加了这个属性之后，才能遮住底部的1px背景线 */\n  position: relative;\n}\n.workflow-editor-canvas .flow .flow-node .flow-node-box .node-header {\n  height: 48px;\n  padding: 4px;\n  border-bottom: 1px solid #ccc;\n}\n.workflow-editor-canvas .flow .flow-node .flow-node-box .node-content {\n  padding: 6px;\n}\n.workflow-editor-canvas .flow .flow-node .node-append-btn {\n  padding: 20px;\n  text-align: center;\n}\n.workflow-editor-canvas .flow .flow-node .node-append-btn span {\n  position: relative;\n  border: 1px solid grey;\n  border-radius: 50%;\n  cursor: pointer;\n  outline: none;\n}\n.workflow-editor-canvas .flow .flow-end {\n  width: 56px;\n  height: 32px;\n  background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAHAAAABACAQAAABokzttAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAAmJLR0QA/4ePzL8AAAAHdElNRQfiCAkRLQN+59ZwAAAAfUlEQVRo3u3ZwQ2AIBAAQbFn69ce7qEumWng2BDC49Z1H1s7vz6AQIEC4c/WPfwH13Dg9Nudztv+DQqsE1gnsE5gncA6gXUC6wTWCawTWCewTmCdwLo1XRa8vWOYztv+BgXWCawTWCewTmCdwDqBdQLrBNYJrBNYJ7BOYN0Dws4H6yyzXK8AAAAldEVYdGRhdGU6Y3JlYXRlADIwMTgtMDgtMDlUMTc6NDU6MDMrMDg6MDBVMAcOAAAAJXRFWHRkYXRlOm1vZGlmeQAyMDE4LTA4LTA5VDE3OjQ1OjAzKzA4OjAwJG2/sgAAAABJRU5ErkJggg==) no-repeat;\n  background-size: 56px 32px;\n  margin: 30px auto;\n}\n.node-append-selector {\n  display: flex;\n}\n.node-append-selector .node-card {\n  border: 1px solid grey;\n  width: 60px;\n  height: 60px;\n  margin: 10px;\n}\n\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy93b3JrZmxvdy9jb21wb25lbnRzL0Zsb3dDYW52YXMubGVzcyIsIkZsb3dDYW52YXMubGVzcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQTtFQUNJLGNBQUE7QUNDSjtBREZBO0VBSVEsYUFBQTtFQUNBLHNCQUFBO0VBQ0EsbUJBQUE7QUNDUjtBRFBBO0VBVVksa0JBQUE7QUNBWjtBREVZO0VBQ0ksa0JBQUE7RUFDQSxXQUFBO0VBQ0EsVUFBQTtFQUNBLFlBQUE7RUFDQSxzQkFBQTtBQ0FoQjtBRGpCQTtFQXFCZ0IsWUFBQTtFQUNBLGlCQUFBO0VBQ0Esc0JBQUE7RUFDQSxnQkFBQTtFQUNBLGtCQUFBO0VDRGQsMkJBQTJCO0VER2Isa0JBQUE7QUNEaEI7QUQxQkE7RUE4Qm9CLFlBQUE7RUFDQSxZQUFBO0VBQ0EsNkJBQUE7QUNEcEI7QUQvQkE7RUFvQ29CLFlBQUE7QUNGcEI7QURsQ0E7RUF5Q2dCLGFBQUE7RUFDQSxrQkFBQTtBQ0poQjtBRHRDQTtFQTZDb0Isa0JBQUE7RUFDQSxzQkFBQTtFQUNBLGtCQUFBO0VBQ0EsZUFBQTtFQUNBLGFBQUE7QUNKcEI7QUQ3Q0E7RUF1RFksV0FBQTtFQUNBLFlBQUE7RUFDQSxxaUJBQUE7RUFDQSwwQkFBQTtFQUNBLGlCQUFBO0FDUFo7QURZQTtFQUNJLGFBQUE7QUNWSjtBRFNBO0VBSVEsc0JBQUE7RUFDQSxXQUFBO0VBQ0EsWUFBQTtFQUNBLFlBQUE7QUNWUiIsImZpbGUiOiJGbG93Q2FudmFzLmxlc3MifQ== */";
 styleInject(css_248z$1);
 
 function FlowCanvas(props) {
     return (React__default['default'].createElement("div", { className: "workflow-editor-canvas" },
-        React__default['default'].createElement(Flow, null)));
+        React__default['default'].createElement(Flow, null),
+        React__default['default'].createElement(AppendNodeModal, null)));
 }
 
 var css_248z$2 = ".workflow-editor {\n  overflow: auto;\n}\n\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy93b3JrZmxvdy9pbmRleC5sZXNzIiwiaW5kZXgubGVzcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFHQTtFQUNJLGNBQUE7QUNGSiIsImZpbGUiOiJpbmRleC5sZXNzIn0= */";
 styleInject(css_248z$2);
 
 function WorkflowEditor(props) {
+    let { startNodeModel } = props;
     let nodeMap = React.useMemo(() => getNodeMap(props.nodes), []);
-    let initNodeModel = React.useMemo(() => props.startNodeModel || getDefaultStartNodeModel(nodeMap), []);
+    let initNodeModel = React.useMemo(() => startNodeModel || getDefaultStartNodeModel(nodeMap), []);
     const [nodeModel, setNodeModel] = React.useState(initNodeModel);
-    let contextValue = React.useMemo(() => getInitContextValue(props, nodeMap, nodeModel, setNodeModel), []);
+    const [peddingNode, setPeddingNode] = React.useState();
+    let contextValue = React.useMemo(() => getContextValue(props, nodeMap, nodeModel, setNodeModel, peddingNode, setPeddingNode), [peddingNode]);
     return (React__default['default'].createElement(WorkflowEditorContext.Provider, { value: contextValue },
         React__default['default'].createElement("div", { className: "workflow-editor" },
             React__default['default'].createElement(FlowCanvas, null),
@@ -383,16 +422,19 @@ function getDefaultStartNodeModel(nodeMap) {
     }
     throw new Error("流程初始化出错，不存在开始节点！！！");
 }
-function getInitContextValue(props, nodeMap, nodeModel, setNodeModel) {
+function getContextValue(props, nodeMap, nodeModel, setNodeModel, peddingNode, setPeddingNode) {
     return {
         editable: props.editable || true,
         nodeMap: nodeMap,
         nodeModel: nodeModel,
         refreshNodeModel: () => {
             setNodeModel((prevNodeModel) => {
-                console.log(prevNodeModel);
                 return lodash.cloneDeep(prevNodeModel);
             });
+        },
+        peddingNode: peddingNode,
+        setPeddingNode: (peddingNode) => {
+            setPeddingNode(peddingNode);
         }
     };
 }

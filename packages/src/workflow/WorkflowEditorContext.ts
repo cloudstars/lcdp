@@ -6,6 +6,18 @@ import InputNode from "./nodes/input/InputNode";
 import ApproveNode from "./nodes/approve/ApproveNode";
 import ConditionNode from "./nodes/condition/ConditionNode";
 
+
+/**
+ * 待追加的节点（将在期后添加新的节点）
+ */
+export interface PeddingNode {
+    nodeModel: NodeModel/*,
+    position: {
+        left: number,
+        top: number
+    }*/
+}
+
 /**
  * 工作流编辑器上下文
  */
@@ -15,7 +27,11 @@ export interface WorkflowEditorContextType {
     // 开始结点数据模型
     nodeModel?: NodeModel;
     // 刷新开始结点的数据模型
-    refreshNodeModel?: () => void;
+    readonly refreshNodeModel?: () => void;
+    // 待追加的节点
+    peddingNode?: PeddingNode,
+    // 设置待追加的节点
+    readonly setPeddingNode?: (peddingNode: PeddingNode) => void,
     // 节点映射
     readonly nodeMap: {
         [key: string]: Node<NodeOptions>;

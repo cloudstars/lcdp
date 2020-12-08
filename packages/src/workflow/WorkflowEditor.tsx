@@ -1,7 +1,7 @@
-import React, { Dispatch, SetStateAction, useCallback, useEffect, useMemo, useState } from 'react'
+import React, { Dispatch, SetStateAction, useMemo, useState } from 'react'
 import ConfigPanel from './components/ConfigPanel';
 import FlowCanvas from './components/FlowCanvas';
-import { WorkflowEditorContext, contextInitValue } from './WorkflowEditorContext';
+import { WorkflowEditorContext, contextInitValue, PeddingNode } from './WorkflowEditorContext';
 import Node, { NodeOptions, NodeType } from './nodes/Node';
 import NodeModel from './nodes/NodeModel';
 import { cloneDeep } from "lodash";
@@ -22,19 +22,22 @@ interface WorkflowEditorProps {
  */
 export default function WorkflowEditor(props: WorkflowEditorProps) {
 
-    let { startNodeModel, nodes } = props;
+    let { startNodeModel } = props;
     
     // 节点映射表
     let nodeMap = useMemo(() => getNodeMap(props.nodes), []); 
 
     // 获取流程的节点模型初始值
-    let initNodeModel = useMemo(() => props.startNodeModel || getDefaultStartNodeModel(nodeMap), []);
+    let initNodeModel = useMemo(() => startNodeModel || getDefaultStartNodeModel(nodeMap), []);
 
     // 流程的节点模型(状态)
     const [nodeModel, setNodeModel] = useState<NodeModel>(initNodeModel);
 
+    // 待追加的节点(状态)
+    const [peddingNode, setPeddingNode] = useState<PeddingNode>();
+    
     // 获取上下文的值
-    let contextValue = useMemo(() => getInitContextValue(props, nodeMap, nodeModel!, setNodeModel), []);
+    let contextValue = useMemo(() => getContextValue(props, nodeMap, nodeModel!, setNodeModel, peddingNode, setPeddingNode), [peddingNode]);
 
 
     return (
@@ -90,11 +93,13 @@ function getDefaultStartNodeModel(nodeMap: { [key: string]: Node<NodeOptions> })
  * 
  * @param props 
  */
-function getInitContextValue(
+function getContextValue(
     props: WorkflowEditorProps, 
     nodeMap: { [key: string]: Node<NodeOptions> },
     nodeModel: NodeModel<NodeOptions>,
-    setNodeModel: Dispatch<SetStateAction<NodeModel<NodeOptions>>>
+    setNodeModel: Dispatch<SetStateAction<NodeModel<NodeOptions>>>,
+    peddingNode: PeddingNode | undefined,
+    setPeddingNode: Dispatch<SetStateAction<PeddingNode | undefined>>,
 ) {
     return {
         editable: props.editable || true,
@@ -102,9 +107,12 @@ function getInitContextValue(
         nodeModel: nodeModel,
         refreshNodeModel: () => {
             setNodeModel((prevNodeModel: NodeModel<NodeOptions>) => {
-                console.log(prevNodeModel);
                 return cloneDeep<NodeModel<NodeOptions>>(prevNodeModel)
             });
+        },
+        peddingNode: peddingNode,
+        setPeddingNode: (peddingNode: PeddingNode) => {
+            setPeddingNode(peddingNode);
         }
     }
 }
