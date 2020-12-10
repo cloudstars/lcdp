@@ -1,10 +1,11 @@
 import { createContext } from "react";
 import NodeModel from "./nodes/NodeModel";
+import Node, { BranchNode } from "./nodes/Node";
 import StartNode from "./nodes/start/StartNode";
-import Node, { NodeOptions } from "./nodes/Node";
 import InputNode from "./nodes/input/InputNode";
 import ApproveNode from "./nodes/approve/ApproveNode";
 import ConditionNode from "./nodes/condition/ConditionNode";
+import ExclusiveBranchNode from "./nodes/branch/ExclusiveBranchNode";
 
 
 /**
@@ -29,12 +30,12 @@ export interface WorkflowEditorContextType {
     // 刷新开始结点的数据模型
     readonly refreshNodeModel?: () => void;
     // 待追加的节点
-    peddingNode?: PeddingNode,
+    peddingNode?: PeddingNode | undefined,
     // 设置待追加的节点
     readonly setPeddingNode?: (peddingNode: PeddingNode) => void,
     // 节点映射
     readonly nodeMap: {
-        [key: string]: Node<NodeOptions>;
+        [key: string]: Node<any, any>;
     };
 }
 
@@ -45,7 +46,8 @@ export const contextInitValue = {
         [StartNode.id]: StartNode,
         [InputNode.id]: InputNode,
         [ApproveNode.id]: ApproveNode,
-        [ConditionNode.id]: ConditionNode
+        [ConditionNode.id]: ConditionNode,
+        [ExclusiveBranchNode.id]: ExclusiveBranchNode
     }
 }
 

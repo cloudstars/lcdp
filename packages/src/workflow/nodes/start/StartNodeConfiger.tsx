@@ -1,13 +1,11 @@
 import React from 'react';
-import NodeModel from "../NodeModel";
-import NodeConfiger, { NodeConfigerProps } from "../NodeConfiger";
-import { StartNodeOptions } from "./StartNode";
+import { NodeConfigerProps } from '../Node';
 
 /**
  * 开始节点配置器属性
  */
 export interface StartNodeConfigerProps extends NodeConfigerProps {
-    dataModel: NodeModel<StartNodeOptions>; // 节点的数据模型
+    startForm: object
 }
 
 /**
@@ -20,24 +18,6 @@ export default function StartNodeConfiger(props: StartNodeConfigerProps) {
         </div>
     );
 }
-
-/**
- * 开始节点配置器（类组件）
-*/
-export class StartNodeConfigerClass extends React.Component<StartNodeConfigerProps> implements NodeConfiger<StartNodeOptions> {
-    /*constructor(props: StartNodeConfigerProps) {
-        super(props);
-    }*/
-
-    hasError(node: NodeModel<StartNodeOptions>) {
-        return false;
-    }
-
-    render() {
-        return <div>这是一个StartNodeConfiger</div>;
-    }
-} 
-
 
 
 

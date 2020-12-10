@@ -1,6 +1,5 @@
 import { ComponentType } from "react";
-import NodeConfiger, { NodeConfigerProps } from "./NodeConfiger";
-import NodeViewer, { NodeViewerProps } from "./NodeViewer";
+import NodeModel from "./NodeModel";
 
 // 节点分类
 export enum NodeType {
@@ -8,15 +7,10 @@ export enum NodeType {
     INPUT, // 填写
     APPROVE, // 审批 
     SERVICE, // 程序
+    BRANCH, //分支
     CONDITION // 条件
 }
 
-/**
- * 节点配置
- */
-export interface NodeOptions {
-    [key: string]: any;
-}
 
 /**
  * 校验错误
@@ -30,12 +24,15 @@ export interface ValidationError {
 /**
  * 流程节点（用于函数式组件)
  */
-export default interface Node<O extends NodeOptions = NodeOptions, V extends NodeViewerProps = NodeViewerProps, C extends NodeConfigerProps = NodeConfigerProps> {
+export default interface Node<V extends NodeViewerProps = NodeViewerProps, C extends NodeConfigerProps = NodeConfigerProps> {
     // 节点分类
     type: NodeType;
 
     // 节点的ID（英文）
     id: string;
+
+    // 是否可被选择
+    selectable: boolean;
 
     // 节点的名称（中文）
     name: string;
@@ -44,7 +41,7 @@ export default interface Node<O extends NodeOptions = NodeOptions, V extends Nod
     color: string;
 
     // 默认的选项
-    defaultOptions: () => O;
+    defaultOptions: () => any;
 
     // 节点的展示器
     nodeViewer: ComponentType<V>;
@@ -53,27 +50,27 @@ export default interface Node<O extends NodeOptions = NodeOptions, V extends Nod
     nodeConfiger: ComponentType<C>;
 
     // 节点校验方法
-    validate: (node: O) => ValidationError;
+    validate: (nodeModel: NodeModel) => ValidationError;
+}
+
+
+/**
+ * 流程分支节点
+ */
+export interface BranchNode<V extends NodeViewerProps = NodeViewerProps, C extends NodeConfigerProps = NodeConfigerProps> extends Node<V, C> {
+    conditionNode: Node<any, any>
 }
 
 /**
- * 流程节点（用于类组件继承)
+ * 节点展示卡属性
  */
-export interface NodeClass<O extends NodeOptions, V extends NodeViewerProps, C extends NodeConfigerProps> {
-    
-    getType(): NodeType;
+export interface NodeViewerProps {
+    dataModel: NodeModel; // 节点的数据模型
+}
 
-    getId(): string;
-
-    getName(): string;
-
-    getColor(): string;
-
-    getDefaultOptions(): O; 
-
-    getNodeViewer(): React.ComponentClass<V> & { new (props: V): NodeViewer<V>};
-
-    getNodeConfiger(): React.ComponentClass<C> & { new (props: C): NodeConfiger<C>};
-
-    validate(node: O): ValidationError;
+/**
+ * 节点配置器属性
+ */
+export interface NodeConfigerProps {
+    dataModel: NodeModel; // 节点的数据模型
 }

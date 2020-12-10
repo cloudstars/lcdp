@@ -1,30 +1,32 @@
-import Node, { NodeClass, NodeOptions, NodeType } from "../Node";
-import StartNodeConfiger, { StartNodeConfigerClass, StartNodeConfigerProps } from "./StartNodeConfiger";
-import StartNodeViewer, { StartNodeViewerClass, StartNodeViewerProps } from "./StartNodeViewer";
+import Node, { NodeType } from "../Node";
+import NodeModel from "../NodeModel";
+import StartNodeConfiger, { StartNodeConfigerProps } from "./StartNodeConfiger";
+import StartNodeViewer, { StartNodeViewerProps } from "./StartNodeViewer";
 
 /**
- * 条件节点配置
+ * 开始节点配置
  */
-export interface StartNodeOptions extends NodeOptions {
-
+export interface StartNodeOptions {
+    startForm: object
 }
 
-
 /**
- * 条件结点（用于函数式组件）
+ * 开始结点
  */
-const StartNode: Node<StartNodeOptions, StartNodeViewerProps, StartNodeConfigerProps> = {
+const StartNode: Node<StartNodeViewerProps, StartNodeConfigerProps> = {
     type: NodeType.START,
     id: 'default.start',
+    selectable: false,
     name: '开始',
     color: '#f3f3f3',
     defaultOptions: () => {
         return {
+            startForm: {}
         }
     },
     nodeConfiger: StartNodeConfiger,
     nodeViewer: StartNodeViewer,
-    validate: (node: StartNodeOptions) => { 
+    validate: (nodeModel: NodeModel) => { 
         return {
             hasError: false,
             title: '',
@@ -32,46 +34,5 @@ const StartNode: Node<StartNodeOptions, StartNodeViewerProps, StartNodeConfigerP
         };
     }
 };
-
-/**
- * 开始结点（用于类组件）
- */
-export class StartNodeClass implements NodeClass<StartNodeOptions, StartNodeViewerProps, StartNodeConfigerProps> {
-    getType() {
-       return NodeType.START; 
-    }
-
-    getId() {
-        return "default.start"
-    }
-
-    getName() {
-        return "开始";
-    }
-
-    getColor() {
-        return "#f3f3f3";
-    }
-
-    getDefaultOptions() {
-        return {}
-    }
-
-    getNodeViewer() {
-        return StartNodeViewerClass;
-    }
-
-    getNodeConfiger() {
-        return StartNodeConfigerClass;
-    }
-
-    validate(node: StartNodeOptions) {
-        return {
-            hasError: false,
-            title: '',
-            message: ''
-        };
-    }
-}
 
 export default StartNode;

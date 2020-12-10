@@ -1,13 +1,13 @@
 import React from 'react';
+import { NodeViewerProps } from '../Node';
 import NodeModel from "../NodeModel";
-import { NodeViewerProps } from '../NodeViewer';
 import { ConditionNodeOptions } from './ConditionNode';
 
 /**
  * 条件节点展示卡属性
  */
 export interface ConditionNodeViewerProps extends NodeViewerProps {
-    dataModel: NodeModel<ConditionNodeOptions>;
+    fieldc: string;
 }
 
 

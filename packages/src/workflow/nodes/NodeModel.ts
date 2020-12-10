@@ -1,19 +1,19 @@
 import { v4 as uuid } from "uuid";
 import LinkedList from "../../common/LinkedList";
-import { NodeOptions, NodeType } from "./Node";
+import { NodeType } from "./Node";
 
 /**
  * 流程节点数据模型
  */
-export default class NodeModel<T extends NodeOptions = NodeOptions> extends LinkedList<NodeModel<T>>  {
+export default class NodeModel extends LinkedList<NodeModel>  {
     private _id: string; // 节点ID
     private _name: string; // 节点名称
     private _type: NodeType; // 节点类型
     private _subType: string; // 节点子类型
-    private _options: T; // 节点选项
+    private _options: any; // 节点选项
     private _branchs: NodeModel[];
 
-    constructor(name: string, type: NodeType, subType: string, options: T, branchs: NodeModel[]) {
+    constructor(name: string, type: NodeType, subType: string, options: any, branchs: NodeModel[]) {
         super();
         this._id = uuid().replace(/-/g, '');
         this._name = name;
@@ -39,7 +39,7 @@ export default class NodeModel<T extends NodeOptions = NodeOptions> extends Link
         return this._subType;
     }
 
-    get options(): NodeOptions {
+    get options(): any {
         return this._options;
     }
 

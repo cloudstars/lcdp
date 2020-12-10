@@ -1,13 +1,11 @@
 import React from 'react';
-import NodeModel from "../NodeModel";
-import { NodeViewerProps } from '../NodeViewer';
-import { InputNodeOptions } from './InputNode';
+import { NodeViewerProps } from '../Node';
 
 /**
  * 填写节点展示卡属性
  */
 export interface InputNodeViewerProps extends NodeViewerProps {
-    dataModel: NodeModel<InputNodeOptions>;
+    field2: string
 }
 
 

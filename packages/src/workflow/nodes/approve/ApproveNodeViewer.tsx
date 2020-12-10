@@ -1,13 +1,11 @@
 import React from 'react';
-import NodeModel from "../NodeModel";
-import { NodeViewerProps } from '../NodeViewer';
-import { ApproveNodeOptions } from './ApproveNode';
+import { NodeViewerProps } from '../Node';
 
 /**
  * 审批节点展示卡属性
  */
 export interface ApproveNodeViewerProps extends NodeViewerProps {
-    dataModel: NodeModel<ApproveNodeOptions>;
+    fielda: string;
 }
 
 

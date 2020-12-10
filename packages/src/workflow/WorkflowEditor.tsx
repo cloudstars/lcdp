@@ -2,7 +2,7 @@ import React, { Dispatch, SetStateAction, useMemo, useState } from 'react'
 import ConfigPanel from './components/ConfigPanel';
 import FlowCanvas from './components/FlowCanvas';
 import { WorkflowEditorContext, contextInitValue, PeddingNode } from './WorkflowEditorContext';
-import Node, { NodeOptions, NodeType } from './nodes/Node';
+import Node, { NodeType } from './nodes/Node';
 import NodeModel from './nodes/NodeModel';
 import { cloneDeep } from "lodash";
 
@@ -55,8 +55,8 @@ export default function WorkflowEditor(props: WorkflowEditorProps) {
  * 
  * @param nodes
  */
-function getNodeMap(nodes: Node<NodeOptions>[] | undefined) {
-    let nodeMap: { [key: string]: Node<NodeOptions> } = {};
+function getNodeMap(nodes: Node[] | undefined) {
+    let nodeMap: { [key: string]: Node<any, any> } = {};
 
     // 判断是否外部输入了节点列表
     if (nodes) {
@@ -76,10 +76,10 @@ function getNodeMap(nodes: Node<NodeOptions>[] | undefined) {
  * 
  * @param nodeMap
  */
-function getDefaultStartNodeModel(nodeMap: { [key: string]: Node<NodeOptions> }): NodeModel<NodeOptions> {
+function getDefaultStartNodeModel(nodeMap: { [key: string]: Node }): NodeModel {
     for (let key in nodeMap) {
         if (nodeMap[key].type == NodeType.START) {
-            let startNode: Node<NodeOptions> = nodeMap[key];
+            let startNode: Node = nodeMap[key];
             return new NodeModel(startNode.name, startNode.type, startNode.id, startNode.defaultOptions(), []);
         }
     }
@@ -95,9 +95,9 @@ function getDefaultStartNodeModel(nodeMap: { [key: string]: Node<NodeOptions> })
  */
 function getContextValue(
     props: WorkflowEditorProps, 
-    nodeMap: { [key: string]: Node<NodeOptions> },
-    nodeModel: NodeModel<NodeOptions>,
-    setNodeModel: Dispatch<SetStateAction<NodeModel<NodeOptions>>>,
+    nodeMap: { [key: string]: Node },
+    nodeModel: NodeModel,
+    setNodeModel: Dispatch<SetStateAction<NodeModel>>,
     peddingNode: PeddingNode | undefined,
     setPeddingNode: Dispatch<SetStateAction<PeddingNode | undefined>>,
 ) {
@@ -106,8 +106,8 @@ function getContextValue(
         nodeMap: nodeMap,
         nodeModel: nodeModel,
         refreshNodeModel: () => {
-            setNodeModel((prevNodeModel: NodeModel<NodeOptions>) => {
-                return cloneDeep<NodeModel<NodeOptions>>(prevNodeModel)
+            setNodeModel((prevNodeModel: NodeModel) => {
+                return cloneDeep<NodeModel>(prevNodeModel)
             });
         },
         peddingNode: peddingNode,

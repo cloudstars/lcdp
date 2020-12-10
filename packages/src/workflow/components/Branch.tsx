@@ -1,5 +1,4 @@
-import React, { useContext } from "react";
-import { NodeOptions } from "../nodes/Node";
+import React from "react";
 import NodeModel from "../nodes/NodeModel";
 import NodeList from "./NodeList";
 
@@ -9,7 +8,7 @@ import NodeList from "./NodeList";
  * 分支渲染器属性
  */
 export interface BranchProps {
-    branchs: NodeModel<NodeOptions>[];
+    branchs: NodeModel[];
 }
 
 /**
@@ -26,8 +25,8 @@ export default function Branch(props: BranchProps) {
         <div className="flow-branch">
             <i className="workflowBranchBtn icon-workflow_add"></i>
             {branchs && branchs.length > 0 &&
-                branchs.map((startNodeModel) => {
-                    <NodeList startNodeModel={startNodeModel}></NodeList>
+                branchs.map((nodeModel) => {
+                    <NodeList startNodeModel={nodeModel}></NodeList>
                 })
             }
         </div>

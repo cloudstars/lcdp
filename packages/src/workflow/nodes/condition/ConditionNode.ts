@@ -1,30 +1,33 @@
-import Node, { NodeOptions, NodeType } from "../Node";
+import Node, { NodeType } from "../Node";
+import NodeModel from "../NodeModel";
 import ConditionNodeConfiger, { ConditionNodeConfigerProps } from "./ConditionNodeConfiger";
 import ConditionNodeViewer, { ConditionNodeViewerProps } from "./ConditionNodeViewer";
 
 /**
  * 条件节点配置
  */
-export interface ConditionNodeOptions extends NodeOptions {
-
+export interface ConditionNodeOptions {
+    fieldc: string;
 }
 
 
 /**
  * 条件节点
  */
-const ConditionNode: Node<ConditionNodeOptions, ConditionNodeViewerProps, ConditionNodeConfigerProps> = {
+const ConditionNode: Node<ConditionNodeViewerProps, ConditionNodeConfigerProps> = {
     type: NodeType.CONDITION,
     id: 'default.condition',
+    selectable: false,
     name: '条件',
     color: '#fbfbfb',
     defaultOptions: () => {
         return {
+            fieldc: "xxx"
         }
     },
     nodeConfiger: ConditionNodeConfiger,
     nodeViewer: ConditionNodeViewer,
-    validate: (node: ConditionNodeOptions) => { 
+    validate: (nodeModel: NodeModel) => { 
         return {
             hasError: false,
             title: '',

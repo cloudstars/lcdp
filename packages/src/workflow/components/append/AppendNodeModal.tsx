@@ -1,14 +1,13 @@
 import React, { useCallback, useContext, useEffect, useMemo, useState } from 'react';
 import { Modal } from 'antd';
-import Node, { NodeOptions, NodeType } from '../../nodes/Node';
-import { WorkflowEditorContext, PeddingNode } from '../../WorkflowEditorContext';
+import Node, { BranchNode, NodeType } from '../../nodes/Node';
+import { WorkflowEditorContext } from '../../WorkflowEditorContext';
 import NodeModel from '../../nodes/NodeModel';
 
 /**
  * 添加节点模态框属性
  */
 interface AppendNodeModalProps {
-    //peddingNode: PeddingNode
 }
 
 
@@ -17,7 +16,7 @@ interface AppendNodeModalProps {
  * 添加节点的弹框组件
  */
 export default function AppendNodeModal(props: AppendNodeModalProps) {
-    const { nodeMap, peddingNode, refreshNodeModel } = useContext(WorkflowEditorContext);
+    const { nodeMap, peddingNode, setPeddingNode, refreshNodeModel } = useContext(WorkflowEditorContext);
     
     // const [position, setPosition] = useState(null);
     const [isModalVisible, setModalVisible] = useState(!!peddingNode);
@@ -42,7 +41,13 @@ export default function AppendNodeModal(props: AppendNodeModalProps) {
      */
     const appendNode = useCallback(
         (node: Node) => {
-            peddingNode!.nodeModel.append(new NodeModel(node.name, node.type, node.id, node.defaultOptions(), []));
+            let branchs = [];
+            if (node.type == NodeType.BRANCH) {
+                let cn = (node as BranchNode).conditionNode;
+                branchs.push(new NodeModel(cn.name, cn.type, cn.id, cn.defaultOptions(), []));
+                branchs.push(new NodeModel(cn.name, cn.type, cn.id, cn.defaultOptions(), []));
+            }
+            peddingNode!.nodeModel.append(new NodeModel(node.name, node.type, node.id, node.defaultOptions(), branchs));
             refreshNodeModel && refreshNodeModel();
         },
         [peddingNode],
@@ -80,26 +85,24 @@ export default function AppendNodeModal(props: AppendNodeModalProps) {
  */
 function getNodesSelector(
     nodeMap: {
-        [key: string]: Node<NodeOptions>
+        [key: string]: Node
     },
     appendNode: (node: Node) => void
 ) {
     let reactNodes: React.ReactNode[] = [];
     for (let key in nodeMap) {
         let node = nodeMap[key];
-        if (node.type == NodeType.START) continue;
-
-        let reactNode = (
-            <div 
-                key={node.id} 
-                className="node-card"
-                onClick={() => appendNode(node)}
-            >
-                {node.name}
-            </div>
-        )
-
-        reactNodes.push(reactNode);
+        if (node.selectable) {
+            reactNodes.push((
+                <div 
+                    key={node.id} 
+                    className="node-card"
+                    onClick={() => appendNode(node)}
+                >
+                    {node.name}
+                </div>
+            ));
+        }
     }
 
     return reactNodes;

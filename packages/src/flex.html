@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <style>
+        body {
+            width: 100vw;
+            height: 100vh;
+        }
+
+        .workflow-editor {
+            position: relative;
+
+        }
+
+        .flex-column {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .workflow-node {
+            position: relative;
+            padding: 20px 50px 0 50px;
+        }
+
+        .workflow-node::before {
+            position: absolute;
+            content: "";
+            width: 1px;
+            height: 100%;
+            top: 0;
+            left: 50%;
+            background-color: #ccc;
+        }
+
+        .workflow-node + .workflow-node {
+            padding-top: 0;
+        }
+
+        .workflow-node-item {
+            position: relative;
+            width: 280px;
+            background: #fff;
+        }
+
+        .workflow-node-header {
+            height: 50px;
+            background-color: silver;
+        }
+
+        .workflow-node-content {
+            height: 80px;
+            background-color: snow;
+        }
+
+        .workflow-node-addbtn {
+            position: relative;
+            padding: 20px 0;
+        }
+
+        .workflow-node-addbtn > button {
+            width: 20px;
+            height: 20px;
+            display: block;
+            margin: 0 auto;
+            border-radius: 100%;
+            border: 1px solid gray;
+        }
+
+        .flex-branchs {
+            display: inline-flex;
+        }
+
+        .flex-branchs > .flex-branch {
+            position: relative;
+            border-top: 1px solid #ccc;
+            border-bottom: 1px solid #ccc;
+        }
+
+        /*.flex-branchs > .flex-branch > .workflow-node.first-node {
+            padding-top: 20px;
+        }
+
+        .flex-branchs > .flex-branch > .workflow-node.first-node > .workflow-node-addbtn {
+            padding-bottom: 0;
+        }*/
+
+        .clear-left-border, .clear-right-border {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+        }
+        .clear-left-border::before, .clear-left-border::after, .clear-right-border::before, .clear-right-border::after  {
+            content: "";
+            position: absolute;
+            width: 50%;
+            background: #fff;
+            height: 10px;
+        }
+
+        .clear-left-border::before  {
+            left: 0;
+            top: -5px;
+        }
+
+        .clear-left-border::after {
+            left: 0;
+            bottom: -5px;
+        }
+
+        .clear-right-border::before  {
+            right: 0;
+            top: -5px;
+        }
+
+        .clear-right-border::after {
+            right: 0;
+            bottom: -5px;
+        }
+    </style>
+
+</head>
+<body>
+    <div class="workfow-editor flex-column" >
+        <div class="flex-column">
+            <div class="workflow-node">
+                <div class="workflow-node-item">
+                    <div class="workflow-node-header">这是工作流节点头部</div>
+                    <div class="workflow-node-content">这是工作流节点内容</div>
+                </div>
+                <div class="workflow-node-addbtn">
+                    <button>+</button>
+                </div>
+            </div>
+        </div>
+        <div class="flex-column">
+            <div class="flex-branchs">
+                <div class="flex-branch">
+                    <div class="clear-left-border"></div>
+                    <div class="workflow-node">
+                        <div class="workflow-node-item">
+                            <div class="workflow-node-header">11这是工作流节点头部</div>
+                            <div class="workflow-node-content">11这是工作流节点内容</div>
+                        </div>
+                        <div class="workflow-node-addbtn">
+                            <button>+</button>
+                        </div>
+                    </div>
+                    <div class="workflow-node">
+                        <div class="workflow-node-item">
+                            <div class="workflow-node-header">11这是工作流节点头部</div>
+                            <div class="workflow-node-content">11这是工作流节点内容</div>
+                        </div>
+                        <div class="workflow-node-addbtn">
+                            <button>+</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="flex-branch">
+                    <div class="workflow-node">
+                        <div class="workflow-node-item">
+                            <div class="workflow-node-header">11这是工作流节点头部</div>
+                            <div class="workflow-node-content">11这是工作流节点内容</div>
+                        </div>
+                        <div class="workflow-node-addbtn">
+                            <button>+</button>
+                        </div>
+                    </div>
+                    <div class="workflow-node">
+                        <div class="workflow-node-item">
+                            <div class="workflow-node-header">11这是工作流节点头部</div>
+                            <div class="workflow-node-content">11这是工作流节点内容</div>
+                        </div>
+                        <div class="workflow-node-addbtn">
+                            <button>+</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="flex-branch">
+                    <div class="clear-right-border"></div>
+                    <div class="workflow-node">
+                        <div class="workflow-node-item">
+                            <div class="workflow-node-header">22这是工作流节点头部</div>
+                            <div class="workflow-node-content">22这是工作流节点内容</div>
+                        </div>
+                        <div class="workflow-node-addbtn">
+                            <button>+</button>
+                        </div>
+                    </div>
+                    <div class="workflow-node">
+                        <div class="workflow-node-item">
+                            <div class="workflow-node-header">22这是工作流节点头部</div>
+                            <div class="workflow-node-content">22这是工作流节点内容</div>
+                        </div>
+                        <div class="workflow-node-addbtn">
+                            <button>+</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="flex-column">
+            <div class="workflow-node">
+                <div class="workflow-node-item">
+                    <div class="workflow-node-header">这是工作流节点头部</div>
+                    <div class="workflow-node-content">这是工作流节点内容</div>
+                </div>
+                <div class="workflow-node-addbtn">
+                    <button>+</button>
+                </div>
+            </div>
+        </div>
+        <div class="flex-column">
+            <div class="workflow-node">
+                <div class="workflow-node-item">
+                    <div class="workflow-node-header">这是工作流节点头部</div>
+                    <div class="workflow-node-content">这是工作流节点内容</div>
+                </div>
+                <div class="workflow-node-addbtn">
+                    <button>+</button>
+                </div>
+            </div>
+        </div>
+        <div class="flex-column">
+            <div class="workflow-node">
+                <div class="workflow-node-item">
+                    <div class="workflow-node-header">这是工作流节点头部</div>
+                    <div class="workflow-node-content">这是工作流节点内容</div>
+                </div>
+                <div class="workflow-node-addbtn">
+                    <button>+</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

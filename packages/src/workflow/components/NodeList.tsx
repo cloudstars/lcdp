@@ -1,5 +1,4 @@
 import React, { useContext } from 'react';
-import { StartNodeOptions } from '../nodes/start/StartNode';
 import NodeModel from '../nodes/NodeModel';
 import { WorkflowEditorContext } from '../WorkflowEditorContext';
 import AppendNodeButton from './append/AppendNodeButton';
@@ -10,7 +9,7 @@ import AppendNodeButton from './append/AppendNodeButton';
  */
 export interface NodeListProps {
      // 开始节点
-    startNodeModel: NodeModel<StartNodeOptions>
+    startNodeModel: NodeModel
 }
 
 /**
@@ -22,6 +21,7 @@ export interface NodeListProps {
  */
 export default function NodeList(props: NodeListProps) {
     let { startNodeModel } = props;
+    console.log('NodeList:' + startNodeModel);
 
     // 迭代生成全部的节点结构
     let reactNodes = [];

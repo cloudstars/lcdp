@@ -1,13 +1,11 @@
 import React from 'react';
-import { NodeConfigerProps } from '../NodeConfiger';
-import NodeModel from "../NodeModel";
-import { InputNodeOptions } from "./InputNode";
+import { NodeConfigerProps } from '../Node';
 
 /**
  * 填写节点配置器属性
  */
 export interface InputNodeConfigerProps extends NodeConfigerProps {
-    dataModel: NodeModel<InputNodeOptions>; // 节点的数据模型
+    field2: string
 }
 
 /**
