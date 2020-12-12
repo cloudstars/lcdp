@@ -30,9 +30,14 @@ var NodeType;
     NodeType[NodeType["CONDITION"] = 5] = "CONDITION";
 })(NodeType || (NodeType = {}));
 
-function StartNodeConfiger(props) {
+const StartNodeConfiger = React.forwardRef((props, ref) => {
     const [form] = antd.Form.useForm();
     const { options, onOptionsValuesChange } = props;
+    React.useImperativeHandle(ref, () => ({
+        getOptions: () => {
+            return { field1: 'xxx' };
+        }
+    }), []);
     return (React__default['default'].createElement("div", null,
         React__default['default'].createElement("p", null, "\u8FD9\u662F\u4E00\u4E2AStartNodeConfiger"),
         React__default['default'].createElement("br", null),
@@ -41,7 +46,7 @@ function StartNodeConfiger(props) {
                 React__default['default'].createElement(antd.Input.TextArea, { rows: 1 })),
             React__default['default'].createElement(antd.Form.Item, { name: "field2", label: "\u8BF7\u8F93\u5165\u7B2C\u4E8C\u4E2A\u53C2\u6570", initialValue: options.field2 },
                 React__default['default'].createElement(antd.Input.TextArea, { rows: 3 })))));
-}
+});
 
 function StartNodeViewer(props) {
     const { options } = props;
@@ -79,10 +84,15 @@ const StartNode = {
     }
 };
 
-function InputNodeConfiger(props) {
+const InputNodeConfiger = React.forwardRef((props, ref) => {
+    React.useImperativeHandle(ref, () => ({
+        getOptions: () => {
+            return { field2: 'xxx' };
+        }
+    }), []);
     return (React__default['default'].createElement("div", null,
         React__default['default'].createElement("p", null, "\u8FD9\u662F\u4E00\u4E2AInputNodeConfiger")));
-}
+});
 
 function InputNodeViewer(props) {
     return (React__default['default'].createElement("div", null,
@@ -111,10 +121,15 @@ const InputNode = {
     }
 };
 
-function ApproveNodeConfiger(props) {
+const ApproveNodeConfiger = React.forwardRef((props, ref) => {
+    React.useImperativeHandle(ref, () => ({
+        getOptions: () => {
+            return { fielda: 'xxx' };
+        }
+    }), []);
     return (React__default['default'].createElement("div", null,
         React__default['default'].createElement("p", null, "\u8FD9\u662F\u4E00\u4E2AApproveNodeConfiger")));
-}
+});
 
 function ApproveNodeViewer(props) {
     return (React__default['default'].createElement("div", null,
@@ -143,10 +158,15 @@ const ApproveNode = {
     }
 };
 
-function ConditionNodeConfiger(props) {
+const ConditionNodeConfiger = React.forwardRef((props, ref) => {
+    React.useImperativeHandle(ref, () => ({
+        getOptions: () => {
+            return { fieldc: 'xxx' };
+        }
+    }), []);
     return (React__default['default'].createElement("div", null,
         React__default['default'].createElement("p", null, "\u8FD9\u662F\u4E00\u4E2AConditionNodeConfiger")));
-}
+});
 
 function ConditionNodeViewer(props) {
     return (React__default['default'].createElement("div", null,
@@ -175,10 +195,15 @@ const ConditionNode = {
     }
 };
 
-function ExclusiveBranchNodeConfiger(props) {
+const ExclusiveBranchNodeConfiger = React.forwardRef((props, ref) => {
+    React.useImperativeHandle(ref, () => ({
+        getOptions: () => {
+            return { fieldb: 'xxx' };
+        }
+    }), []);
     return (React__default['default'].createElement("div", null,
         React__default['default'].createElement("p", null, "\u8FD9\u662F\u4E00\u4E2ABranchNodeConfiger")));
-}
+});
 
 function AppendNodeButton(props) {
     let { nodeModel } = props;

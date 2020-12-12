@@ -1,5 +1,5 @@
-import React from 'react';
-import { NodeConfigerProps } from '../Node';
+import React, { forwardRef, useImperativeHandle } from 'react';
+import { NodeConfigerProps, NodeConfigerRef } from '../Node';
 import { Form, Input } from 'antd';
 
 
@@ -7,15 +7,24 @@ import { Form, Input } from 'antd';
  * 开始节点配置器属性
  */
 export interface StartNodeConfigerProps extends NodeConfigerProps {
-    
+    field1: boolean
 }
+
 
 /**
  * 开始节点配置器
 */
-export default function StartNodeConfiger(props: StartNodeConfigerProps) {
+const StartNodeConfiger = forwardRef<NodeConfigerRef, StartNodeConfigerProps>((props, ref) => {
     const [ form ] = Form.useForm();
     const { options, onOptionsValuesChange } = props;
+
+    // 暴露内部的方法
+    useImperativeHandle(ref, () => ({
+        getOptions: () => {
+            return {field1: 'xxx'}
+        }
+    }), []);
+
     return (
         <div>
             <p>这是一个StartNodeConfiger</p>
@@ -30,7 +39,7 @@ export default function StartNodeConfiger(props: StartNodeConfigerProps) {
             </Form>
         </div>
     );
-}
+});
 
 
-
+export default StartNodeConfiger;

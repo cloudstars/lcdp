@@ -47,7 +47,7 @@ export default interface Node<V extends NodeViewerProps = NodeViewerProps, C ext
     nodeViewer: ComponentType<V>;
 
     // 节点的配置器
-    nodeConfiger: ComponentType<C>;
+    nodeConfiger: React.ForwardRefExoticComponent<C & React.RefAttributes<NodeConfigerRef>>;
 
     // 节点校验方法
     validate: (nodeModel: NodeModel) => ValidationError;
@@ -84,4 +84,14 @@ export interface NodeConfigerProps {
      * @param newOptionsValuesPart 变更的部分数据
      */ 
     onOptionsValuesChange: (newOptionsValuesPart: any) => void;
+}
+
+/**
+ * 节点配置器的引用
+ */
+export interface NodeConfigerRef {
+    /**
+     * 获取节点的配置选项
+     */
+    getOptions: () => any;
 }

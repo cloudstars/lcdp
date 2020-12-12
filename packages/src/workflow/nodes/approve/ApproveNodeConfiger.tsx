@@ -1,5 +1,5 @@
-import React from 'react';
-import { NodeConfigerProps } from '../Node';
+import React, { forwardRef, useImperativeHandle } from 'react';
+import { NodeConfigerProps, NodeConfigerRef } from '../Node';
 
 /**
  * 审批节点配置器属性
@@ -11,13 +11,24 @@ export interface ApproveNodeConfigerProps extends NodeConfigerProps {
 /**
  * 审批节点配置器
 */
-export default function ApproveNodeConfiger(props: ApproveNodeConfigerProps) {
+const ApproveNodeConfiger = forwardRef<NodeConfigerRef, ApproveNodeConfigerProps>((props, ref) => {
+
+    // 暴露内部的方法
+    useImperativeHandle(ref, () => ({
+        getOptions: () => {
+            return {fielda: 'xxx'}
+        }
+    }), []);
+
+        
     return (
         <div>
             <p>这是一个ApproveNodeConfiger</p>
         </div>
     );
-}
+});
+
+export default ApproveNodeConfiger 
 
 
 
