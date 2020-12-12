@@ -24,19 +24,23 @@ export interface PeddingNode {
  */
 export interface WorkflowEditorContextType {
     // 是否允许修改
-    readonly editable: boolean; 
+    readonly editable: boolean;
+    // 节点映射
+    readonly nodeMap: {
+        [key: string]: Node<any, any>;
+    }; 
     // 开始结点数据模型
     nodeModel?: NodeModel;
     // 刷新开始结点的数据模型
     readonly refreshNodeModel?: () => void;
     // 待追加的节点
-    peddingNode?: PeddingNode | undefined,
+    peddingNode?: PeddingNode,
     // 设置待追加的节点
-    readonly setPeddingNode?: (peddingNode: PeddingNode) => void,
-    // 节点映射
-    readonly nodeMap: {
-        [key: string]: Node<any, any>;
-    };
+    readonly setPeddingNode?: (peddingNode: PeddingNode | undefined) => void,
+    // 当前选中的节点
+    currentNode?: NodeModel,
+    // 设置当前选中的节点
+    readonly setCurrentNode?: (currentNode: NodeModel | undefined) => void
 }
 
 // 工作流编辑器上下文初始值

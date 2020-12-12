@@ -25,8 +25,8 @@ const InputNode: Node<InputNodeViewerProps, InputNodeConfigerProps> = {
             field2: "xx"
         }
     },
-    nodeConfiger: InputNodeConfiger,
     nodeViewer: InputNodeViewer,
+    nodeConfiger: InputNodeConfiger,
     validate: (nodeModel: NodeModel) => { 
         return {
             hasError: false,

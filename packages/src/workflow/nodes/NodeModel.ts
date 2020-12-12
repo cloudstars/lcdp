@@ -43,6 +43,10 @@ export default class NodeModel extends LinkedList<NodeModel>  {
         return this._options;
     }
 
+    set options(options: any) {
+        this._options = options;
+    }
+
     get branchs(): NodeModel[] {
         return this._branchs;
     }

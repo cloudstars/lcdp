@@ -19,19 +19,19 @@ export default function AppendNodeModal(props: AppendNodeModalProps) {
     const { nodeMap, peddingNode, setPeddingNode, refreshNodeModel } = useContext(WorkflowEditorContext);
     
     // const [position, setPosition] = useState(null);
-    const [isModalVisible, setModalVisible] = useState(!!peddingNode);
+    const [isVisible, setVisible] = useState(!!peddingNode);
 
     useEffect(() => {
-        setModalVisible(!!peddingNode);
+        setVisible(!!peddingNode);
     }, [peddingNode])
 
 
     const handleOk = () => {
-        setModalVisible(false);
+        setVisible(false);
     };
 
     const handleCancel = () => {
-        setModalVisible(false);
+        setVisible(false);
     };
 
     /**
@@ -41,6 +41,7 @@ export default function AppendNodeModal(props: AppendNodeModalProps) {
      */
     const appendNode = useCallback(
         (node: Node) => {
+            console.log('appendNode');
             let branchs = [];
             if (node.type == NodeType.BRANCH) {
                 let cn = (node as BranchNode).conditionNode;
@@ -49,27 +50,28 @@ export default function AppendNodeModal(props: AppendNodeModalProps) {
             }
             peddingNode!.nodeModel.append(new NodeModel(node.name, node.type, node.id, node.defaultOptions(), branchs));
             refreshNodeModel && refreshNodeModel();
+
+            setVisible(false);
+            setPeddingNode && setPeddingNode(undefined);
         },
         [peddingNode],
     )
 
 
     // 可被选择的节点列表
-    let nodesSelector = useMemo(
-        () => {
-            return getNodesSelector(nodeMap, appendNode);
-        }, 
-        [peddingNode]
-    );
+    let nodesSelector = useMemo(() => {
+        return getNodesSelector(nodeMap, appendNode);
+    }, [peddingNode]);
 
     
 
     return (
         <Modal
-            visible={isModalVisible}
+            visible={isVisible}
             closable={false}
             onOk={handleOk}
             onCancel={handleCancel}
+            footer={[]} 
         >
             <div className="node-append-selector">
                 {nodesSelector}

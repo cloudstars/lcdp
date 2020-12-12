@@ -19,8 +19,14 @@ export default function ExclusiveBranchNodeViewer(props: ExclusiveBranchNodeView
     return (
         <div className="flow-branch">
             {branchs && branchs.length > 0 &&
-                branchs.map((startNodeModel) => {
-                    return <NodeList startNodeModel={startNodeModel}></NodeList>
+                branchs.map((startNodeModel, index) => {
+                    let clearBorder = null;
+                    if (index == 0) {
+                        clearBorder = <div className="clear-left-border"></div>
+                    } else if (index == branchs.length - 1) {
+                        clearBorder = <div className="clear-right-border"></div>
+                    }
+                    return <NodeList startNodeModel={startNodeModel}>{clearBorder}</NodeList>
                 })
             }
         </div>

@@ -20,43 +20,6 @@ function PageEditor(props) {
     return (React__default['default'].createElement("div", null, "\u8FD9\u662F\u4E00\u4E2APageEditor"));
 }
 
-function styleInject(css, ref) {
-  if (ref === void 0) ref = {};
-  var insertAt = ref.insertAt;
-
-  if (!css || typeof document === 'undefined') {
-    return;
-  }
-
-  var head = document.head || document.getElementsByTagName('head')[0];
-  var style = document.createElement('style');
-  style.type = 'text/css';
-
-  if (insertAt === 'top') {
-    if (head.firstChild) {
-      head.insertBefore(style, head.firstChild);
-    } else {
-      head.appendChild(style);
-    }
-  } else {
-    head.appendChild(style);
-  }
-
-  if (style.styleSheet) {
-    style.styleSheet.cssText = css;
-  } else {
-    style.appendChild(document.createTextNode(css));
-  }
-}
-
-var css_248z = ".workflow-editor {\n  overflow: auto;\n}\n.workflow-editor-panel {\n  display: none;\n}\n\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy93b3JrZmxvdy9pbmRleC5sZXNzIiwiQ29uZmlnUGFuZWwubGVzcyIsInNyYy93b3JrZmxvdy9jb21wb25lbnRzL0NvbmZpZ1BhbmVsLmxlc3MiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBR0E7RUFDSSxjQUFBO0FDRko7QUNDQTtFQUNJLGFBQUE7QURDSiIsImZpbGUiOiJDb25maWdQYW5lbC5sZXNzIn0= */";
-styleInject(css_248z);
-
-function ConfigPanel(props) {
-    return (React__default['default'].createElement("div", { className: "workflow-editor-panel" },
-        React__default['default'].createElement("p", null, "\u8FD9\u662F\u4E00\u4E2AConfigPanel")));
-}
-
 var NodeType;
 (function (NodeType) {
     NodeType[NodeType["START"] = 0] = "START";
@@ -68,12 +31,28 @@ var NodeType;
 })(NodeType || (NodeType = {}));
 
 function StartNodeConfiger(props) {
+    const [form] = antd.Form.useForm();
+    const { options, onOptionsValuesChange } = props;
     return (React__default['default'].createElement("div", null,
-        React__default['default'].createElement("p", null, "\u8FD9\u662F\u4E00\u4E2AStartNodeConfiger")));
+        React__default['default'].createElement("p", null, "\u8FD9\u662F\u4E00\u4E2AStartNodeConfiger"),
+        React__default['default'].createElement("br", null),
+        React__default['default'].createElement(antd.Form, { layout: "vertical", form: form, onValuesChange: onOptionsValuesChange },
+            React__default['default'].createElement(antd.Form.Item, { name: "field1", label: "\u8BF7\u8F93\u5165\u7B2C\u4E00\u4E2A\u53C2\u6570", initialValue: options.field1 },
+                React__default['default'].createElement(antd.Input.TextArea, { rows: 1 })),
+            React__default['default'].createElement(antd.Form.Item, { name: "field2", label: "\u8BF7\u8F93\u5165\u7B2C\u4E8C\u4E2A\u53C2\u6570", initialValue: options.field2 },
+                React__default['default'].createElement(antd.Input.TextArea, { rows: 3 })))));
 }
 
 function StartNodeViewer(props) {
-    return (React__default['default'].createElement("div", null, "\u8FD9\u662F\u4E00\u4E2AStartNodeViewer"));
+    const { options } = props;
+    return (React__default['default'].createElement("div", null,
+        "\u8FD9\u662F\u4E00\u4E2AStartNodeViewer",
+        React__default['default'].createElement("br", null),
+        React__default['default'].createElement("br", null),
+        React__default['default'].createElement("p", null,
+            "\u7B2C\u4E00\u4E2A\u5B57\u6BB5\uFF1A",
+            options.field1),
+        React__default['default'].createElement("p", null, "\u7B2C\u4E8C\u4E2A\u5B57\u6BB5\uFF1A")));
 }
 
 const StartNode = {
@@ -84,11 +63,13 @@ const StartNode = {
     color: '#f3f3f3',
     defaultOptions: () => {
         return {
-            startForm: {}
+            startForm: {},
+            field1: 'xxx',
+            fiedl2: 'yyy'
         };
     },
-    nodeConfiger: StartNodeConfiger,
     nodeViewer: StartNodeViewer,
+    nodeConfiger: StartNodeConfiger,
     validate: (nodeModel) => {
         return {
             hasError: false,
@@ -119,8 +100,8 @@ const InputNode = {
             field2: "xx"
         };
     },
-    nodeConfiger: InputNodeConfiger,
     nodeViewer: InputNodeViewer,
+    nodeConfiger: InputNodeConfiger,
     validate: (nodeModel) => {
         return {
             hasError: false,
@@ -183,8 +164,8 @@ const ConditionNode = {
             fieldc: "xxx"
         };
     },
-    nodeConfiger: ConditionNodeConfiger,
     nodeViewer: ConditionNodeViewer,
+    nodeConfiger: ConditionNodeConfiger,
     validate: (nodeModel) => {
         return {
             hasError: false,
@@ -207,12 +188,12 @@ function AppendNodeButton(props) {
             nodeModel: nodeModel
         });
     }
-    return (React__default['default'].createElement("div", { className: "node-append-btn", onClick: handleClick },
+    return (React__default['default'].createElement("div", { className: "flow-node-addbtn", onClick: handleClick },
         React__default['default'].createElement(icons.PlusOutlined, null)));
 }
 
 function NodeList(props) {
-    let { startNodeModel } = props;
+    let { children, startNodeModel } = props;
     console.log('NodeList:' + startNodeModel);
     let reactNodes = [];
     for (let nodeModel of startNodeModel) {
@@ -222,27 +203,41 @@ function NodeList(props) {
             React__default['default'].createElement(NodeWrapper, Object.assign({}, props, { isBranch: isBranch, nodeModel: nm }))));
         reactNodes.push(reactNode);
     }
-    return React__default['default'].createElement(React__default['default'].Fragment, null, reactNodes);
+    return (React__default['default'].createElement("div", { className: "flow-list" },
+        children,
+        reactNodes));
 }
 function NodeWrapper(props) {
-    let { nodeMap, editable } = React.useContext(WorkflowEditorContext);
+    let { nodeMap, editable, setCurrentNode } = React.useContext(WorkflowEditorContext);
     let nodeModel = props.nodeModel;
     let node = nodeMap[nodeModel.subType];
     let NodeViewer = node.nodeViewer;
+    const onNodeItemClick = () => {
+        setCurrentNode && setCurrentNode(nodeModel);
+        console.log('current=' + nodeModel);
+    };
     return (React__default['default'].createElement(React__default['default'].Fragment, null,
-        React__default['default'].createElement("div", { className: "flow-node-box" },
-            !props.isBranch &&
-                React__default['default'].createElement("div", { className: "node-header", style: { backgroundColor: node.color } }, nodeModel.name),
-            React__default['default'].createElement("div", { className: "node-content" },
-                React__default['default'].createElement(NodeViewer, { key: nodeModel.id, dataModel: nodeModel }))),
+        props.isBranch ?
+            React__default['default'].createElement(NodeViewer, { key: nodeModel.id, dataModel: nodeModel }) :
+            React__default['default'].createElement("div", { className: "flow-node-item", onClick: onNodeItemClick },
+                React__default['default'].createElement("div", { className: "node-item-header", style: { backgroundColor: node.color } }, nodeModel.name),
+                React__default['default'].createElement("div", { className: "node-item-content" },
+                    React__default['default'].createElement(NodeViewer, { key: nodeModel.id, dataModel: nodeModel, options: nodeModel.options }))),
         editable && React__default['default'].createElement(AppendNodeButton, { nodeModel: nodeModel })));
 }
 
 function ExclusiveBranchNodeViewer(props) {
     let branchs = props.dataModel.branchs;
     return (React__default['default'].createElement("div", { className: "flow-branch" }, branchs && branchs.length > 0 &&
-        branchs.map((startNodeModel) => {
-            return React__default['default'].createElement(NodeList, { startNodeModel: startNodeModel });
+        branchs.map((startNodeModel, index) => {
+            let clearBorder = null;
+            if (index == 0) {
+                clearBorder = React__default['default'].createElement("div", { className: "clear-left-border" });
+            }
+            else if (index == branchs.length - 1) {
+                clearBorder = React__default['default'].createElement("div", { className: "clear-right-border" });
+            }
+            return React__default['default'].createElement(NodeList, { startNodeModel: startNodeModel }, clearBorder);
         })));
 }
 
@@ -257,8 +252,8 @@ const ExclusiveBranchNode = {
             fieldb: "xxxdfs"
         };
     },
-    nodeConfiger: ExclusiveBranchNodeConfiger,
     nodeViewer: ExclusiveBranchNodeViewer,
+    nodeConfiger: ExclusiveBranchNodeConfiger,
     validate: (nodeModel) => {
         return {
             hasError: false,
@@ -280,6 +275,43 @@ const contextInitValue = {
     }
 };
 const WorkflowEditorContext = React.createContext(contextInitValue);
+
+function ConfigPanel(props) {
+    const { nodeMap, currentNode, setCurrentNode, refreshNodeModel } = React.useContext(WorkflowEditorContext);
+    const [isVisible, setVisible] = React.useState(!!currentNode);
+    const [options, setOptions] = React.useState(currentNode ? currentNode.options : {});
+    React.useEffect(() => {
+        setVisible(!!currentNode);
+    }, [currentNode]);
+    const onClose = () => {
+        setVisible(false);
+        setCurrentNode && setCurrentNode(undefined);
+    };
+    const onSave = () => {
+        if (currentNode) {
+            let Node = nodeMap[currentNode.subType];
+            currentNode.options = options;
+            refreshNodeModel && refreshNodeModel();
+        }
+        setVisible(false);
+    };
+    const onOptionsValuesChange = (newOptionsValuesPart) => {
+        setOptions({ ...options, ...newOptionsValuesPart });
+    };
+    if (!currentNode) {
+        return React__default['default'].createElement(React__default['default'].Fragment, null);
+    }
+    else {
+        let NodeConfiger = nodeMap[currentNode.subType].nodeConfiger;
+        return (React__default['default'].createElement(antd.Drawer, { visible: isVisible, title: "Basic Drawer", placement: "right", closable: false, onClose: onClose, footer: footer(onClose, onSave) }, !!currentNode &&
+            React__default['default'].createElement(NodeConfiger, { options: currentNode.options, onOptionsValuesChange: onOptionsValuesChange })));
+    }
+}
+function footer(onCancel, onSave) {
+    return (React__default['default'].createElement("div", { style: { textAlign: 'right' } },
+        React__default['default'].createElement(antd.Button, { onClick: onCancel, style: { marginRight: 8 } }, "\u53D6\u6D88"),
+        React__default['default'].createElement(antd.Button, { onClick: onSave, type: "primary" }, "\u63D0\u4EA4")));
+}
 
 class LinkedList {
     constructor() {
@@ -356,6 +388,9 @@ class NodeModel extends LinkedList {
     get options() {
         return this._options;
     }
+    set options(options) {
+        this._options = options;
+    }
     get branchs() {
         return this._branchs;
     }
@@ -363,17 +398,18 @@ class NodeModel extends LinkedList {
 
 function AppendNodeModal(props) {
     const { nodeMap, peddingNode, setPeddingNode, refreshNodeModel } = React.useContext(WorkflowEditorContext);
-    const [isModalVisible, setModalVisible] = React.useState(!!peddingNode);
+    const [isVisible, setVisible] = React.useState(!!peddingNode);
     React.useEffect(() => {
-        setModalVisible(!!peddingNode);
+        setVisible(!!peddingNode);
     }, [peddingNode]);
     const handleOk = () => {
-        setModalVisible(false);
+        setVisible(false);
     };
     const handleCancel = () => {
-        setModalVisible(false);
+        setVisible(false);
     };
     const appendNode = React.useCallback((node) => {
+        console.log('appendNode');
         let branchs = [];
         if (node.type == NodeType.BRANCH) {
             let cn = node.conditionNode;
@@ -382,11 +418,13 @@ function AppendNodeModal(props) {
         }
         peddingNode.nodeModel.append(new NodeModel(node.name, node.type, node.id, node.defaultOptions(), branchs));
         refreshNodeModel && refreshNodeModel();
+        setVisible(false);
+        setPeddingNode && setPeddingNode(undefined);
     }, [peddingNode]);
     let nodesSelector = React.useMemo(() => {
         return getNodesSelector(nodeMap, appendNode);
     }, [peddingNode]);
-    return (React__default['default'].createElement(antd.Modal, { visible: isModalVisible, closable: false, onOk: handleOk, onCancel: handleCancel },
+    return (React__default['default'].createElement(antd.Modal, { visible: isVisible, closable: false, onOk: handleOk, onCancel: handleCancel, footer: [] },
         React__default['default'].createElement("div", { className: "node-append-selector" }, nodesSelector)));
 }
 function getNodesSelector(nodeMap, appendNode) {
@@ -412,17 +450,43 @@ function EndNode(props) {
             React__default['default'].createElement("div", { className: "workflowEnd" }))));
 }
 
-var css_248z$1 = ".workflow-editor-canvas {\n  display: block;\n}\n.workflow-editor-canvas .flow {\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n}\n.workflow-editor-canvas .flow .flow-node {\n  position: relative;\n}\n.workflow-editor-canvas .flow .flow-node::before {\n  position: absolute;\n  content: \"\";\n  width: 1px;\n  height: 100%;\n  background-color: #ccc;\n}\n.workflow-editor-canvas .flow .flow-node .flow-node-box {\n  width: 280px;\n  min-height: 128px;\n  border: 1px solid #ccc;\n  background: #fff;\n  border-radius: 6px;\n  /* 加了这个属性之后，才能遮住底部的1px背景线 */\n  position: relative;\n}\n.workflow-editor-canvas .flow .flow-node .flow-node-box .node-header {\n  height: 48px;\n  padding: 4px;\n  border-bottom: 1px solid #ccc;\n}\n.workflow-editor-canvas .flow .flow-node .flow-node-box .node-content {\n  padding: 6px;\n}\n.workflow-editor-canvas .flow .flow-node .node-append-btn {\n  padding: 20px;\n  text-align: center;\n}\n.workflow-editor-canvas .flow .flow-node .node-append-btn span {\n  position: relative;\n  border: 1px solid grey;\n  border-radius: 50%;\n  cursor: pointer;\n  outline: none;\n}\n.workflow-editor-canvas .flow .flow-branch {\n  display: flex;\n}\n.workflow-editor-canvas .flow .flow-end {\n  width: 56px;\n  height: 32px;\n  background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAHAAAABACAQAAABokzttAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAAmJLR0QA/4ePzL8AAAAHdElNRQfiCAkRLQN+59ZwAAAAfUlEQVRo3u3ZwQ2AIBAAQbFn69ce7qEumWng2BDC49Z1H1s7vz6AQIEC4c/WPfwH13Dg9Nudztv+DQqsE1gnsE5gncA6gXUC6wTWCawTWCewTmCdwLo1XRa8vWOYztv+BgXWCawTWCewTmCdwDqBdQLrBNYJrBNYJ7BOYN0Dws4H6yyzXK8AAAAldEVYdGRhdGU6Y3JlYXRlADIwMTgtMDgtMDlUMTc6NDU6MDMrMDg6MDBVMAcOAAAAJXRFWHRkYXRlOm1vZGlmeQAyMDE4LTA4LTA5VDE3OjQ1OjAzKzA4OjAwJG2/sgAAAABJRU5ErkJggg==) no-repeat;\n  background-size: 56px 32px;\n  margin: 30px auto;\n}\n.node-append-selector {\n  display: flex;\n}\n.node-append-selector .node-card {\n  border: 1px solid grey;\n  width: 60px;\n  height: 60px;\n  margin: 10px;\n}\n\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy93b3JrZmxvdy9jb21wb25lbnRzL0Zsb3dDYW52YXMubGVzcyIsIkZsb3dDYW52YXMubGVzcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQTtFQUNJLGNBQUE7QUNDSjtBREZBO0VBSVEsYUFBQTtFQUNBLHNCQUFBO0VBQ0EsbUJBQUE7QUNDUjtBRFBBO0VBVVksa0JBQUE7QUNBWjtBREVZO0VBQ0ksa0JBQUE7RUFDQSxXQUFBO0VBQ0EsVUFBQTtFQUNBLFlBQUE7RUFDQSxzQkFBQTtBQ0FoQjtBRGpCQTtFQXFCZ0IsWUFBQTtFQUNBLGlCQUFBO0VBQ0Esc0JBQUE7RUFDQSxnQkFBQTtFQUNBLGtCQUFBO0VDRGQsMkJBQTJCO0VER2Isa0JBQUE7QUNEaEI7QUQxQkE7RUE4Qm9CLFlBQUE7RUFDQSxZQUFBO0VBQ0EsNkJBQUE7QUNEcEI7QUQvQkE7RUFvQ29CLFlBQUE7QUNGcEI7QURsQ0E7RUF5Q2dCLGFBQUE7RUFDQSxrQkFBQTtBQ0poQjtBRHRDQTtFQTZDb0Isa0JBQUE7RUFDQSxzQkFBQTtFQUNBLGtCQUFBO0VBQ0EsZUFBQTtFQUNBLGFBQUE7QUNKcEI7QUQ3Q0E7RUF1RFksYUFBQTtBQ1BaO0FEaERBO0VBNkRZLFdBQUE7RUFDQSxZQUFBO0VBQ0EscWlCQUFBO0VBQ0EsMEJBQUE7RUFDQSxpQkFBQTtBQ1ZaO0FEZUE7RUFDSSxhQUFBO0FDYko7QURZQTtFQUlRLHNCQUFBO0VBQ0EsV0FBQTtFQUNBLFlBQUE7RUFDQSxZQUFBO0FDYlIiLCJmaWxlIjoiRmxvd0NhbnZhcy5sZXNzIn0= */";
-styleInject(css_248z$1);
-
 function FlowCanvas(props) {
     return (React__default['default'].createElement("div", { className: "workflow-editor-canvas" },
         React__default['default'].createElement(Flow, null),
         React__default['default'].createElement(AppendNodeModal, null)));
 }
 
-var css_248z$2 = ".workflow-editor {\n  overflow: auto;\n}\n\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy93b3JrZmxvdy9pbmRleC5sZXNzIiwiaW5kZXgubGVzcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFHQTtFQUNJLGNBQUE7QUNGSiIsImZpbGUiOiJpbmRleC5sZXNzIn0= */";
-styleInject(css_248z$2);
+function styleInject(css, ref) {
+  if (ref === void 0) ref = {};
+  var insertAt = ref.insertAt;
+
+  if (!css || typeof document === 'undefined') {
+    return;
+  }
+
+  var head = document.head || document.getElementsByTagName('head')[0];
+  var style = document.createElement('style');
+  style.type = 'text/css';
+
+  if (insertAt === 'top') {
+    if (head.firstChild) {
+      head.insertBefore(style, head.firstChild);
+    } else {
+      head.appendChild(style);
+    }
+  } else {
+    head.appendChild(style);
+  }
+
+  if (style.styleSheet) {
+    style.styleSheet.cssText = css;
+  } else {
+    style.appendChild(document.createTextNode(css));
+  }
+}
+
+var css_248z = ".workflow-editor {\n  overflow: auto;\n}\n.workflow-editor-canvas {\n  display: block;\n}\n.workflow-editor-canvas .flow-list {\n  position: relative;\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n}\n.workflow-editor-canvas .flow-list::before {\n  position: absolute;\n  content: \"\";\n  width: 1px;\n  height: 100%;\n  top: 0;\n  left: 50%;\n  background-color: #ccc;\n}\n.workflow-editor-canvas .flow-list .flow-node {\n  position: relative;\n  padding: 20px 50px 0 50px;\n}\n.workflow-editor-canvas .flow-list .flow-node + .flow-node {\n  padding-top: 0;\n}\n.workflow-editor-canvas .flow-list .flow-node-item {\n  position: relative;\n  width: 280px;\n}\n.workflow-editor-canvas .flow-list .flow-node-item .node-item-header {\n  height: 50px;\n  background-color: silver;\n}\n.workflow-editor-canvas .flow-list .flow-node-item .node-item-content {\n  overflow: hidden;\n  height: 80px;\n  background-color: snow;\n}\n.workflow-editor-canvas .flow-list .flow-node-addbtn {\n  position: relative;\n  padding: 20px 0;\n}\n.workflow-editor-canvas .flow-list .flow-node-addbtn > button {\n  width: 20px;\n  height: 20px;\n  display: block;\n  margin: 0 auto;\n  border-radius: 100%;\n  border: 1px solid gray;\n}\n.workflow-editor-canvas .flow-list .flow-branch {\n  display: inline-flex;\n  position: relative;\n  /* 这个参数用于遮住底部的1px背景  */\n  background-color: #fff;\n}\n.workflow-editor-canvas .flow-list .flow-branch > .flow-list {\n  position: relative;\n  border-top: 1px solid #ccc;\n  border-bottom: 1px solid #ccc;\n}\n.workflow-editor-canvas .flow-list .clear-left-border,\n.workflow-editor-canvas .flow-list .clear-right-border {\n  position: absolute;\n  left: 0;\n  top: 0;\n  width: 100%;\n  height: 100%;\n}\n.workflow-editor-canvas .flow-list .clear-left-border::before,\n.workflow-editor-canvas .flow-list .clear-left-border::after,\n.workflow-editor-canvas .flow-list .clear-right-border::before,\n.workflow-editor-canvas .flow-list .clear-right-border::after {\n  content: \"\";\n  position: absolute;\n  width: 50%;\n  background: #fff;\n  height: 10px;\n}\n.workflow-editor-canvas .flow-list .clear-left-border::before {\n  left: 0;\n  top: -5px;\n}\n.workflow-editor-canvas .flow-list .clear-left-border::after {\n  left: 0;\n  bottom: -5px;\n}\n.workflow-editor-canvas .flow-list .clear-right-border::before {\n  right: -2px;\n  top: -5px;\n}\n.workflow-editor-canvas .flow-list .clear-right-border::after {\n  right: -2px;\n  bottom: -5px;\n}\n.workflow-editor-canvas .flow-end {\n  width: 56px;\n  height: 32px;\n  background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAHAAAABACAQAAABokzttAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAAmJLR0QA/4ePzL8AAAAHdElNRQfiCAkRLQN+59ZwAAAAfUlEQVRo3u3ZwQ2AIBAAQbFn69ce7qEumWng2BDC49Z1H1s7vz6AQIEC4c/WPfwH13Dg9Nudztv+DQqsE1gnsE5gncA6gXUC6wTWCawTWCewTmCdwLo1XRa8vWOYztv+BgXWCawTWCewTmCdwDqBdQLrBNYJrBNYJ7BOYN0Dws4H6yyzXK8AAAAldEVYdGRhdGU6Y3JlYXRlADIwMTgtMDgtMDlUMTc6NDU6MDMrMDg6MDBVMAcOAAAAJXRFWHRkYXRlOm1vZGlmeQAyMDE4LTA4LTA5VDE3OjQ1OjAzKzA4OjAwJG2/sgAAAABJRU5ErkJggg==) no-repeat;\n  background-size: 56px 32px;\n  margin: 30px auto;\n}\n.node-append-selector {\n  display: flex;\n}\n.node-append-selector .node-card {\n  border: 1px solid grey;\n  width: 60px;\n  height: 60px;\n  margin: 10px;\n}\n.workflow-editor-panel {\n  display: none;\n}\n\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy93b3JrZmxvdy9Xb3JrZmxvd0VkaXRvci5sZXNzIiwiaW5kZXgubGVzcyIsInNyYy93b3JrZmxvdy9jb21wb25lbnRzL0Zsb3dDYW52YXMubGVzcyIsInNyYy93b3JrZmxvdy9jb21wb25lbnRzL0NvbmZpZ2VyUGFuZWwubGVzcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQTtFQUNJLGNBQUE7QUNDSjtBQ0FBO0VBQ0ksY0FBQTtBREVKO0FDSEE7RUFJUSxrQkFBQTtFQUNBLGFBQUE7RUFDQSxzQkFBQTtFQUNBLG1CQUFBO0FERVI7QUNBUTtFQUNJLGtCQUFBO0VBQ0EsV0FBQTtFQUNBLFVBQUE7RUFDQSxZQUFBO0VBQ0EsTUFBQTtFQUNBLFNBQUE7RUFDQSxzQkFBQTtBREVaO0FDbEJBO0VBb0JZLGtCQUFBO0VBQ0EseUJBQUE7QURDWjtBQ0NZO0VBQ0ksY0FBQTtBRENoQjtBQ3pCQTtFQTZCWSxrQkFBQTtFQUNBLFlBQUE7QUREWjtBQzdCQTtFQWlDZ0IsWUFBQTtFQUNBLHdCQUFBO0FERGhCO0FDakNBO0VBc0NnQixnQkFBQTtFQUNBLFlBQUE7RUFDQSxzQkFBQTtBREZoQjtBQ3RDQTtFQTZDWSxrQkFBQTtFQUNBLGVBQUE7QURKWjtBQ01ZO0VBQ0ksV0FBQTtFQUNBLFlBQUE7RUFDQSxjQUFBO0VBQ0EsY0FBQTtFQUNBLG1CQUFBO0VBQ0Esc0JBQUE7QURKaEI7QUNsREE7RUEyRFksb0JBQUE7RUFDQSxrQkFBQTtFRE5WLHNCQUFzQjtFQ09aLHNCQUFBO0FETFo7QUNPWTtFQUNJLGtCQUFBO0VBQ0EsMEJBQUE7RUFDQSw2QkFBQTtBRExoQjtBQzdEQTs7RUF3RVksa0JBQUE7RUFDQSxPQUFBO0VBQ0EsTUFBQTtFQUNBLFdBQUE7RUFDQSxZQUFBO0FEUFo7QUNyRUE7Ozs7RUFtRlksV0FBQTtFQUNBLGtCQUFBO0VBQ0EsVUFBQTtFQUNBLGdCQUFBO0VBQ0EsWUFBQTtBRFJaO0FDL0VBO0VBMkZZLE9BQUE7RUFDQSxTQUFBO0FEVFo7QUNuRkE7RUFnR1ksT0FBQTtFQUNBLFlBQUE7QURWWjtBQ3ZGQTtFQXFHWSxXQUFBO0VBQ0EsU0FBQTtBRFhaO0FDM0ZBO0VBMEdZLFdBQUE7RUFDQSxZQUFBO0FEWlo7QUMvRkE7RUFpSFEsV0FBQTtFQUNBLFlBQUE7RUFDQSxxaUJBQUE7RUFDQSwwQkFBQTtFQUNBLGlCQUFBO0FEZlI7QUNtQkE7RUFDSSxhQUFBO0FEakJKO0FDZ0JBO0VBSVEsc0JBQUE7RUFDQSxXQUFBO0VBQ0EsWUFBQTtFQUNBLFlBQUE7QURqQlI7QUU5R0E7RUFDSSxhQUFBO0FGZ0hKIiwiZmlsZSI6ImluZGV4Lmxlc3MifQ== */";
+styleInject(css_248z);
 
 function WorkflowEditor(props) {
     let { startNodeModel } = props;
@@ -430,7 +494,10 @@ function WorkflowEditor(props) {
     let initNodeModel = React.useMemo(() => startNodeModel || getDefaultStartNodeModel(nodeMap), []);
     const [nodeModel, setNodeModel] = React.useState(initNodeModel);
     const [peddingNode, setPeddingNode] = React.useState();
-    let contextValue = React.useMemo(() => getContextValue(props, nodeMap, nodeModel, setNodeModel, peddingNode, setPeddingNode), [peddingNode]);
+    const [currentNode, setCurrentNode] = React.useState();
+    let contextValue = React.useMemo(() => {
+        return getContextValue(props, nodeMap, nodeModel, setNodeModel, peddingNode, setPeddingNode, currentNode, setCurrentNode);
+    }, [peddingNode, currentNode]);
     return (React__default['default'].createElement(WorkflowEditorContext.Provider, { value: contextValue },
         React__default['default'].createElement("div", { className: "workflow-editor" },
             React__default['default'].createElement(FlowCanvas, null),
@@ -458,7 +525,7 @@ function getDefaultStartNodeModel(nodeMap) {
     }
     throw new Error("流程初始化出错，不存在开始节点！！！");
 }
-function getContextValue(props, nodeMap, nodeModel, setNodeModel, peddingNode, setPeddingNode) {
+function getContextValue(props, nodeMap, nodeModel, setNodeModel, peddingNode, setPeddingNode, currentNode, setCurrentNode) {
     return {
         editable: props.editable || true,
         nodeMap: nodeMap,
@@ -471,6 +538,10 @@ function getContextValue(props, nodeMap, nodeModel, setNodeModel, peddingNode, s
         peddingNode: peddingNode,
         setPeddingNode: (peddingNode) => {
             setPeddingNode(peddingNode);
+        },
+        currentNode: currentNode,
+        setCurrentNode: (currentNode) => {
+            setCurrentNode(currentNode);
         }
     };
 }

@@ -21,11 +21,13 @@ const StartNode: Node<StartNodeViewerProps, StartNodeConfigerProps> = {
     color: '#f3f3f3',
     defaultOptions: () => {
         return {
-            startForm: {}
+            startForm: {},
+            field1: 'xxx',
+            fiedl2: 'yyy'
         }
     },
-    nodeConfiger: StartNodeConfiger,
     nodeViewer: StartNodeViewer,
+    nodeConfiger: StartNodeConfiger,
     validate: (nodeModel: NodeModel) => { 
         return {
             hasError: false,

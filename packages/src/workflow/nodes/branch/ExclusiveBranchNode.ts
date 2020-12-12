@@ -28,8 +28,8 @@ const ExclusiveBranchNode: BranchNode<ExclusiveBranchNodeViewerProps, ExclusiveB
             fieldb: "xxxdfs"
         }
     },
-    nodeConfiger: ExclusiveBranchNodeConfiger,
     nodeViewer: ExclusiveBranchNodeViewer,
+    nodeConfiger: ExclusiveBranchNodeConfiger,
     validate: (nodeModel: NodeModel) => { 
         return {
             hasError: false,

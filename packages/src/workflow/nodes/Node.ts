@@ -65,12 +65,23 @@ export interface BranchNode<V extends NodeViewerProps = NodeViewerProps, C exten
  * 节点展示卡属性
  */
 export interface NodeViewerProps {
-    dataModel: NodeModel; // 节点的数据模型
+    // 节点的数据模型  
+    dataModel: NodeModel;  
+    
+    // 节点的数据模型选择
+    options: any;
 }
 
 /**
  * 节点配置器属性
  */
 export interface NodeConfigerProps {
-    dataModel: NodeModel; // 节点的数据模型
+    // 节点的数据模型选择
+    options: any;
+    
+    /**
+     * 数据模型选项的值变更事件
+     * @param newOptionsValuesPart 变更的部分数据
+     */ 
+    onOptionsValuesChange: (newOptionsValuesPart: any) => void;
 }

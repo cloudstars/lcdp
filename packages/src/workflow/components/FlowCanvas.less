@@ -1,70 +1,123 @@
+@import "../../variables.less";
+
 .workflow-editor-canvas {
     display: block;
 
-    .flow {
+    .flow-list {
+        position: relative;
         display: flex;
         flex-direction: column;
         align-items: center;
 
+        &::before {
+            position: absolute;
+            content: "";
+            width: 1px;
+            height: 100%;
+            top: 0;
+            left: 50%;
+            background-color: #ccc;
+        }    
 
         .flow-node {
             position: relative;
-            
-            &::before {
-                position: absolute;
-                content: "";
-                width: 1px;
-                height: 100%;
-                background-color: #ccc;
-            }
-
-            .flow-node-box {
-                width: 280px;
-                min-height: 128px;
-                border: 1px solid #ccc;
-                background: #fff;
-                border-radius: 6px;
-                /* 加了这个属性之后，才能遮住底部的1px背景线 */
-                position: relative;
-
-                .node-header {
-                    height: 48px;
-                    padding: 4px;
-                    border-bottom: 1px solid #ccc;
-                }
+            padding: 20px 50px 0 50px;
     
-                .node-content {
-                    padding: 6px;
-                }
-            }
-
-            .node-append-btn {
-                padding: 20px;
-                text-align: center;
-
-                span {
-                    position: relative;
-                    border: 1px solid grey;
-                    border-radius: 50%;
-                    cursor: pointer;
-                    outline: none;
-                }              
+            & + .flow-node {
+                padding-top: 0;
             }
         }
+    
+        .flow-node-item {
+            position: relative;
+            width: 280px;
+
+            .node-item-header {
+                height: 50px;
+                background-color: silver;
+            }
         
+            .node-item-content {
+                overflow: hidden;
+                height: 80px;
+                background-color: snow;
+            }
+        }
+    
+        .flow-node-addbtn {
+            position: relative;
+            padding: 20px 0;
+
+            & > button {
+                width: 20px;
+                height: 20px;
+                display: block;
+                margin: 0 auto;
+                border-radius: 100%;
+                border: 1px solid gray;
+            }
+        }
+
         .flow-branch {
-            display: flex;
+            display: inline-flex;
+            position: relative; /* 这个参数用于遮住底部的1px背景  */
+            background-color: #fff;
 
-            
+            & > .flow-list {
+                position: relative;
+                border-top: 1px solid #ccc;
+                border-bottom: 1px solid #ccc;
+            }
         }
 
-        .flow-end {
-            width: 56px;
-            height: 32px;
-            background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAHAAAABACAQAAABokzttAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAAmJLR0QA/4ePzL8AAAAHdElNRQfiCAkRLQN+59ZwAAAAfUlEQVRo3u3ZwQ2AIBAAQbFn69ce7qEumWng2BDC49Z1H1s7vz6AQIEC4c/WPfwH13Dg9Nudztv+DQqsE1gnsE5gncA6gXUC6wTWCawTWCewTmCdwLo1XRa8vWOYztv+BgXWCawTWCewTmCdwDqBdQLrBNYJrBNYJ7BOYN0Dws4H6yyzXK8AAAAldEVYdGRhdGU6Y3JlYXRlADIwMTgtMDgtMDlUMTc6NDU6MDMrMDg6MDBVMAcOAAAAJXRFWHRkYXRlOm1vZGlmeQAyMDE4LTA4LTA5VDE3OjQ1OjAzKzA4OjAwJG2/sgAAAABJRU5ErkJggg==) no-repeat;
-            background-size: 56px 32px;
-            margin: 30px auto;
+        .clear-left-border, 
+        .clear-right-border {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
         }
+
+        .clear-left-border::before, 
+        .clear-left-border::after, 
+        .clear-right-border::before,
+        .clear-right-border::after  {
+            content: "";
+            position: absolute;
+            width: 50%;
+            background: #fff;
+            height: 10px;
+        }
+
+        .clear-left-border::before  {
+            left: 0;
+            top: -5px;
+        }
+
+        .clear-left-border::after {
+            left: 0;
+            bottom: -5px;
+        }
+
+        .clear-right-border::before  {
+            right: -2px;
+            top: -5px;
+        }
+
+        .clear-right-border::after {
+            right: -2px;
+            bottom: -5px;
+        }
+    }
+
+
+    .flow-end {
+        width: 56px;
+        height: 32px;
+        background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAHAAAABACAQAAABokzttAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAAmJLR0QA/4ePzL8AAAAHdElNRQfiCAkRLQN+59ZwAAAAfUlEQVRo3u3ZwQ2AIBAAQbFn69ce7qEumWng2BDC49Z1H1s7vz6AQIEC4c/WPfwH13Dg9Nudztv+DQqsE1gnsE5gncA6gXUC6wTWCawTWCewTmCdwLo1XRa8vWOYztv+BgXWCawTWCewTmCdwDqBdQLrBNYJrBNYJ7BOYN0Dws4H6yyzXK8AAAAldEVYdGRhdGU6Y3JlYXRlADIwMTgtMDgtMDlUMTc6NDU6MDMrMDg6MDBVMAcOAAAAJXRFWHRkYXRlOm1vZGlmeQAyMDE4LTA4LTA5VDE3OjQ1OjAzKzA4OjAwJG2/sgAAAABJRU5ErkJggg==) no-repeat;
+        background-size: 56px 32px;
+        margin: 30px auto;
     }
 }
 

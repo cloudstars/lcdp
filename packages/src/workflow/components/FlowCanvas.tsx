@@ -3,8 +3,6 @@ import React from 'react';
 import AppendNodeModal from './append/AppendNodeModal';
 import Flow from './Flow';
 
-import "./FlowCanvas.less";
-
 /**
  * 流程画布属性
  */

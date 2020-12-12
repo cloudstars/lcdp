@@ -1,5 +1,5 @@
 import React, { Dispatch, SetStateAction, useMemo, useState } from 'react'
-import ConfigPanel from './components/ConfigPanel';
+import ConfigPanel from './components/ConfigerPanel';
 import FlowCanvas from './components/FlowCanvas';
 import { WorkflowEditorContext, contextInitValue, PeddingNode } from './WorkflowEditorContext';
 import Node, { NodeType } from './nodes/Node';
@@ -35,12 +35,18 @@ export default function WorkflowEditor(props: WorkflowEditorProps) {
 
     // 待追加的节点(状态)
     const [peddingNode, setPeddingNode] = useState<PeddingNode>();
+
+    // 当前选中的节点(状态)
+    const [currentNode, setCurrentNode] = useState<NodeModel>();
     
     // 获取上下文的值
-    let contextValue = useMemo(() => getContextValue(props, nodeMap, nodeModel!, setNodeModel, peddingNode, setPeddingNode), [peddingNode]);
+    let contextValue = useMemo(() => {
+        return getContextValue(props, nodeMap, nodeModel!, setNodeModel, peddingNode, setPeddingNode, currentNode, setCurrentNode)
+    }, [peddingNode, currentNode]);
 
 
     return (
+        
         <WorkflowEditorContext.Provider value={contextValue}>
             <div className="workflow-editor">
                 <FlowCanvas></FlowCanvas>
@@ -100,6 +106,8 @@ function getContextValue(
     setNodeModel: Dispatch<SetStateAction<NodeModel>>,
     peddingNode: PeddingNode | undefined,
     setPeddingNode: Dispatch<SetStateAction<PeddingNode | undefined>>,
+    currentNode: NodeModel | undefined,
+    setCurrentNode: Dispatch<SetStateAction<NodeModel | undefined>>,
 ) {
     return {
         editable: props.editable || true,
@@ -111,8 +119,12 @@ function getContextValue(
             });
         },
         peddingNode: peddingNode,
-        setPeddingNode: (peddingNode: PeddingNode) => {
+        setPeddingNode: (peddingNode: PeddingNode | undefined) => {
             setPeddingNode(peddingNode);
+        },
+        currentNode: currentNode,
+        setCurrentNode: (currentNode: NodeModel |undefined) => {
+            setCurrentNode(currentNode);
         }
     }
 }

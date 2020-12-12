@@ -25,8 +25,8 @@ const ConditionNode: Node<ConditionNodeViewerProps, ConditionNodeConfigerProps> 
             fieldc: "xxx"
         }
     },
-    nodeConfiger: ConditionNodeConfiger,
     nodeViewer: ConditionNodeViewer,
+    nodeConfiger: ConditionNodeConfiger,
     validate: (nodeModel: NodeModel) => { 
         return {
             hasError: false,

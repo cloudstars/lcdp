@@ -19,7 +19,7 @@ export default function AppendNodeButton(props: {nodeModel: NodeModel}) {
     }
 
     return (
-        <div className="node-append-btn" onClick={handleClick}>
+        <div className="flow-node-addbtn" onClick={handleClick}>
             <PlusOutlined />
         </div>
     );

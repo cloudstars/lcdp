@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { Children, PropsWithChildren, ReactNode, useContext } from 'react';
 import NodeModel from '../nodes/NodeModel';
 import { WorkflowEditorContext } from '../WorkflowEditorContext';
 import AppendNodeButton from './append/AppendNodeButton';
@@ -19,8 +19,8 @@ export interface NodeListProps {
  * 
  * @param props
  */
-export default function NodeList(props: NodeListProps) {
-    let { startNodeModel } = props;
+export default function NodeList(props: PropsWithChildren<NodeListProps>) {
+    let { children, startNodeModel } = props;
     console.log('NodeList:' + startNodeModel);
 
     // 迭代生成全部的节点结构
@@ -36,7 +36,12 @@ export default function NodeList(props: NodeListProps) {
         reactNodes.push(reactNode);
     };
 
-    return <>{reactNodes}</>;
+    return (
+        <div className="flow-list">
+            {children}
+            {reactNodes}
+        </div>
+    );
 }
 
 /**
@@ -45,20 +50,27 @@ export default function NodeList(props: NodeListProps) {
  * @param props 
  */
 function NodeWrapper(props: NodeListProps & {nodeModel: NodeModel, isBranch: boolean}) {
-    let { nodeMap, editable } = useContext(WorkflowEditorContext);
+    let { nodeMap, editable, setCurrentNode } = useContext(WorkflowEditorContext);
     let nodeModel = props.nodeModel;
     let node = nodeMap[nodeModel.subType];
     let NodeViewer = node.nodeViewer;
+
+    const onNodeItemClick = () => {
+        setCurrentNode && setCurrentNode(nodeModel);
+        console.log('current=' + nodeModel);
+    };
+
     return (
         <>
-            <div className="flow-node-box">
-                {!props.isBranch &&
-                    <div className="node-header" style={{backgroundColor: node.color}}>{nodeModel.name}</div>
-                }
-                <div className="node-content">
-                    <NodeViewer key={nodeModel.id} dataModel={nodeModel}></NodeViewer>
+            {props.isBranch ?
+                <NodeViewer key={nodeModel.id} dataModel={nodeModel}></NodeViewer> : 
+                <div className="flow-node-item" onClick={onNodeItemClick}>
+                    <div className="node-item-header" style={{backgroundColor: node.color}}>{nodeModel.name}</div>
+                    <div className="node-item-content">
+                        <NodeViewer key={nodeModel.id} dataModel={nodeModel} options={nodeModel.options}></NodeViewer>
+                    </div>
                 </div>
-            </div>
+            }
             {editable && <AppendNodeButton nodeModel={nodeModel}></AppendNodeButton>}
         </>
     );
