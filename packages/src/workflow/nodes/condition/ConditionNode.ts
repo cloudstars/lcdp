@@ -4,7 +4,7 @@ import ConditionNodeConfiger, { ConditionNodeConfigerProps } from "./ConditionNo
 import ConditionNodeViewer, { ConditionNodeViewerProps } from "./ConditionNodeViewer";
 
 /**
- * 条件节点配置
+ * 条件节点配置项
  */
 export interface ConditionNodeOptions {
     fieldc: string;
@@ -14,7 +14,10 @@ export interface ConditionNodeOptions {
 /**
  * 条件节点
  */
-const ConditionNode: Node<ConditionNodeViewerProps, ConditionNodeConfigerProps> = {
+const ConditionNode: Node<
+    ConditionNodeViewerProps, 
+    ConditionNodeConfigerProps
+> = {
     type: NodeType.CONDITION,
     id: 'default.condition',
     selectable: false,

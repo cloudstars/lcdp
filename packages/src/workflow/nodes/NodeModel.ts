@@ -3,7 +3,7 @@ import LinkedList from "../../common/LinkedList";
 import { NodeType } from "./Node";
 
 /**
- * 流程节点数据模型
+ * 节点数据模型（第一个节点代表了整个流程）
  */
 export default class NodeModel extends LinkedList<NodeModel>  {
     private _id: string; // 节点ID

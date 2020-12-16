@@ -9,7 +9,7 @@ import ExclusiveBranchNode from "./nodes/branch/ExclusiveBranchNode";
 
 
 /**
- * 待追加的节点（将在期后添加新的节点）
+ * 待追加的节点（将在此节点后添加新的节点）
  */
 export interface PeddingNode {
     nodeModel: NodeModel/*,

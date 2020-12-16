@@ -12,8 +12,23 @@ function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'defau
 
 var React__default = /*#__PURE__*/_interopDefaultLegacy(React);
 
+function InputCanvas(props) {
+    return (React__default['default'].createElement("div", null, "\u8FD9\u662F\u4E00\u4E2AInputCanvas"));
+}
+
+function InputConfiger(props) {
+    return (React__default['default'].createElement("div", null, "\u8FD9\u662F\u4E00\u4E2AInputConfiger"));
+}
+
+function InputSelector(props) {
+    return (React__default['default'].createElement("div", null, "\u8FD9\u662F\u4E00\u4E2AInputSelector"));
+}
+
 function FormEditor(props) {
-    return (React__default['default'].createElement("div", null, "\u8FD9\u662F\u4E00\u4E2AFormEditor"));
+    return (React__default['default'].createElement("div", null,
+        React__default['default'].createElement(InputSelector, null),
+        React__default['default'].createElement(InputCanvas, null),
+        React__default['default'].createElement(InputConfiger, null)));
 }
 
 function PageEditor(props) {
@@ -480,38 +495,6 @@ function FlowCanvas(props) {
         React__default['default'].createElement(Flow, null),
         React__default['default'].createElement(AppendNodeModal, null)));
 }
-
-function styleInject(css, ref) {
-  if (ref === void 0) ref = {};
-  var insertAt = ref.insertAt;
-
-  if (!css || typeof document === 'undefined') {
-    return;
-  }
-
-  var head = document.head || document.getElementsByTagName('head')[0];
-  var style = document.createElement('style');
-  style.type = 'text/css';
-
-  if (insertAt === 'top') {
-    if (head.firstChild) {
-      head.insertBefore(style, head.firstChild);
-    } else {
-      head.appendChild(style);
-    }
-  } else {
-    head.appendChild(style);
-  }
-
-  if (style.styleSheet) {
-    style.styleSheet.cssText = css;
-  } else {
-    style.appendChild(document.createTextNode(css));
-  }
-}
-
-var css_248z = ".workflow-editor {\n  overflow: auto;\n}\n.workflow-editor-canvas {\n  display: block;\n}\n.workflow-editor-canvas .flow-list {\n  position: relative;\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n}\n.workflow-editor-canvas .flow-list::before {\n  position: absolute;\n  content: \"\";\n  width: 1px;\n  height: 100%;\n  top: 0;\n  left: 50%;\n  background-color: #ccc;\n}\n.workflow-editor-canvas .flow-list .flow-node {\n  position: relative;\n  padding: 20px 50px 0 50px;\n}\n.workflow-editor-canvas .flow-list .flow-node + .flow-node {\n  padding-top: 0;\n}\n.workflow-editor-canvas .flow-list .flow-node-item {\n  position: relative;\n  width: 280px;\n}\n.workflow-editor-canvas .flow-list .flow-node-item .node-item-header {\n  height: 50px;\n  background-color: silver;\n}\n.workflow-editor-canvas .flow-list .flow-node-item .node-item-content {\n  overflow: hidden;\n  height: 80px;\n  background-color: snow;\n}\n.workflow-editor-canvas .flow-list .flow-node-addbtn {\n  position: relative;\n  padding: 20px 0;\n}\n.workflow-editor-canvas .flow-list .flow-node-addbtn > button {\n  width: 20px;\n  height: 20px;\n  display: block;\n  margin: 0 auto;\n  border-radius: 100%;\n  border: 1px solid gray;\n}\n.workflow-editor-canvas .flow-list .flow-branch {\n  display: inline-flex;\n  position: relative;\n  /* 这个参数用于遮住底部的1px背景  */\n  background-color: #fff;\n}\n.workflow-editor-canvas .flow-list .flow-branch > .flow-list {\n  position: relative;\n  border-top: 1px solid #ccc;\n  border-bottom: 1px solid #ccc;\n}\n.workflow-editor-canvas .flow-list .clear-left-border,\n.workflow-editor-canvas .flow-list .clear-right-border {\n  position: absolute;\n  left: 0;\n  top: 0;\n  width: 100%;\n  height: 100%;\n}\n.workflow-editor-canvas .flow-list .clear-left-border::before,\n.workflow-editor-canvas .flow-list .clear-left-border::after,\n.workflow-editor-canvas .flow-list .clear-right-border::before,\n.workflow-editor-canvas .flow-list .clear-right-border::after {\n  content: \"\";\n  position: absolute;\n  width: 50%;\n  background: #fff;\n  height: 10px;\n}\n.workflow-editor-canvas .flow-list .clear-left-border::before {\n  left: 0;\n  top: -5px;\n}\n.workflow-editor-canvas .flow-list .clear-left-border::after {\n  left: 0;\n  bottom: -5px;\n}\n.workflow-editor-canvas .flow-list .clear-right-border::before {\n  right: -2px;\n  top: -5px;\n}\n.workflow-editor-canvas .flow-list .clear-right-border::after {\n  right: -2px;\n  bottom: -5px;\n}\n.workflow-editor-canvas .flow-end {\n  width: 56px;\n  height: 32px;\n  background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAHAAAABACAQAAABokzttAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAAmJLR0QA/4ePzL8AAAAHdElNRQfiCAkRLQN+59ZwAAAAfUlEQVRo3u3ZwQ2AIBAAQbFn69ce7qEumWng2BDC49Z1H1s7vz6AQIEC4c/WPfwH13Dg9Nudztv+DQqsE1gnsE5gncA6gXUC6wTWCawTWCewTmCdwLo1XRa8vWOYztv+BgXWCawTWCewTmCdwDqBdQLrBNYJrBNYJ7BOYN0Dws4H6yyzXK8AAAAldEVYdGRhdGU6Y3JlYXRlADIwMTgtMDgtMDlUMTc6NDU6MDMrMDg6MDBVMAcOAAAAJXRFWHRkYXRlOm1vZGlmeQAyMDE4LTA4LTA5VDE3OjQ1OjAzKzA4OjAwJG2/sgAAAABJRU5ErkJggg==) no-repeat;\n  background-size: 56px 32px;\n  margin: 30px auto;\n}\n.node-append-selector {\n  display: flex;\n}\n.node-append-selector .node-card {\n  border: 1px solid grey;\n  width: 60px;\n  height: 60px;\n  margin: 10px;\n}\n.workflow-editor-panel {\n  display: none;\n}\n\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy93b3JrZmxvdy9Xb3JrZmxvd0VkaXRvci5sZXNzIiwiaW5kZXgubGVzcyIsInNyYy93b3JrZmxvdy9jb21wb25lbnRzL0Zsb3dDYW52YXMubGVzcyIsInNyYy93b3JrZmxvdy9jb21wb25lbnRzL0NvbmZpZ2VyUGFuZWwubGVzcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQTtFQUNJLGNBQUE7QUNDSjtBQ0FBO0VBQ0ksY0FBQTtBREVKO0FDSEE7RUFJUSxrQkFBQTtFQUNBLGFBQUE7RUFDQSxzQkFBQTtFQUNBLG1CQUFBO0FERVI7QUNBUTtFQUNJLGtCQUFBO0VBQ0EsV0FBQTtFQUNBLFVBQUE7RUFDQSxZQUFBO0VBQ0EsTUFBQTtFQUNBLFNBQUE7RUFDQSxzQkFBQTtBREVaO0FDbEJBO0VBb0JZLGtCQUFBO0VBQ0EseUJBQUE7QURDWjtBQ0NZO0VBQ0ksY0FBQTtBRENoQjtBQ3pCQTtFQTZCWSxrQkFBQTtFQUNBLFlBQUE7QUREWjtBQzdCQTtFQWlDZ0IsWUFBQTtFQUNBLHdCQUFBO0FERGhCO0FDakNBO0VBc0NnQixnQkFBQTtFQUNBLFlBQUE7RUFDQSxzQkFBQTtBREZoQjtBQ3RDQTtFQTZDWSxrQkFBQTtFQUNBLGVBQUE7QURKWjtBQ01ZO0VBQ0ksV0FBQTtFQUNBLFlBQUE7RUFDQSxjQUFBO0VBQ0EsY0FBQTtFQUNBLG1CQUFBO0VBQ0Esc0JBQUE7QURKaEI7QUNsREE7RUEyRFksb0JBQUE7RUFDQSxrQkFBQTtFRE5WLHNCQUFzQjtFQ09aLHNCQUFBO0FETFo7QUNPWTtFQUNJLGtCQUFBO0VBQ0EsMEJBQUE7RUFDQSw2QkFBQTtBRExoQjtBQzdEQTs7RUF3RVksa0JBQUE7RUFDQSxPQUFBO0VBQ0EsTUFBQTtFQUNBLFdBQUE7RUFDQSxZQUFBO0FEUFo7QUNyRUE7Ozs7RUFtRlksV0FBQTtFQUNBLGtCQUFBO0VBQ0EsVUFBQTtFQUNBLGdCQUFBO0VBQ0EsWUFBQTtBRFJaO0FDL0VBO0VBMkZZLE9BQUE7RUFDQSxTQUFBO0FEVFo7QUNuRkE7RUFnR1ksT0FBQTtFQUNBLFlBQUE7QURWWjtBQ3ZGQTtFQXFHWSxXQUFBO0VBQ0EsU0FBQTtBRFhaO0FDM0ZBO0VBMEdZLFdBQUE7RUFDQSxZQUFBO0FEWlo7QUMvRkE7RUFpSFEsV0FBQTtFQUNBLFlBQUE7RUFDQSxxaUJBQUE7RUFDQSwwQkFBQTtFQUNBLGlCQUFBO0FEZlI7QUNtQkE7RUFDSSxhQUFBO0FEakJKO0FDZ0JBO0VBSVEsc0JBQUE7RUFDQSxXQUFBO0VBQ0EsWUFBQTtFQUNBLFlBQUE7QURqQlI7QUU5R0E7RUFDSSxhQUFBO0FGZ0hKIiwiZmlsZSI6ImluZGV4Lmxlc3MifQ== */";
-styleInject(css_248z);
 
 function WorkflowEditor(props) {
     let { startNodeModel } = props;

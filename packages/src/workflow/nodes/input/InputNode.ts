@@ -4,7 +4,7 @@ import InputNodeConfiger, { InputNodeConfigerProps } from "./InputNodeConfiger";
 import InputNodeViewer, { InputNodeViewerProps } from "./InputNodeViewer";
 
 /**
- * 填写节点配置
+ * 填写节点配置项
  */
 export interface InputNodeOptions {
     field2: string;
@@ -14,7 +14,10 @@ export interface InputNodeOptions {
 /**
  * 填写节点
  */
-const InputNode: Node<InputNodeViewerProps, InputNodeConfigerProps> = {
+const InputNode: Node<
+    InputNodeViewerProps, 
+    InputNodeConfigerProps
+> = {
     type: NodeType.INPUT,
     id: 'default.Input',
     selectable: true,

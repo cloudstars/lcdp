@@ -5,7 +5,7 @@ import ConditionNode from "../condition/ConditionNode";
 import NodeModel from "../NodeModel";
 
 /**
- * 排它分支节点配置
+ * 排它分支节点配置项
  */
 export interface ExclusiveBranchNodeOptions {
     fieldb: string;
@@ -17,7 +17,10 @@ export interface ExclusiveBranchNodeOptions {
 /**
  * 排它分支节点
  */
-const ExclusiveBranchNode: BranchNode<ExclusiveBranchNodeViewerProps, ExclusiveBranchNodeConfigerProps> = {
+const ExclusiveBranchNode: BranchNode<
+    ExclusiveBranchNodeViewerProps, 
+    ExclusiveBranchNodeConfigerProps
+> = {
     type: NodeType.BRANCH,
     id: 'default.branch',
     selectable: true,

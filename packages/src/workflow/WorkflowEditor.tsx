@@ -9,7 +9,7 @@ import { cloneDeep } from "lodash";
 import "./index.less";
 
 /**
- * 流程设计器属性
+ * 流程编辑器属性
  */
 interface WorkflowEditorProps {
     editable: boolean; // 是否允许修改
@@ -18,7 +18,7 @@ interface WorkflowEditorProps {
 }
   
 /**
- * 流程设计器
+ * 流程编辑器
  */
 export default function WorkflowEditor(props: WorkflowEditorProps) {
 

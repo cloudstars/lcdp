@@ -24,7 +24,10 @@ export interface ValidationError {
 /**
  * 流程节点（用于函数式组件)
  */
-export default interface Node<V extends NodeViewerProps = NodeViewerProps, C extends NodeConfigerProps = NodeConfigerProps> {
+export default interface Node<
+    V extends NodeViewerProps = NodeViewerProps, 
+    C extends NodeConfigerProps = NodeConfigerProps
+> {
     // 节点分类
     type: NodeType;
 

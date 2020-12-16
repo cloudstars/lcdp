@@ -14,7 +14,7 @@ export default {
     plugins: [
         babel(),
         postcss({
-          extract: false,
+          extract: true,
           sourceMap: true,
           extensions: [".less", ".css"]
         }),

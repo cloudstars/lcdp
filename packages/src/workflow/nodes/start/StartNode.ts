@@ -4,7 +4,7 @@ import StartNodeConfiger, { StartNodeConfigerProps } from "./StartNodeConfiger";
 import StartNodeViewer, { StartNodeViewerProps } from "./StartNodeViewer";
 
 /**
- * 开始节点配置
+ * 开始节点配置项
  */
 export interface StartNodeOptions {
     startForm: object
@@ -13,7 +13,10 @@ export interface StartNodeOptions {
 /**
  * 开始结点
  */
-const StartNode: Node<StartNodeViewerProps, StartNodeConfigerProps> = {
+const StartNode: Node<
+    StartNodeViewerProps, 
+    StartNodeConfigerProps
+> = {
     type: NodeType.START,
     id: 'default.start',
     selectable: false,

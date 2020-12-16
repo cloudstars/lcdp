@@ -4,7 +4,7 @@ import ApproveNodeConfiger, { ApproveNodeConfigerProps } from "./ApproveNodeConf
 import ApproveNodeViewer, { ApproveNodeViewerProps } from "./ApproveNodeViewer";
 
 /**
- * 审批节点配置
+ * 审批节点配置项
  */
 export interface ApproveNodeOptions {
     field1: string;
@@ -14,7 +14,10 @@ export interface ApproveNodeOptions {
 /**
  * 审批节点
  */
-const ApproveNode: Node<ApproveNodeViewerProps, ApproveNodeConfigerProps> = {
+const ApproveNode: Node<
+    ApproveNodeViewerProps, 
+    ApproveNodeConfigerProps
+> = {
     type: NodeType.APPROVE,
     id: 'default.Approve',
     selectable: true,
