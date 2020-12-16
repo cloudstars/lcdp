@@ -10,6 +10,7 @@ import SelectorControlRender, { SelectorControlRenderProps } from "./SelectorCon
  */
 export interface SelectorControlOptions {
     field: string;
+    multiple: boolean;
 }
 
 
@@ -22,7 +23,7 @@ const SelectorControl: Control<
     SelectorControlRenderProps
 > = {
     id: 'default.Selector',
-    name: '单项选择',
+    name: '下拉选择',
     icon: '#fdfdfd',
     defaultOptions: () => {
         return {

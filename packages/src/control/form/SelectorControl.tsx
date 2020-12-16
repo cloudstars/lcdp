@@ -2,20 +2,21 @@ import React from 'react'
 
 
 /**
- * 单项选择属性
+ * 下拉选择控件属性
  */
 interface SelectorControlProps {
-    name: string
+    name: string,
+    multiple: boolean
 }
   
 /**
- * 单项选择文本选择器
+ * 下拉选择控件
  */
 export default function SelectorControl(props: SelectorControlProps) {  
     return (
         <div>
             <select name={props.name}>
-                s
+                
             </select>
         </div>
     );      

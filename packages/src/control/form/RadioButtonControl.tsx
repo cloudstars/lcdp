@@ -2,16 +2,16 @@ import React from 'react'
 
 
 /**
- * 多项选择属性
+ * 单选框控件属性
  */
-interface MultiSelectorControlProps {
+interface RadioButtonControlProps {
     name: string
 }
   
 /**
- * 多项选择文本选择器
+ * 单选框控件
  */
-export default function MultiSelectorControl(props: MultiSelectorControlProps) {  
+export default function RadioButtonControl(props: RadioButtonControlProps) {  
     return (
         <div>
             <select name={props.name} multiple>
