@@ -1,4 +1,5 @@
 import { ComponentType } from "react";
+import Control, { ControlType } from "../Control";
 import ControlModel from "../ControlModel";
 
 
@@ -12,16 +13,14 @@ export interface ValidationError {
 }
 
 /**
- * 表单控件
+ * 输入控件
  */
-export default interface FormControl<
+export default interface InputControl<
     V extends ControlViewerProps = ControlViewerProps, 
     C extends ControlConfigerProps = ControlConfigerProps, 
     R extends ControlRenderProps = ControlRenderProps
-> {
-    // 控件的ID（英文）
-    id: string;
-
+> extends Control {
+    
     // 控件的名称（中文）
     name: string;
 
@@ -31,13 +30,13 @@ export default interface FormControl<
     // 默认的选项
     defaultOptions: () => any;
 
-    // 控件的展示器（用于在表单设计器中间的画片展示）
+    // 控件的展示器（用于在输入设计器中间的画片展示）
     ControlViewer: ComponentType<V>;
 
-    // 控件的配置器（用于在表单设计器右侧的配置面板展示）
+    // 控件的配置器（用于在输入设计器右侧的配置面板展示）
     ControlConfiger: React.ForwardRefExoticComponent<C & React.RefAttributes<ControlConfigerRef>>;
 
-    // 控件的渲染器（用于在表单运行时展示表单的样式和数据，分只读态和编辑态）
+    // 控件的渲染器（用于在输入运行时展示输入的样式和数据，分只读态和编辑态）
     ControlRender: ComponentType<R>;
 
     // 控件校验方法
