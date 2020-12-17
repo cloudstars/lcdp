@@ -1,8 +1,8 @@
 // 可视化控件分类
 export enum ControlType {
-    LAYOUT, // 布局控件
     CONTAINER, // 容器控件
-    FORM, // 表单控件
+    INPUT, // 输入控件
+    VIEW, // 展示控件
 }
 
 /**

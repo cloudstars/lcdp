@@ -1,19 +1,16 @@
 import { createContext } from "react";
-import ControlModel from "./controls/ControlModel";
-import Control from "./controls/Control";
-import TextControl from "./controls/text/TextControl";
-import SelectorControl from "./controls/selector/SelectorControl";
+import ControlModel from "../../control/ControlModel";
+import FormControl from "../../control/input/InputControl";
+import SelectorControl from "../../control/input/selector/SelectorControl";
+import TextControl from "../../control/input/text/TextControl";
+
 
 
 /**
  * 待追加的控件（将在此控件后添加新的控件）
  */
 export interface PeddingControl {
-    ControlModel: ControlModel/*,
-    position: {
-        left: number,
-        top: number
-    }*/
+    ControlModel: ControlModel
 }
 
 /**
@@ -24,7 +21,7 @@ export interface FormEditorContextType {
     readonly editable: boolean;
     // 控件映射
     readonly ControlMap: {
-        [key: string]: Control<any, any, any>;
+        [key: string]: FormControl<any, any, any>;
     }; 
     // 开始结点数据模型
     ControlModel?: ControlModel;

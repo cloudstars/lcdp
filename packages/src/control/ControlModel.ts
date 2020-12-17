@@ -1,5 +1,5 @@
 import { v4 as uuid } from "uuid";
-import LinkedList from "../../common/LinkedList";
+import LinkedList from "../common/LinkedList";
 
 /**
  * 控件数据模型（第一个控件代表了整个表单）

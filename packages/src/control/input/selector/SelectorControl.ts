@@ -1,5 +1,5 @@
-import Control from "../Control";
-import ControlModel from "../ControlModel";
+import FormControl from "../InputControl";
+import ControlModel from "../../ControlModel";
 import SelectorControlViewer, { SelectorControlViewerProps } from "./SelectorControlViewer";
 import SelectorControlConfiger, { SelectorControlConfigerProps } from "./SelectorControlConfiger";
 import SelectorControlRender, { SelectorControlRenderProps } from "./SelectorControlRender";
@@ -17,7 +17,7 @@ export interface SelectorControlOptions {
 /**
  * 单项选择控件
  */
-const SelectorControl: Control<
+const SelectorControl: FormControl<
     SelectorControlViewerProps, 
     SelectorControlConfigerProps,
     SelectorControlRenderProps

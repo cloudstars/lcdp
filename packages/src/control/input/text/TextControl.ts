@@ -1,5 +1,5 @@
-import Control from "../Control";
-import ControlModel from "../ControlModel";
+import FormControl from "../InputControl";
+import ControlModel from "../../ControlModel";
 import TextControlConfiger, { TextControlConfigerProps } from "./TextControlConfiger";
 import TextControlRender, { TextControlRenderProps } from "./TextControlRender";
 import TextControlViewer, { TextControlViewerProps } from "./TextControlViewer";
@@ -15,7 +15,7 @@ export interface TextControlOptions {
 /**
  * 单行文本控件
  */
-const TextControl: Control<
+const TextControl: FormControl<
     TextControlViewerProps, 
     TextControlConfigerProps,
     TextControlRenderProps

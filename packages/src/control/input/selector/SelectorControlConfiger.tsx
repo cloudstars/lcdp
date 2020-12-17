@@ -1,5 +1,5 @@
 import React, { forwardRef, useImperativeHandle } from 'react';
-import { ControlConfigerProps, ControlConfigerRef } from '../Control';
+import { ControlConfigerProps, ControlConfigerRef } from '../InputControl';
 
 /**
  * 单项选择控件配置器属性

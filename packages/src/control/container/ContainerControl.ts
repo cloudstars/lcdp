@@ -1,5 +1,6 @@
 import { ComponentType } from "react";
-import ControlModel from "./ControlModel";
+import { ControlType } from "../Control";
+import ControlModel from "../ControlModel";
 
 
 /**
@@ -12,9 +13,9 @@ export interface ValidationError {
 }
 
 /**
- * 表单控件
+ * 容器控件
  */
-export default interface Control<
+export default interface ContainerControl<
     V extends ControlViewerProps = ControlViewerProps, 
     C extends ControlConfigerProps = ControlConfigerProps, 
     R extends ControlRenderProps = ControlRenderProps
@@ -31,17 +32,20 @@ export default interface Control<
     // 默认的选项
     defaultOptions: () => any;
 
-    // 控件的展示器（用于在表单设计器中间的画片展示）
+    // 控件的展示器（用于在容器设计器中间的画片展示）
     ControlViewer: ComponentType<V>;
 
-    // 控件的配置器（用于在表单设计器右侧的配置面板展示）
+    // 控件的配置器（用于在容器设计器右侧的配置面板展示）
     ControlConfiger: React.ForwardRefExoticComponent<C & React.RefAttributes<ControlConfigerRef>>;
 
-    // 控件的渲染器（用于在表单运行时展示表单的样式和数据，分只读态和编辑态）
+    // 控件的渲染器（用于在容器运行时展示容器的样式和数据，分只读态和编辑态）
     ControlRender: ComponentType<R>;
 
     // 控件校验方法
     validate: (ControlModel: ControlModel) => ValidationError;
+
+    // 支持的子类型
+    supportSubTypes: ControlType[];
 }
 
 /**

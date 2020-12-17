@@ -1,8 +1,8 @@
 import React from 'react'
-import Control from '../control/Control';
-import InputCanvas from './components/InputCanvas'
-import InputConfiger from './components/InputConfiger'
-import InputSelector from './components/InputSelector'
+import Control from '../../control/Control';
+import InputCanvas from './components/FormCanvas'
+import InputConfiger from './components/ControlConfiger'
+import InputSelector from './components/ControlSelector'
 
 
 /**
