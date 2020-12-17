@@ -1,5 +1,5 @@
 import React from 'react';
-import NodeList from '../../components/NodeList';
+import NodeList from '../../editor/components/NodeList';
 import { NodeViewerProps } from '../Node';
 
 /**

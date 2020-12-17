@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import { PlusOutlined } from '@ant-design/icons';
-import NodeModel from '../../nodes/NodeModel';
+import NodeModel from '../../../nodes/NodeModel';
 import { WorkflowEditorContext } from '../../WorkflowEditorContext';
 
 /**

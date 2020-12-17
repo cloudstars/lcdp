@@ -1,5 +1,5 @@
 import React, { Children, PropsWithChildren, ReactNode, useContext } from 'react';
-import NodeModel from '../nodes/NodeModel';
+import NodeModel from '../../nodes/NodeModel';
 import { WorkflowEditorContext } from '../WorkflowEditorContext';
 import AppendNodeButton from './append/AppendNodeButton';
 

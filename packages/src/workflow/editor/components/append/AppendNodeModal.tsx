@@ -1,8 +1,8 @@
 import React, { useCallback, useContext, useEffect, useMemo, useState } from 'react';
 import { Modal } from 'antd';
-import Node, { BranchNode, NodeType } from '../../nodes/Node';
+import Node, { BranchNode, NodeType } from '../../../nodes/Node';
 import { WorkflowEditorContext } from '../../WorkflowEditorContext';
-import NodeModel from '../../nodes/NodeModel';
+import NodeModel from '../../../nodes/NodeModel';
 
 /**
  * 添加节点模态框属性
