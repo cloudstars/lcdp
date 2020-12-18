@@ -56,7 +56,7 @@ export interface ControlViewerProps {
     dataModel: ControlModel;  
     
     // 控件的数据模型选择
-options: any;
+    options: any;
 }
 
 /**

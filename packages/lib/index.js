@@ -31,8 +31,16 @@ function FormEditor(props) {
         React__default['default'].createElement(InputConfiger, null)));
 }
 
+function FormRender(props) {
+    return (React__default['default'].createElement("div", null));
+}
+
 function PageEditor(props) {
     return (React__default['default'].createElement("div", null, "\u8FD9\u662F\u4E00\u4E2APageEditor"));
+}
+
+function PageRender(props) {
+    return (React__default['default'].createElement("div", null));
 }
 
 var NodeType;
@@ -555,5 +563,7 @@ function getContextValue(props, nodeMap, nodeModel, setNodeModel, peddingNode, s
 }
 
 exports.FormEditor = FormEditor;
+exports.FormRender = FormRender;
 exports.PageEditor = PageEditor;
+exports.PageRender = PageRender;
 exports.WorkflowEditor = WorkflowEditor;

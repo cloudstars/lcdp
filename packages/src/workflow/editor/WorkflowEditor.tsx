@@ -2,11 +2,11 @@ import React, { Dispatch, SetStateAction, useMemo, useState } from 'react'
 import ConfigPanel from './components/ConfigerPanel';
 import FlowCanvas from './components/FlowCanvas';
 import { WorkflowEditorContext, contextInitValue, PeddingNode } from './WorkflowEditorContext';
-import Node, { NodeType } from './nodes/Node';
-import NodeModel from './nodes/NodeModel';
+import Node, { NodeType } from '../nodes/Node';
+import NodeModel from '../nodes/NodeModel';
 import { cloneDeep } from "lodash";
 
-import "./index.less";
+import "../index.less";
 
 /**
  * 流程编辑器属性

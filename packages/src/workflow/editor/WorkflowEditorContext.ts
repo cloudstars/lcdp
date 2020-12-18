@@ -1,11 +1,11 @@
 import { createContext } from "react";
-import NodeModel from "./nodes/NodeModel";
-import Node, { BranchNode } from "./nodes/Node";
-import StartNode from "./nodes/start/StartNode";
-import InputNode from "./nodes/input/InputNode";
-import ApproveNode from "./nodes/approve/ApproveNode";
-import ConditionNode from "./nodes/condition/ConditionNode";
-import ExclusiveBranchNode from "./nodes/branch/ExclusiveBranchNode";
+import NodeModel from "../nodes/NodeModel";
+import Node, { BranchNode } from "../nodes/Node";
+import StartNode from "../nodes/start/StartNode";
+import InputNode from "../nodes/input/InputNode";
+import ApproveNode from "../nodes/approve/ApproveNode";
+import ConditionNode from "../nodes/condition/ConditionNode";
+import ExclusiveBranchNode from "../nodes/branch/ExclusiveBranchNode";
 
 
 /**
