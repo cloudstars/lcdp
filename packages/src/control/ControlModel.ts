@@ -1,18 +1,18 @@
 import { v4 as uuid } from "uuid";
-import LinkedList from "../common/LinkedList";
 
 /**
- * 控件数据模型（第一个控件代表了整个表单）
+ * 控件数据模型
  */
-export default class ControlModel extends LinkedList<ControlModel>  {
-    private _id: string; // 节点ID
-    private _name: string; // 节点名称
-    private _options: any; // 节点选项
+export default class ControlModel {
+    private _id: string; // 控件ID
+    private _type: string;  // 控件类型
+    private _name: string; // 控件名称
+    private _options: any; // 控件选项
     private _children: ControlModel[];
 
-    constructor(name: string, options: any, children: ControlModel[]) {
-        super();
+    constructor(name: string, type: string, options: any, children: ControlModel[]) {
         this._id = uuid().replace(/-/g, '');
+        this._type = type;
         this._name = name;
         this._options = options;
         this._children = children;
@@ -20,6 +20,10 @@ export default class ControlModel extends LinkedList<ControlModel>  {
 
     get id(): string {
         return this._id;
+    }
+
+    get type(): string {
+        return this._type;
     }
 
     get name(): string {
@@ -37,6 +41,5 @@ export default class ControlModel extends LinkedList<ControlModel>  {
     get children(): ControlModel[] {
         return this._children;
     }
-
 
 }

@@ -1,5 +1,5 @@
 import React from 'react';
-import { ControlRenderProps } from '../InputControl';
+import { ControlRenderProps } from '../../Control';
 
 /**
  * 单项选择控件渲染器属性

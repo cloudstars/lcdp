@@ -3,6 +3,7 @@ import ControlModel from "../../ControlModel";
 import TextControlConfiger, { TextControlConfigerProps } from "./TextControlConfiger";
 import TextControlRender, { TextControlRenderProps } from "./TextControlRender";
 import TextControlViewer, { TextControlViewerProps } from "./TextControlViewer";
+import { ControlType } from "../../Control";
 
 /**
  * 单行文本控件配置项
@@ -23,14 +24,15 @@ const TextControl: FormControl<
     id: 'default.Text',
     name: '单行文本',
     icon: '#fdfdfd',
+    type: ControlType.INPUT,
     defaultOptions: () => {
         return {
             field2: "xx"
         }
     },
-    ControlViewer: TextControlViewer,
-    ControlConfiger: TextControlConfiger,
-    ControlRender: TextControlRender,
+    Viewer: TextControlViewer,
+    Configer: TextControlConfiger,
+    Render: TextControlRender,
     validate: (ControlModel: ControlModel) => { 
         return {
             hasError: false,

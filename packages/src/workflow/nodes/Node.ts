@@ -60,7 +60,10 @@ export default interface Node<
 /**
  * 流程分支节点
  */
-export interface BranchNode<V extends NodeViewerProps = NodeViewerProps, C extends NodeConfigerProps = NodeConfigerProps> extends Node<V, C> {
+export interface BranchNode<
+    V extends NodeViewerProps = NodeViewerProps,
+    C extends NodeConfigerProps = NodeConfigerProps
+> extends Node<V, C> {
     conditionNode: Node<any, any>
 }
 

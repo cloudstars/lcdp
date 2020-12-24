@@ -3,6 +3,7 @@ import ControlModel from "../../ControlModel";
 import SelectorControlViewer, { SelectorControlViewerProps } from "./SelectorControlViewer";
 import SelectorControlConfiger, { SelectorControlConfigerProps } from "./SelectorControlConfiger";
 import SelectorControlRender, { SelectorControlRenderProps } from "./SelectorControlRender";
+import { ControlType } from "../../Control";
 
 
 /**
@@ -25,14 +26,15 @@ const SelectorControl: FormControl<
     id: 'default.Selector',
     name: '下拉选择',
     icon: '#fdfdfd',
+    type: ControlType.INPUT,
     defaultOptions: () => {
         return {
             field2: "xx"
         }
     },
-    ControlViewer: SelectorControlViewer,
-    ControlConfiger: SelectorControlConfiger,
-    ControlRender: SelectorControlRender,
+    Viewer: SelectorControlViewer,
+    Configer: SelectorControlConfiger,
+    Render: SelectorControlRender,
     validate: (ControlModel: ControlModel) => { 
         return {
             hasError: false,

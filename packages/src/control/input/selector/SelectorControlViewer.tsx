@@ -1,5 +1,5 @@
 import React from 'react';
-import { ControlViewerProps } from '../InputControl';
+import { ControlViewerProps } from '../../Control';
 
 /**
  * 单项选择控件展示卡属性

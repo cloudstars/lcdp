@@ -13,6 +13,7 @@ import "../index.less";
  */
 interface WorkflowEditorProps {
     editable: boolean; // 是否允许修改
+    //startForm? ///;
     startNodeModel?: NodeModel; // 节点模型，不传时初始化为开始节点的默认选项
     nodes?: Node[]; // 流程节点列表，不传入时初始化为内置的节点列表
 }

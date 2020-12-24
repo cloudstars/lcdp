@@ -1,5 +1,4 @@
-import { ComponentType } from "react";
-import Control, { ControlType } from "../Control";
+import Control, { ControlConfigerProps, ControlConfigerRef, ControlRenderProps, ControlType, ControlViewerProps } from "../Control";
 import ControlModel from "../ControlModel";
 
 
@@ -16,78 +15,41 @@ export interface ValidationError {
  * 输入控件
  */
 export default interface InputControl<
-    V extends ControlViewerProps = ControlViewerProps, 
-    C extends ControlConfigerProps = ControlConfigerProps, 
-    R extends ControlRenderProps = ControlRenderProps
-> extends Control {
-    
-    // 控件的名称（中文）
-    name: string;
-
-    // 控件的图标
-    icon: string;
-
-    // 默认的选项
-    defaultOptions: () => any;
-
-    // 控件的展示器（用于在输入设计器中间的画片展示）
-    ControlViewer: ComponentType<V>;
-
-    // 控件的配置器（用于在输入设计器右侧的配置面板展示）
-    ControlConfiger: React.ForwardRefExoticComponent<C & React.RefAttributes<ControlConfigerRef>>;
-
-    // 控件的渲染器（用于在输入运行时展示输入的样式和数据，分只读态和编辑态）
-    ControlRender: ComponentType<R>;
+    V extends InputControlViewerProps = InputControlViewerProps, 
+    C extends InputControlConfigerProps = InputControlConfigerProps, 
+    R extends InputControlRenderProps = InputControlRenderProps
+> extends Control<V, C, R> {
 
     // 控件校验方法
     validate: (ControlModel: ControlModel) => ValidationError;
 }
 
+
 /**
- * 控件展示卡属性
+ * 输入控件展示卡属性
  */
-export interface ControlViewerProps {
-    // 控件的数据模型  
-    dataModel: ControlModel;  
-    
-    // 控件的数据模型选择
-    options: any;
+export interface InputControlViewerProps extends ControlViewerProps {
+   /* 新的属性在这里定义 */
 }
 
 /**
- * 控件配置器属性
+ * 输入控件配置器属性
  */
-export interface ControlConfigerProps {
-    // 控件的数据模型选择
-    options: any;
-    
-    /**
-     * 数据模型选项的值变更事件
-     * @param newOptionsValuesPart 变更的部分数据
-     */ 
-    onOptionsValuesChange: (newOptionsValuesPart: any) => void;
+export interface InputControlConfigerProps extends ControlConfigerProps {
+    /* 新的属性在这里定义 */
 }
 
 /**
- * 控件配置器的引用
+ * 输入控件配置器的引用
  */
-export interface ControlConfigerRef {
-    /**
-     * 获取控件的配置选项
-     */
-    getOptions: () => any;
+export interface InputControlConfigerRef extends ControlConfigerRef {
+    /* 新的属性在这里定义 */
 }
 
+
 /**
- * 控件渲染器属性
+ * 输入控件渲染器属性
  */
-export interface ControlRenderProps {
-    // 控件的数据模型选择
-    options: any;
-
-    // 控件的值
-    value: any;
-
-    // 是否只读
-    readonly: boolean;    
+export interface InputControlRenderProps extends ControlRenderProps {
+    /* 新的属性在这里定义 */
 }
