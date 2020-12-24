@@ -47,10 +47,10 @@ export default interface Node<
     defaultOptions: () => any;
 
     // 节点的展示器
-    nodeViewer: ComponentType<V>;
+    Viewer: ComponentType<V>;
 
     // 节点的配置器
-    nodeConfiger: React.ForwardRefExoticComponent<C & React.RefAttributes<NodeConfigerRef>>;
+    Configer: React.ForwardRefExoticComponent<C & React.RefAttributes<NodeConfigerRef>>;
 
     // 节点校验方法
     validate: (nodeModel: NodeModel) => ValidationError;

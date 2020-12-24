@@ -1,9 +1,10 @@
 import FormControl from "../InputControl";
 import ControlModel from "../../ControlModel";
+import { ControlType } from "../../Control";
 import TextControlConfiger, { TextControlConfigerProps } from "./TextControlConfiger";
 import TextControlRender, { TextControlRenderProps } from "./TextControlRender";
 import TextControlViewer, { TextControlViewerProps } from "./TextControlViewer";
-import { ControlType } from "../../Control";
+
 
 /**
  * 单行文本控件配置项

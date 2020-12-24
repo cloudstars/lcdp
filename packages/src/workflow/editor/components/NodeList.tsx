@@ -1,4 +1,4 @@
-import React, { Children, PropsWithChildren, ReactNode, useContext } from 'react';
+import React, { PropsWithChildren, useContext } from 'react';
 import NodeModel from '../../nodes/NodeModel';
 import { WorkflowEditorContext } from '../WorkflowEditorContext';
 import AppendNodeButton from './append/AppendNodeButton';
@@ -53,7 +53,7 @@ function NodeWrapper(props: NodeListProps & {nodeModel: NodeModel, isBranch: boo
     let { nodeMap, editable, setCurrentNode } = useContext(WorkflowEditorContext);
     let nodeModel = props.nodeModel;
     let node = nodeMap[nodeModel.subType];
-    let NodeViewer = node.nodeViewer;
+    let NodeViewer = node.Viewer;
 
     const onNodeItemClick = () => {
         setCurrentNode && setCurrentNode(nodeModel);

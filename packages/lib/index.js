@@ -96,8 +96,8 @@ const StartNode = {
             fiedl2: 'yyy'
         };
     },
-    nodeViewer: StartNodeViewer,
-    nodeConfiger: StartNodeConfiger,
+    Viewer: StartNodeViewer,
+    Configer: StartNodeConfiger,
     validate: (nodeModel) => {
         return {
             hasError: false,
@@ -170,8 +170,8 @@ const ApproveNode = {
             field1: 'xxx'
         };
     },
-    nodeViewer: ApproveNodeViewer,
-    nodeConfiger: ApproveNodeConfiger,
+    Viewer: ApproveNodeViewer,
+    Configer: ApproveNodeConfiger,
     validate: (nodeModel) => {
         return {
             hasError: false,
@@ -207,8 +207,8 @@ const ConditionNode = {
             fieldc: "xxx"
         };
     },
-    nodeViewer: ConditionNodeViewer,
-    nodeConfiger: ConditionNodeConfiger,
+    Viewer: ConditionNodeViewer,
+    Configer: ConditionNodeConfiger,
     validate: (nodeModel) => {
         return {
             hasError: false,
@@ -259,7 +259,7 @@ function NodeWrapper(props) {
     let { nodeMap, editable, setCurrentNode } = React.useContext(WorkflowEditorContext);
     let nodeModel = props.nodeModel;
     let node = nodeMap[nodeModel.subType];
-    let NodeViewer = node.nodeViewer;
+    let NodeViewer = node.Viewer;
     const onNodeItemClick = () => {
         setCurrentNode && setCurrentNode(nodeModel);
         console.log('current=' + nodeModel);
@@ -300,8 +300,8 @@ const ExclusiveBranchNode = {
             fieldb: "xxxdfs"
         };
     },
-    nodeViewer: ExclusiveBranchNodeViewer,
-    nodeConfiger: ExclusiveBranchNodeConfiger,
+    Viewer: ExclusiveBranchNodeViewer,
+    Configer: ExclusiveBranchNodeConfiger,
     validate: (nodeModel) => {
         return {
             hasError: false,
@@ -350,7 +350,7 @@ function ConfigPanel(props) {
         return React__default['default'].createElement(React__default['default'].Fragment, null);
     }
     else {
-        let NodeConfiger = nodeMap[currentNode.subType].nodeConfiger;
+        let NodeConfiger = nodeMap[currentNode.subType].Configer;
         return (React__default['default'].createElement(antd.Drawer, { visible: isVisible, title: "Basic Drawer", placement: "right", closable: false, onClose: onClose, footer: footer(onClose, onSave) }, !!currentNode &&
             React__default['default'].createElement(NodeConfiger, { options: currentNode.options, onOptionsValuesChange: onOptionsValuesChange })));
     }

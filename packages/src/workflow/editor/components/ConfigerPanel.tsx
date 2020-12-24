@@ -53,7 +53,7 @@ export default function ConfigPanel(props: ConfigPanelProps) {
     if (!currentNode) {
         return <></>;
     } else {
-        let NodeConfiger = nodeMap[currentNode.subType].nodeConfiger;
+        let NodeConfiger = nodeMap[currentNode.subType].Configer;
         return (
             <Drawer
                 visible={isVisible}

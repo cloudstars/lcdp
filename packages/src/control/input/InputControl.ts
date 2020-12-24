@@ -1,4 +1,4 @@
-import Control, { ControlConfigerProps, ControlConfigerRef, ControlRenderProps, ControlType, ControlViewerProps } from "../Control";
+import Control, { ControlConfigerProps, ControlRenderProps, ControlViewerProps } from "../Control";
 import ControlModel from "../ControlModel";
 
 
@@ -36,13 +36,6 @@ export interface InputControlViewerProps extends ControlViewerProps {
  * 输入控件配置器属性
  */
 export interface InputControlConfigerProps extends ControlConfigerProps {
-    /* 新的属性在这里定义 */
-}
-
-/**
- * 输入控件配置器的引用
- */
-export interface InputControlConfigerRef extends ControlConfigerRef {
     /* 新的属性在这里定义 */
 }
 

@@ -28,8 +28,8 @@ const ApproveNode: Node<
             field1: 'xxx'
         }
     },
-    nodeViewer: ApproveNodeViewer,
-    nodeConfiger: ApproveNodeConfiger,
+    Viewer: ApproveNodeViewer,
+    Configer: ApproveNodeConfiger,
     validate: (nodeModel: NodeModel) => { 
         return {
             hasError: false,

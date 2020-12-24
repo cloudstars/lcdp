@@ -1,5 +1,5 @@
-import React, { forwardRef, useImperativeHandle } from 'react';
-import { ControlConfigerProps, ControlConfigerRef } from '../../Control';
+import React from 'react';
+import { ControlConfigerProps } from '../../Control';
 
 /**
  * 单行文本控件配置器属性
@@ -11,23 +11,15 @@ export interface TextControlConfigerProps extends ControlConfigerProps {
 /**
  * 单行文本控件配置器
 */
-const TextControlConfiger = forwardRef<ControlConfigerRef, TextControlConfigerProps>((props, ref) => {
-
-    // 暴露内部的方法
-    useImperativeHandle(ref, () => ({
-        getOptions: () => {
-            return {field2: 'xxx'}
-        }
-    }), []);
-
+export default function TextControlConfiger(props: TextControlConfigerProps) {
     return (
         <div>
             <p>这是一个TextControlConfiger</p>
         </div>
     );
-});
+}
 
-export default TextControlConfiger; 
+
 
 
 
