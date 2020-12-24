@@ -23,7 +23,13 @@ export default {
       extensions: ['.less', '.css'],
     }),
     commonjs(),
-    typescript(),
+    typescript({
+      tsconfigOverride:{
+        compilerOptions:{
+          declaration: true
+        }
+      }
+    }),
     tslint({
       throwOnError: true,
       throwOnWarning: true,

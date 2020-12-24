@@ -1,13 +1,14 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
 # dependencies
-/node_modules
+/packages/node_modules
 /umi-test/node_modules
 /.pnp
 .pnp.js
 
 # testing
 /coverage
+/packages/lib
 
 # production
 /build

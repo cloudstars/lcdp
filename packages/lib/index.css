@@ -1,3 +1,37 @@
+.panelWrapepr {
+  display: flex;
+  flex-wrap: wrap;
+}
+.formItemPanel {
+  display: inline-flex;
+  align-items: center;
+  width: 45%;
+  height: 40px;
+  border-radius: 4px;
+  background-color: #f0f2f5;
+  margin: 10px 2.5%;
+  padding: 0 12px;
+  color: #666;
+  border: 1px solid #fff;
+  cursor: pointer;
+}
+
+.wrapper {
+  height: 100vh;
+}
+.panel {
+  height: 100%;
+}
+.content {
+  padding: 24px;
+}
+.config {
+  height: 100%;
+}
+.sider {
+  padding: 16px;
+}
+
 .workflow-editor {
   overflow: auto;
 }
