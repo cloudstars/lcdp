@@ -1,11 +1,11 @@
 import React from 'react';
 import NodeList from '../../editor/components/NodeList';
-import { NodeViewerProps } from '../Node';
+import { NodeViewProps } from '../Node';
 
 /**
  * 排它分支节点展示卡属性
  */
-export interface ExclusiveBranchNodeViewerProps extends NodeViewerProps {
+export interface ExclusiveBranchNodeViewProps extends NodeViewProps {
     fieldc: string;
 }
 
@@ -13,7 +13,7 @@ export interface ExclusiveBranchNodeViewerProps extends NodeViewerProps {
 /**
  * 排它分支节点展示卡
  */
-export default function ExclusiveBranchNodeViewer(props: ExclusiveBranchNodeViewerProps) {
+export default function ExclusiveBranchNodeView(props: ExclusiveBranchNodeViewProps) {
     let branchs = props.dataModel.branchs;
 
     return (

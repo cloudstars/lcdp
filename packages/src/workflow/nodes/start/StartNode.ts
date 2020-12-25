@@ -1,7 +1,7 @@
 import Node, { NodeType } from "../Node";
 import NodeModel from "../NodeModel";
-import StartNodeConfiger, { StartNodeConfigerProps } from "./StartNodeConfiger";
-import StartNodeViewer, { StartNodeViewerProps } from "./StartNodeViewer";
+import StartNodeConfig, { StartNodeConfigProps } from "./StartNodeConfiger";
+import StartNodeView, { StartNodeViewProps } from "./StartNodeViewer";
 
 /**
  * 开始节点配置项
@@ -14,8 +14,8 @@ export interface StartNodeOptions {
  * 开始结点
  */
 const StartNode: Node<
-    StartNodeViewerProps, 
-    StartNodeConfigerProps
+    StartNodeViewProps, 
+    StartNodeConfigProps
 > = {
     type: NodeType.START,
     id: 'default.start',
@@ -29,8 +29,8 @@ const StartNode: Node<
             fiedl2: 'yyy'
         }
     },
-    nodeViewer: StartNodeViewer,
-    nodeConfiger: StartNodeConfiger,
+    View: StartNodeView,
+    Config: StartNodeConfig,
     validate: (nodeModel: NodeModel) => { 
         return {
             hasError: false,

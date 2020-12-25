@@ -1,7 +1,6 @@
 import React, { FC } from 'react';
 import ReactSortable from 'react-sortablejs';
-import Icon from '@ant-design/icons';
-import { FieldComponent } from '../../type';
+import FormControl from '@/control/type';
 import './index.less';
 
 interface IPanel {
@@ -17,15 +16,15 @@ const FormFieldsPanel: FC<IPanel> = ({ componentList }) => {
       }}
       className="panelWrapepr"
     >
-      {componentList.map((item: FieldComponent) => (
+      {componentList.map((item: FormControl) => (
         <div
           key={item.id}
           data-id={item.id}
-          data-type={item.type}
+          data-type={item.name}
           className="formItemPanel"
         >
           {item.icon}
-          {item.name}
+          {item.defaultOptions.label}
         </div>
       ))}
     </ReactSortable>

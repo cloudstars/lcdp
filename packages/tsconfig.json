@@ -25,6 +25,7 @@
     "paths": {
       "@/*": ["src/*"],
       "@/control/*": ["src/control/*"],
+      "@/common/*": ["src/common/*"],
     },
   },
   "lib": [

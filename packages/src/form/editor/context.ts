@@ -1,14 +1,6 @@
 import React, { createContext, useContext } from 'react';
-import { IFormItemConfig } from './type';
-
-import ControlModel from '../../control/ControlModel';
-import FormControl from '@/control/input/InputControl';
-import SelectorControl from '../../control/input/selector/SelectorControl';
-import TextControl from '../../control/input/text/TextControl';
-
-/**
- * 待追加的控件（将在此控件后添加新的控件）
- */
+import { ControlModel } from '@/control/type';
+import FormControl from '@/control/type';
 export interface PeddingControl {
   ControlModel: ControlModel;
 }
@@ -34,37 +26,33 @@ export interface FormEditorContextType {
   // 刷新开始结点的数据模型
   readonly refreshControlModel?: () => void;
   // 设置待追加的控件
-  readonly setPeddingControl?: (
-    peddingControl: PeddingControl | undefined,
-  ) => void;
+  readonly setPeddingControl?: (params?: PeddingControl | undefined) => void;
   // 设置当前选中的控件
-  readonly setCurrentControl?: (
-    currentControl: ControlModel | undefined,
-  ) => void;
+  readonly setCurrentControl?: (params?: ControlModel | undefined) => void;
 }
 
-// 表单编辑器上下文初始值
-export const contextInitValue = {
-  editable: true,
-  ControlMap: {
-    [TextControl.id]: TextControl,
-    [SelectorControl.id]: SelectorControl,
-  },
-};
+// // 表单编辑器上下文初始值
+// export const contextInitValue = {
+//   editable: true,
+//   ControlMap: {
+//     [TextControl.id]: TextControl,
+//     [SelectorControl.id]: SelectorControl,
+//   },
+// };
 
 // // 表单编辑器上下文创建
 // export const FormEditorContext = createContext<FormEditorContextType>(contextInitValue);
 
 interface IFormState {
   // 表单配置
-  config: IFormItemConfig[];
+  config: ControlModel[];
   selectKey?: string;
   onChoose: (params: string) => void;
-  onChange: (params: IFormItemConfig[]) => void;
+  onChange: (params: ControlModel[]) => void;
 }
 
 const initialValue = {
-  config: [{ id: '', name: '', type: '', options: { label: '' } }],
+  config: [{ id: '', name: '', field: '', options: { label: '', field: '' } }],
   onChange: () => {},
   onChoose: () => {},
 };

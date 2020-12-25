@@ -1,7 +1,7 @@
 import Node, { NodeType } from "../Node";
 import NodeModel from "../NodeModel";
-import InputNodeConfiger, { InputNodeConfigerProps } from "./InputNodeConfiger";
-import InputNodeViewer, { InputNodeViewerProps } from "./InputNodeViewer";
+import InputNodeConfig, { InputNodeConfigProps } from "./InputNodeConfiger";
+import InputNodeView, { InputNodeViewProps } from "./InputNodeViewer";
 
 /**
  * 填写节点配置项
@@ -15,8 +15,8 @@ export interface InputNodeOptions {
  * 填写节点
  */
 const InputNode: Node<
-    InputNodeViewerProps, 
-    InputNodeConfigerProps
+    InputNodeViewProps, 
+    InputNodeConfigProps
 > = {
     type: NodeType.INPUT,
     id: 'default.Input',
@@ -28,8 +28,8 @@ const InputNode: Node<
             field2: "xx"
         }
     },
-    nodeViewer: InputNodeViewer,
-    nodeConfiger: InputNodeConfiger,
+    View: InputNodeView,
+    Config: InputNodeConfig,
     validate: (nodeModel: NodeModel) => { 
         return {
             hasError: false,

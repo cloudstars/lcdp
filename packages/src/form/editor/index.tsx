@@ -2,11 +2,11 @@
 import React, { useState, useCallback, FC } from 'react';
 import { Layout } from 'antd';
 import FormPanel from './components/ComponentPanel';
-import ComponentStore from './components/Fields';
-import FormContent from './components/Content';
+import FormContent from './components/FormContent';
 import ItemConfig from './components/ConfigPanel';
+import ComponentStore from '@/control';
 import { FormStateContext } from './context';
-import { IFormItemConfig } from './type';
+import { ControlModel } from '@/control/type';
 import './index.less';
 
 /**
@@ -20,12 +20,11 @@ interface FormEditorProps {
 /**
  * 表单编辑器
  */
-const FormProvider: FC<FormEditorProps> = ({ children }) => {
-  const [config, setConfig] = useState<IFormItemConfig[]>([
+const FormProvider: FC = ({ children }) => {
+  const [config, setConfig] = useState<ControlModel[]>([
     {
-      id: '2',
-      name: '文本框',
-      type: 'InputField',
+      id: '2111',
+      name: 'Input',
       options: {
         field: 'WB',
         label: '文本',
@@ -34,9 +33,8 @@ const FormProvider: FC<FormEditorProps> = ({ children }) => {
       },
     },
     {
-      id: '1',
-      name: '数字',
-      type: 'InputField',
+      id: '1111',
+      name: 'Input',
       options: {
         field: 'SZ',
         label: '数字',
@@ -47,7 +45,7 @@ const FormProvider: FC<FormEditorProps> = ({ children }) => {
   ]);
   const [selectKey, setSelectKey] = useState<string>('');
 
-  const handleOnChange = useCallback((params: IFormItemConfig[]) => {
+  const handleOnChange = useCallback((params: ControlModel[]) => {
     setConfig(params);
   }, []);
 
@@ -69,7 +67,7 @@ const FormProvider: FC<FormEditorProps> = ({ children }) => {
   );
 };
 
-const FormEditor = () => {
+const FormEditor: FC<FormEditorProps> = () => {
   return (
     <Layout className="wrapper">
       <FormProvider>

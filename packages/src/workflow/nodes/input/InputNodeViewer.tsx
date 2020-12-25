@@ -1,21 +1,21 @@
 import React from 'react';
-import { NodeViewerProps } from '../Node';
+import { NodeViewProps } from '../Node';
 
 /**
  * 填写节点展示卡属性
  */
-export interface InputNodeViewerProps extends NodeViewerProps {
-    field2: string
+export interface InputNodeViewProps extends NodeViewProps {
+    field2?: string
 }
 
 
 /**
  * 填写节点展示卡
  */
-export default function InputNodeViewer(props: InputNodeViewerProps) {
+export default function InputNodeView(props: InputNodeViewProps) {
     return (
         <div>
-            <p>这是一个InputNodeViewer</p>
+            <p>这是一个InputNodeView</p>
         </div>
     );
 }
