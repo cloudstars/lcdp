@@ -1,17 +1,17 @@
 import React, { forwardRef, useImperativeHandle } from 'react';
-import { NodeConfigerProps, NodeConfigerRef } from '../Node';
+import { NodeConfigProps, NodeConfigRef } from '../Node';
 
 /**
  * 排它分支节点配置器属性
  */
-export interface ExclusiveBranchNodeConfigerProps extends NodeConfigerProps {
+export interface ExclusiveBranchNodeConfigProps extends NodeConfigProps {
     fieldb: string;
 }
 
 /**
  * 排它分支节点配置器
 */
-const ExclusiveBranchNodeConfiger = forwardRef<NodeConfigerRef, ExclusiveBranchNodeConfigerProps>((props, ref) => {
+const ExclusiveBranchNodeConfig = forwardRef<NodeConfigRef, ExclusiveBranchNodeConfigProps>((props, ref) => {
 
     // 暴露内部的方法
     useImperativeHandle(ref, () => ({
@@ -23,12 +23,12 @@ const ExclusiveBranchNodeConfiger = forwardRef<NodeConfigerRef, ExclusiveBranchN
 
     return (
         <div>
-            <p>这是一个BranchNodeConfiger</p>
+            <p>这是一个BranchNodeConfig</p>
         </div>
     );
 });
 
-export default ExclusiveBranchNodeConfiger; 
+export default ExclusiveBranchNodeConfig; 
 
 
 

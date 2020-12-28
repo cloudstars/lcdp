@@ -1,10 +1,8 @@
 import React from 'react';
-import styles from './index.less';
+import { FormEditor } from 'lcdp-packages';
+import 'lcdp-packages/lib/index.css';
+import 'antd/dist/antd.less';
 
 export default () => {
-  return (
-    <div>
-      <h1 className={styles.title}>Page index</h1>
-    </div>
-  );
-}
+  return <FormEditor />;
+};

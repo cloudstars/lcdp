@@ -1,10 +1,10 @@
 import React from 'react';
-import { NodeViewerProps } from '../Node';
+import { NodeViewProps } from '../Node';
 
 /**
  * 审批节点展示卡属性
  */
-export interface ApproveNodeViewerProps extends NodeViewerProps {
+export interface ApproveNodeViewProps extends NodeViewProps {
     fielda: string;
 }
 
@@ -12,10 +12,10 @@ export interface ApproveNodeViewerProps extends NodeViewerProps {
 /**
  * 审批节点展示卡
  */
-export default function ApproveNodeViewer(props: ApproveNodeViewerProps) {
+export default function ApproveNodeView(props: ApproveNodeViewProps) {
     return (
         <div>
-            <p>这是一个ApproveNodeViewer</p>
+            <p>这是一个ApproveNodeView</p>
         </div>
     );
 }

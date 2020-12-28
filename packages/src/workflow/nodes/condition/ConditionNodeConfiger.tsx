@@ -1,17 +1,17 @@
 import React, { forwardRef, useImperativeHandle } from 'react';
-import { NodeConfigerProps, NodeConfigerRef } from '../Node';
+import { NodeConfigProps, NodeConfigRef } from '../Node';
 
 /**
  * 条件节点配置器属性
  */
-export interface ConditionNodeConfigerProps extends NodeConfigerProps {
+export interface ConditionNodeConfigProps extends NodeConfigProps {
     fieldc: string;
 }
 
 /**
  * 条件节点配置器
 */
-const ConditionNodeConfiger = forwardRef<NodeConfigerRef, ConditionNodeConfigerProps>((props, ref) => {
+const ConditionNodeConfig = forwardRef<NodeConfigRef, ConditionNodeConfigProps>((props, ref) => {
 
     // 暴露内部的方法
     useImperativeHandle(ref, () => ({
@@ -22,12 +22,12 @@ const ConditionNodeConfiger = forwardRef<NodeConfigerRef, ConditionNodeConfigerP
 
     return (
         <div>
-            <p>这是一个ConditionNodeConfiger</p>
+            <p>这是一个ConditionNodeConfig</p>
         </div>
     );
 });
 
-export default ConditionNodeConfiger;
+export default ConditionNodeConfig;
 
 
 

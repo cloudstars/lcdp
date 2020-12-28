@@ -53,7 +53,7 @@ export default function ConfigPanel(props: ConfigPanelProps) {
     if (!currentNode) {
         return <></>;
     } else {
-        let NodeConfiger = nodeMap[currentNode.subType].Configer;
+        let NodeConfig = nodeMap[currentNode.subType].Config;
         return (
             <Drawer
                 visible={isVisible}
@@ -64,7 +64,7 @@ export default function ConfigPanel(props: ConfigPanelProps) {
                 footer={footer(onClose, onSave)}
             >
                 {!!currentNode && 
-                    <NodeConfiger options={currentNode.options} onOptionsValuesChange={onOptionsValuesChange}></NodeConfiger>
+                    <NodeConfig options={currentNode.options} onOptionsValuesChange={onOptionsValuesChange}></NodeConfig>
                 }            
             </Drawer>
         );

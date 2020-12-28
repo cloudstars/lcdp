@@ -1,17 +1,17 @@
 import React, { forwardRef, useImperativeHandle } from 'react';
-import { NodeConfigerProps, NodeConfigerRef } from '../Node';
+import { NodeConfigProps, NodeConfigRef } from '../Node';
 
 /**
  * 填写节点配置器属性
  */
-export interface InputNodeConfigerProps extends NodeConfigerProps {
-    field2: string
+export interface InputNodeConfigProps extends NodeConfigProps {
+    field2?: string
 }
 
 /**
  * 填写节点配置器
 */
-const InputNodeConfiger = forwardRef<NodeConfigerRef, InputNodeConfigerProps>((props, ref) => {
+const InputNodeConfig = forwardRef<NodeConfigRef, InputNodeConfigProps>((props, ref) => {
 
     // 暴露内部的方法
     useImperativeHandle(ref, () => ({
@@ -22,12 +22,12 @@ const InputNodeConfiger = forwardRef<NodeConfigerRef, InputNodeConfigerProps>((p
 
     return (
         <div>
-            <p>这是一个InputNodeConfiger</p>
+            <p>这是一个InputNodeConfig</p>
         </div>
     );
 });
 
-export default InputNodeConfiger; 
+export default InputNodeConfig; 
 
 
 

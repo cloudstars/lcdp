@@ -1,17 +1,17 @@
 import React, { forwardRef, useImperativeHandle } from 'react';
-import { NodeConfigerProps, NodeConfigerRef } from '../Node';
+import { NodeConfigProps, NodeConfigRef } from '../Node';
 
 /**
  * 审批节点配置器属性
  */
-export interface ApproveNodeConfigerProps extends NodeConfigerProps {
+export interface ApproveNodeConfigProps extends NodeConfigProps {
     fielda: string;
 }
 
 /**
  * 审批节点配置器
 */
-const ApproveNodeConfiger = forwardRef<NodeConfigerRef, ApproveNodeConfigerProps>((props, ref) => {
+const ApproveNodeConfig = forwardRef<NodeConfigRef, ApproveNodeConfigProps>((props, ref) => {
 
     // 暴露内部的方法
     useImperativeHandle(ref, () => ({
@@ -23,12 +23,12 @@ const ApproveNodeConfiger = forwardRef<NodeConfigerRef, ApproveNodeConfigerProps
         
     return (
         <div>
-            <p>这是一个ApproveNodeConfiger</p>
+            <p>这是一个ApproveNodeConfig</p>
         </div>
     );
 });
 
-export default ApproveNodeConfiger 
+export default ApproveNodeConfig 
 
 
 

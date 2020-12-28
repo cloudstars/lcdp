@@ -25,8 +25,8 @@ export interface ValidationError {
  * 流程节点（用于函数式组件)
  */
 export default interface Node<
-    V extends NodeViewerProps = NodeViewerProps, 
-    C extends NodeConfigerProps = NodeConfigerProps
+    V extends NodeViewProps = NodeViewProps, 
+    C extends NodeConfigProps = NodeConfigProps
 > {
     // 节点分类
     type: NodeType;
@@ -50,7 +50,7 @@ export default interface Node<
     CanvasView: ComponentType<V>;
 
     // 节点的配置器
-    ConfigPanel: React.ForwardRefExoticComponent<C & React.RefAttributes<NodeConfigerRef>>;
+    ConfigPanel: React.ForwardRefExoticComponent<C & React.RefAttributes<NodeConfigRef>>;
 
     // 节点校验方法
     validate: (nodeModel: NodeModel) => ValidationError;
@@ -61,8 +61,8 @@ export default interface Node<
  * 流程分支节点
  */
 export interface BranchNode<
-    V extends NodeViewerProps = NodeViewerProps,
-    C extends NodeConfigerProps = NodeConfigerProps
+    V extends NodeViewProps = NodeViewProps,
+    C extends NodeConfigProps = NodeConfigProps
 > extends Node<V, C> {
     conditionNode: Node<any, any>
 }
@@ -70,7 +70,7 @@ export interface BranchNode<
 /**
  * 节点展示卡属性
  */
-export interface NodeViewerProps {
+export interface NodeViewProps {
     // 节点的数据模型  
     dataModel: NodeModel;  
     
@@ -81,7 +81,7 @@ export interface NodeViewerProps {
 /**
  * 节点配置器属性
  */
-export interface NodeConfigerProps {
+export interface NodeConfigProps {
     // 节点的数据模型选择
     options: any;
     
@@ -95,7 +95,7 @@ export interface NodeConfigerProps {
 /**
  * 节点配置器的引用
  */
-export interface NodeConfigerRef {
+export interface NodeConfigRef {
     /**
      * 获取节点的配置选项
      */

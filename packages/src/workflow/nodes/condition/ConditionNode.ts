@@ -1,7 +1,7 @@
 import Node, { NodeType } from "../Node";
 import NodeModel from "../NodeModel";
-import ConditionNodeConfiger, { ConditionNodeConfigerProps } from "./ConditionNodeConfiger";
-import ConditionNodeViewer, { ConditionNodeViewerProps } from "./ConditionNodeViewer";
+import ConditionNodeConfig, { ConditionNodeConfigProps } from "./ConditionNodeConfiger";
+import ConditionNodeView, { ConditionNodeViewProps } from "./ConditionNodeViewer";
 
 /**
  * 条件节点配置项
@@ -15,8 +15,8 @@ export interface ConditionNodeOptions {
  * 条件节点
  */
 const ConditionNode: Node<
-    ConditionNodeViewerProps, 
-    ConditionNodeConfigerProps
+    ConditionNodeViewProps, 
+    ConditionNodeConfigProps
 > = {
     type: NodeType.CONDITION,
     id: 'default.condition',
@@ -28,8 +28,8 @@ const ConditionNode: Node<
             fieldc: "xxx"
         }
     },
-    CanvasView: ConditionNodeViewer,
-    ConfigPanel: ConditionNodeConfiger,
+    CanvasView: ConditionNodeView,
+    ConfigPanel: ConditionNodeConfig,
     validate: (nodeModel: NodeModel) => { 
         return {
             hasError: false,

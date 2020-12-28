@@ -1,8 +1,8 @@
 import { BranchNode, NodeType } from "../Node";
 import ConditionNode from "../condition/ConditionNode";
 import NodeModel from "../NodeModel";
-import ExclusiveBranchNodeConfiger, { ExclusiveBranchNodeConfigerProps } from "./ExclusiveBranchNodeConfiger";
-import ExclusiveBranchNodeViewer, { ExclusiveBranchNodeViewerProps } from "./ExclusiveBranchNodeViewer";
+import ExclusiveBranchNodeConfig, { ExclusiveBranchNodeConfigProps } from "./ExclusiveBranchNodeConfiger";
+import ExclusiveBranchNodeView, { ExclusiveBranchNodeViewProps } from "./ExclusiveBranchNodeViewer";
 
 
 /**
@@ -19,8 +19,8 @@ export interface ExclusiveBranchNodeOptions {
  * 排它分支节点
  */
 const ExclusiveBranchNode: BranchNode<
-    ExclusiveBranchNodeViewerProps, 
-    ExclusiveBranchNodeConfigerProps
+    ExclusiveBranchNodeViewProps, 
+    ExclusiveBranchNodeConfigProps
 > = {
     type: NodeType.BRANCH,
     id: 'default.branch',
@@ -32,8 +32,8 @@ const ExclusiveBranchNode: BranchNode<
             fieldb: "xxxdfs"
         }
     },
-    CanvasView: ExclusiveBranchNodeViewer,
-    ConfigPanel: ExclusiveBranchNodeConfiger,
+    CanvasView: ExclusiveBranchNodeView,
+    ConfigPanel: ExclusiveBranchNodeConfig,
     validate: (nodeModel: NodeModel) => { 
         return {
             hasError: false,

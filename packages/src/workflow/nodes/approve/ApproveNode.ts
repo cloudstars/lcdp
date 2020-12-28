@@ -1,7 +1,7 @@
 import Node, { NodeType } from "../Node";
 import NodeModel from "../NodeModel";
-import ApproveNodeConfiger, { ApproveNodeConfigerProps } from "./ApproveNodeConfiger";
-import ApproveNodeViewer, { ApproveNodeViewerProps } from "./ApproveNodeViewer";
+import ApproveNodeConfig, { ApproveNodeConfigProps } from "./ApproveNodeConfiger";
+import ApproveNodeView, { ApproveNodeViewProps } from "./ApproveNodeViewer";
 
 /**
  * 审批节点配置项
@@ -15,8 +15,8 @@ export interface ApproveNodeOptions {
  * 审批节点
  */
 const ApproveNode: Node<
-    ApproveNodeViewerProps, 
-    ApproveNodeConfigerProps
+    ApproveNodeViewProps, 
+    ApproveNodeConfigProps
 > = {
     type: NodeType.APPROVE,
     id: 'default.Approve',
@@ -28,8 +28,8 @@ const ApproveNode: Node<
             field1: 'xxx'
         }
     },
-    CanvasView: ApproveNodeViewer,
-    ConfigPanel: ApproveNodeConfiger,
+    CanvasView: ApproveNodeView,
+    ConfigPanel: ApproveNodeConfig,
     validate: (nodeModel: NodeModel) => { 
         return {
             hasError: false,

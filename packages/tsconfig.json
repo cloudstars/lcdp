@@ -20,7 +20,13 @@
     "noImplicitAny": true,
     "jsx": "react",
     "sourceMap": true,
-    "removeComments": true
+    "removeComments": true,
+    "baseUrl": "./",
+    "paths": {
+      "@/*": ["src/*"],
+      "@/control/*": ["src/control/*"],
+      "@/common/*": ["src/common/*"],
+    },
   },
   "lib": [
     "dom",

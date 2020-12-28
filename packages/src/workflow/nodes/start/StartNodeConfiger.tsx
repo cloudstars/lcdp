@@ -1,12 +1,12 @@
 import React, { forwardRef, useImperativeHandle } from 'react';
-import { NodeConfigerProps, NodeConfigerRef } from '../Node';
+import { NodeConfigProps, NodeConfigRef } from '../Node';
 import { Form, Input } from 'antd';
 
 
 /**
  * 开始节点配置器属性
  */
-export interface StartNodeConfigerProps extends NodeConfigerProps {
+export interface StartNodeConfigProps extends NodeConfigProps {
     field1: boolean
 }
 
@@ -14,7 +14,7 @@ export interface StartNodeConfigerProps extends NodeConfigerProps {
 /**
  * 开始节点配置器
 */
-const StartNodeConfiger = forwardRef<NodeConfigerRef, StartNodeConfigerProps>((props, ref) => {
+const StartNodeConfig = forwardRef<NodeConfigRef, StartNodeConfigProps>((props, ref) => {
     const [ form ] = Form.useForm();
     const { options, onOptionsValuesChange } = props;
 
@@ -27,7 +27,7 @@ const StartNodeConfiger = forwardRef<NodeConfigerRef, StartNodeConfigerProps>((p
 
     return (
         <div>
-            <p>这是一个StartNodeConfiger</p>
+            <p>这是一个StartNodeConfig</p>
             <br />
             <Form layout="vertical" form={form} onValuesChange={onOptionsValuesChange}>
                 <Form.Item name="field1" label="请输入第一个参数" initialValue={options.field1}>
@@ -42,4 +42,4 @@ const StartNodeConfiger = forwardRef<NodeConfigerRef, StartNodeConfigerProps>((p
 });
 
 
-export default StartNodeConfiger;
+export default StartNodeConfig;

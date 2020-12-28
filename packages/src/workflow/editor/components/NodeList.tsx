@@ -53,7 +53,7 @@ function NodeWrapper(props: NodeListProps & {nodeModel: NodeModel, isBranch: boo
     let { nodeMap, editable, setCurrentNode } = useContext(WorkflowEditorContext);
     let nodeModel = props.nodeModel;
     let node = nodeMap[nodeModel.subType];
-    let NodeViewer = node.Viewer;
+    let NodeView = node.View;
 
     const onNodeItemClick = () => {
         setCurrentNode && setCurrentNode(nodeModel);
@@ -63,11 +63,11 @@ function NodeWrapper(props: NodeListProps & {nodeModel: NodeModel, isBranch: boo
     return (
         <>
             {props.isBranch ?
-                <NodeViewer key={nodeModel.id} dataModel={nodeModel}></NodeViewer> : 
+                <NodeView key={nodeModel.id} dataModel={nodeModel}></NodeView> : 
                 <div className="flow-node-item" onClick={onNodeItemClick}>
                     <div className="node-item-header" style={{backgroundColor: node.color}}>{nodeModel.name}</div>
                     <div className="node-item-content">
-                        <NodeViewer key={nodeModel.id} dataModel={nodeModel} options={nodeModel.options}></NodeViewer>
+                        <NodeView key={nodeModel.id} dataModel={nodeModel} options={nodeModel.options}></NodeView>
                     </div>
                 </div>
             }
