@@ -47,10 +47,10 @@ export default interface Node<
     defaultOptions: () => any;
 
     // 节点的展示器
-    Viewer: ComponentType<V>;
+    CanvasView: ComponentType<V>;
 
     // 节点的配置器
-    Configer: React.ForwardRefExoticComponent<C & React.RefAttributes<NodeConfigerRef>>;
+    ConfigPanel: React.ForwardRefExoticComponent<C & React.RefAttributes<NodeConfigerRef>>;
 
     // 节点校验方法
     validate: (nodeModel: NodeModel) => ValidationError;
@@ -99,5 +99,5 @@ export interface NodeConfigerRef {
     /**
      * 获取节点的配置选项
      */
-    getOptions: () => any;
+    getOptions: () => {};
 }

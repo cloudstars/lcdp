@@ -51,5 +51,4 @@ export default class NodeModel extends LinkedList<NodeModel>  {
         return this._branchs;
     }
 
-
 }

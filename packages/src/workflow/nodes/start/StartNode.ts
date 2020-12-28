@@ -29,8 +29,8 @@ const StartNode: Node<
             fiedl2: 'yyy'
         }
     },
-    Viewer: StartNodeViewer,
-    Configer: StartNodeConfiger,
+    CanvasView: StartNodeViewer,
+    ConfigPanel: StartNodeConfiger,
     validate: (nodeModel: NodeModel) => { 
         return {
             hasError: false,
