@@ -1,4 +1,3 @@
-// import Control from '../../control/Control';
 import React, { useState, useCallback, FC } from 'react';
 import { Layout } from 'antd';
 import FormPanel from './components/ComponentPanel';
@@ -7,6 +6,7 @@ import ItemConfig from './components/ConfigPanel';
 import ComponentStore from '@/control';
 import { FormStateContext } from './context';
 import { ControlModel } from '@/control/type';
+import { cloneDeep } from 'lodash';
 import './index.less';
 
 /**
@@ -43,23 +43,48 @@ const FormProvider: FC = ({ children }) => {
       },
     },
   ]);
-  const [selectKey, setSelectKey] = useState<string>('');
+  const [chooseOption, setChooseOption] = useState<ControlModel>();
 
   const handleOnChange = useCallback((params: ControlModel[]) => {
     setConfig(params);
   }, []);
 
-  const handleOnChoose = useCallback((params: string) => {
-    setSelectKey(params);
-  }, []);
+  const handleOnChoose = useCallback(
+    (params: ControlModel) => {
+      console.log(params);
+      
+      setChooseOption(params);
+    },
+    [config],
+  );
+
+  const loop = (config: ControlModel[], model: ControlModel) => {
+    config.forEach((item) => {
+      if (item.id === model.id) {
+        item.options = { ...model.options };
+      } else if (item.children && item.children.length > 0) {
+        loop(item.children, model);
+      }
+    });
+  };
+
+  const handleOnConfigChange = useCallback(
+    (params: ControlModel) => {
+      let newConfig = cloneDeep(config);
+      loop(newConfig, params);
+      setConfig(newConfig);
+    },
+    [config],
+  );
 
   return (
     <FormStateContext.Provider
       value={{
         config,
-        selectKey,
+        chooseOption,
         onChange: handleOnChange,
         onChoose: handleOnChoose,
+        onConfigChange: handleOnConfigChange,
       }}
     >
       {children}
@@ -68,6 +93,8 @@ const FormProvider: FC = ({ children }) => {
 };
 
 const FormEditor: FC<FormEditorProps> = () => {
+  console.log('render content');
+
   return (
     <Layout className="wrapper">
       <FormProvider>

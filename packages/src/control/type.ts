@@ -60,9 +60,9 @@ export interface ControlConfigProps {
 
   /**
    * 数据模型选项的值变更事件
-   * @param newOptionsValuesPart 变更的部分数据
+   * @param values 变更的部分数据
    */
-  onOptionsValuesChange: (newOptionsValuesPart: any) => void;
+  onOptionsValuesChange: (values: any) => void;
 }
 
 /**

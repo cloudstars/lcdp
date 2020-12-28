@@ -17,11 +17,13 @@ declare module 'react-sortablejs' {
     options?: Sortable.Options;
     style?: React.CSSProperties;
     className?: string;
+    config?: any;
     onChange?: (
       list: ItemData[],
       sortable: Sortable,
       evt: Sortable.SortableEvent,
     ) => void;
+    onChoose?: (evt: Sortable.SortableEvent) => void;
   }
 
   export default class SortableComponent<

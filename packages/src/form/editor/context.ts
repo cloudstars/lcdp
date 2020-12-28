@@ -46,15 +46,17 @@ export interface FormEditorContextType {
 interface IFormState {
   // 表单配置
   config: ControlModel[];
-  selectKey?: string;
-  onChoose: (params: string) => void;
+  chooseOption?: ControlModel;
+  onChoose: (params: ControlModel) => void;
   onChange: (params: ControlModel[]) => void;
+  onConfigChange: (params: ControlModel) => void;
 }
 
 const initialValue = {
   config: [{ id: '', name: '', field: '', options: { label: '', field: '' } }],
   onChange: () => {},
   onChoose: () => {},
+  onConfigChange: () => {},
 };
 
 export const FormStateContext = createContext<IFormState>(initialValue);

@@ -3,13 +3,14 @@
 # dependencies
 /packages/node_modules
 /packages/yarn.lock
+/packages/lib
 /umi-test/node_modules
 /.pnp
 .pnp.js
 
 # testing
 /coverage
-/packages/lib
+
 
 # production
 /build

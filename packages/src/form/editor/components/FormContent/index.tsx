@@ -1,4 +1,4 @@
-import React, { FC, useMemo } from 'react';
+import React, { FC, useMemo, useRef } from 'react';
 import { Form } from 'antd';
 import { v1 as uuid } from 'uuid';
 import update from 'immutability-helper';
@@ -12,6 +12,7 @@ import _ from 'lodash';
 
 const FormContent: FC = () => {
   const { config, onChange, onChoose } = useFormState();
+  const sortableRef = useRef<any>();
   /***
    * @description 新增表单组件
    * @param evt sortablejs实例
@@ -80,16 +81,17 @@ const FormContent: FC = () => {
    * @description 表单组件选择
    */
   const handleOnChoose = (evt: SortableEvent | any) => {
-    // const { oldIndex } = evt;
+    const { oldIndex } = evt;
+    const latestConfig = sortableRef.current.props.config;
+    // 父节点路径
+    const parentPath = evt.path[1].getAttribute('data-id');
 
-    // // 父节点路径
-    // const parentPath = evt.path[1].getAttribute('data-id');
+    // 父元素 根节点时直接调用data
+    let parent = parentPath ? getItem(parentPath, latestConfig) : latestConfig;
 
-    // // 父元素 根节点时直接调用data
-    // let parent = parentPath ? getItem(parentPath, config) : config;
-
-    // onChoose(oldIndex);
-    console.log(config, evt, 'choose');
+    // 当前拖拽元素
+    const dragItem = parent[oldIndex];
+    onChoose(dragItem);
   };
 
   /***
@@ -117,6 +119,7 @@ const FormContent: FC = () => {
   return (
     <Form layout="vertical" id="form-test">
       <ReactSortable
+        ref={sortableRef}
         options={{
           group: {
             name: 'content',
@@ -125,7 +128,9 @@ const FormContent: FC = () => {
           },
           sort: true,
           animation: 150,
+          onChoose: handleOnChoose,
         }}
+        config={config}
         onChange={handleOnChange}
       >
         {renderSortableItem}

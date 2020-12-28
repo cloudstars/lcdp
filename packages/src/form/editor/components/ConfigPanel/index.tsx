@@ -1,16 +1,37 @@
-import React, { FC } from 'react';
+import React, { FC, useEffect, useState, memo } from 'react';
 import { Empty } from 'antd';
+import ComponentStore from '@/control';
+import Control from '@/control/type';
 import { useFormState } from '../../context';
 
 interface ConfigProps {
   [key: string]: any;
 }
 
-const Config: FC<ConfigProps> = props => {
-  const { selectKey } = useFormState();
-  // console.log(selectKey, 'selectKey');
+const ConfigPanel: FC<ConfigProps> = (props) => {
+  const { chooseOption, onConfigChange } = useFormState();
+  const [ModelData, steModelData] = useState<Control>();
 
-  return <Empty />;
+  useEffect(() => {
+    if (!chooseOption) return;
+    const model = ComponentStore.getComponent(chooseOption.name);
+    steModelData(model);
+  }, [chooseOption]);
+
+  console.log('render, sider');
+
+  return (
+    <div>
+      {ModelData ? (
+        <ModelData.Config
+          options={chooseOption}
+          onOptionsValuesChange={onConfigChange}
+        />
+      ) : (
+        <Empty />
+      )}
+    </div>
+  );
 };
 
-export default Config;
+export default memo(ConfigPanel);
