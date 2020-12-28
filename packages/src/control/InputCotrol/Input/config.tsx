@@ -22,12 +22,8 @@ const InputConfig: FC<InputConfigProps> = ({
     });
   };
 
-  useEffect(() => {
-    form.setFieldsValue(rest);
-  }, [options]);
-
   return (
-    <Form layout="vertical" form={form} onValuesChange={onChange}>
+    <Form layout="vertical" form={form} onValuesChange={onChange} initialValues={rest}>
       <Form.Item label="" name="label">
         <Input />
       </Form.Item>
