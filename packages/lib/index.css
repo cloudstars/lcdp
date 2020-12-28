@@ -16,6 +16,22 @@
   cursor: pointer;
 }
 
+.editor-item {
+  padding: 12px;
+  border-radius: 6px;
+  border: 1px dashed #ffffff;
+  background-color: #ffffff;
+  margin-bottom: 6px;
+  position: relative;
+}
+.editor-delete {
+  font-size: 16px;
+  position: absolute;
+  top: 8px;
+  right: 10px;
+  cursor: pointer;
+}
+
 .wrapper {
   height: 100vh;
 }

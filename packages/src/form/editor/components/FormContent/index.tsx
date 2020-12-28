@@ -5,14 +5,17 @@ import update from 'immutability-helper';
 import { SortableEvent } from 'sortablejs';
 import ReactSortable from 'react-sortablejs';
 import ComponentStore from '@/control';
+import DeleteSortable from './Delete';
 import { ControlModel } from '@/control/type';
 import { getItem, setInfo } from '../../utils';
 import { useFormState } from '../../context';
 import _ from 'lodash';
+import './index.less';
 
 const FormContent: FC = () => {
-  const { config, onChange, onChoose } = useFormState();
+  const { config, chooseOption, onChange, onChoose } = useFormState();
   const sortableRef = useRef<any>();
+
   /***
    * @description 新增表单组件
    * @param evt sortablejs实例
@@ -94,6 +97,13 @@ const FormContent: FC = () => {
     onChoose(dragItem);
   };
 
+ /***
+   * @description 表单组件删除
+   */
+  const handleOnDelete = () => {
+     
+  }
+
   /***
    * @description 渲染
    */
@@ -102,20 +112,29 @@ const FormContent: FC = () => {
       const Item = ComponentStore.getComponent(child.name);
       const { options } = child;
       return (
-        <Form.Item
+        <div
+          className="editor-item"
           key={child.id}
           data-id={child.id}
           data-type={child.name}
-          label={options.label}
-          name={options.field}
-          required={options.required}
         >
-          <Item.View key={child.id} />
-        </Form.Item>
+          <DeleteSortable
+            id={child.id}
+            chooseId={chooseOption && chooseOption.id}
+            onClick={handleOnDelete}
+          />
+          <Form.Item
+            label={options.label}
+            name={options.field}
+            required={options.required}
+          >
+            <Item.View key={child.id} />
+          </Form.Item>
+        </div>
       );
     });
-  }, [config]);
-
+  }, [config, chooseOption]);
+  
   return (
     <Form layout="vertical" id="form-test">
       <ReactSortable
