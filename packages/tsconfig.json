@@ -5,7 +5,7 @@
     "skipLibCheck": true,
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
-    "allowUnreachableCode": true, 
+    "allowUnreachableCode": true,
     "allowUnusedLabels": false,
     "strict": true,
     "forceConsistentCasingInFileNames": true,
@@ -26,14 +26,9 @@
       "@/*": ["src/*"],
       "@/control/*": ["src/control/*"],
       "@/common/*": ["src/common/*"],
-    },
+      "@/form/*": ["src/form/*"]
+    }
   },
-  "lib": [
-    "dom",
-    "dom.iterable",
-    "esnext"
-  ],
-  "include": [
-    "src"
-  ]
+  "lib": ["dom", "dom.iterable", "esnext"],
+  "include": ["src"]
 }

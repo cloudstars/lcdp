@@ -26,7 +26,7 @@ const getCloneItem = (index: string | number, cards: {}[]) => {
 };
 
 /**
- * 根据下标获取父节点
+ * 根据id获取父节点
  * @return {object}  返回详情对象
  */
 // const getItem = (pathIndex: string | number, cards: any[]) => {
@@ -59,23 +59,35 @@ const getItem = (id: string, config: ControlModel[]) => {
   return parent || config;
 };
 
-const getParent = (pathIndex: string | number, cards: any[]) => {
-  const arr = indexToArray(pathIndex);
-  // 嵌套节点删除
-  let parent: any;
-  arr.pop();
-  if (arr.length === 0) {
-    return cards;
-  }
-  arr.forEach((item, index) => {
-    if (index === 0) {
-      parent = cards[item];
-    } else {
-      parent = parent.children[item];
+const getParent = (id: string, config: ControlModel[]) => {
+  let parent;
+  config.forEach((item) => {
+    if (item.id === id) {
+      parent = config;
+    } else if (item.children) {
+      getItem(id, item.children);
     }
   });
-  return parent.children ? parent.children : parent;
+  return parent || config;
 };
+
+// const getParent = (pathIndex: string | number, cards: any[]) => {
+//   const arr = indexToArray(pathIndex);
+//   // 嵌套节点删除
+//   let parent: any;
+//   arr.pop();
+//   if (arr.length === 0) {
+//     return cards;
+//   }
+//   arr.forEach((item, index) => {
+//     if (index === 0) {
+//       parent = cards[item];
+//     } else {
+//       parent = parent.children[item];
+//     }
+//   });
+//   return parent.children ? parent.children : parent;
+// };
 
 /**
  * 根据路径删除数据
@@ -83,34 +95,34 @@ const getParent = (pathIndex: string | number, cards: any[]) => {
  * @param {*} cards
  * @return {*}
  */
-const itemRemove = (index: string | number, cards: any) => {
-  let parent = getParent(index, cards);
-  let arr = indexToArray(index);
-  let getIndex = arr.pop();
-  if (parent.children) {
-    parent.children.splice(getIndex, 1);
-    return cards;
-  }
-  parent.splice(getIndex, 1);
-  return cards;
-};
+// const itemRemove = (index: string | number, cards: any) => {
+//   let parent = getParent(index, cards);
+//   let arr = indexToArray(index);
+//   let getIndex = arr.pop();
+//   if (parent.children) {
+//     parent.children.splice(getIndex, 1);
+//     return cards;
+//   }
+//   parent.splice(getIndex, 1);
+//   return cards;
+// };
 /**
  *
  * @param {*} index
  * @param {*} cards
  * @param {*} item
  */
-const itemAdd = (index: string | number, cards: any, item: any) => {
-  let parent = getParent(index, cards);
-  let arr = indexToArray(index);
-  let getIndex = arr.pop();
-  if (parent.children) {
-    parent.children.splice(getIndex, 0, item);
-    return cards;
-  }
-  parent.splice(getIndex, 0, item);
-  return cards;
-};
+// const itemAdd = (index: string | number, cards: any, item: any) => {
+//   let parent = getParent(index, cards);
+//   let arr = indexToArray(index);
+//   let getIndex = arr.pop();
+//   if (parent.children) {
+//     parent.children.splice(getIndex, 0, item);
+//     return cards;
+//   }
+//   parent.splice(getIndex, 0, item);
+//   return cards;
+// };
 
 /**
  * 根据index设置排序
@@ -193,6 +205,6 @@ export {
   isPath,
   getCloneItem,
   getItem,
-  itemRemove,
-  itemAdd,
+  // itemRemove,
+  // itemAdd,
 };

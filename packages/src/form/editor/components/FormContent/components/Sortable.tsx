@@ -4,7 +4,7 @@ import ReactSortable from 'react-sortablejs';
 import ComponentStore from '@/control';
 import { ControlModel } from '@/control/type';
 import SortableItem from './SortableItem';
-import { getItem, setInfo } from '../../../utils';
+import { getItem, getParent, setInfo } from '../../../utils';
 import { useFormState } from '../../../context';
 import update from 'immutability-helper';
 import { v1 as uuid } from 'uuid';
@@ -12,8 +12,15 @@ import _ from 'lodash';
 
 import '../index.less';
 
-const SortableWrapper: FC = () => {
-  const { config, chooseOption, onChange, onChoose } = useFormState();
+interface ISortableWrapper {
+  config: ControlModel[];
+
+}
+
+const SortableWrapper: FC<ISortableWrapper> = ({
+  config,
+}) => {
+  const {  onChange, onChoose } = useFormState();
   const sortableRef = useRef<any>();
 
   /***
@@ -110,23 +117,7 @@ const SortableWrapper: FC = () => {
 
     // 当前拖拽元素
     const dragItem = parent[oldIndex];
-    console.log(dragItem, parentPath);
-
     onChoose(dragItem);
-  };
-
-  /***
-   * @description 表单组件删除
-   */
-  const handleOnDelete = () => {
-    if (chooseOption) {
-      const cloneConfig = _.cloneDeep(config);
-      const parent = getItem(chooseOption.id, cloneConfig);
-      const index = parent.findIndex((item) => item.id === chooseOption.id);
-      parent.splice(index, 1);
-      onChoose();
-      onChange(cloneConfig);
-    }
   };
 
   /***
@@ -147,11 +138,7 @@ const SortableWrapper: FC = () => {
       config={config}
       onChange={handleOnChange}
     >
-      <SortableItem
-        config={config}
-        chosenId={chooseOption && chooseOption.id}
-        onDelete={handleOnDelete}
-      />
+      <SortableItem config={config} />
     </ReactSortable>
   );
 };

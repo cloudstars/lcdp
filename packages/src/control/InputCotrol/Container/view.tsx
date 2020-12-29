@@ -1,5 +1,5 @@
 import React, { FC } from 'react';
-import { DatePicker } from 'antd';
+import Sortable from '@/form/editor/components/FormContent/components/Sortable';
 import { ControlViewProps } from '@/control/type';
 
 /**
@@ -10,11 +10,9 @@ export interface ContainerViewProps extends ControlViewProps {
   onChange?: (params: any) => void;
 }
 
-const { RangePicker } = DatePicker;
-
 const ContainerView: FC<ContainerViewProps> = ({ options }) => {
   const { readOnly, placeholder } = options || {};
-  return <div className='editor-container'></div>;
+  return <div className="editor-container"></div>;
 };
 
 export default ContainerView;

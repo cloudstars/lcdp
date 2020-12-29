@@ -1,15 +1,31 @@
 import React, { FC } from 'react';
 import { DeleteOutlined } from '@ant-design/icons';
+import { useFormState } from '@/form/editor/context';
+import { getParent } from '@/form/editor/utils';
+import cloneDeep from 'lodash/cloneDeep';
 
 interface IProps {
   id: string;
-  chooseId?: string;
-  onClick: () => void;
 }
 
-const DeleteSortable: FC<IProps> = ({ id, chooseId, onClick }) => {
-  return id === chooseId ? (
-    <DeleteOutlined className="editor-delete" onClick={onClick} />
+const DeleteSortable: FC<IProps> = ({ id }) => {
+  const { config, chooseOption, onChange, onChoose } = useFormState();
+  /***
+   * @description 表单组件删除
+   */
+  const handleOnDelete = () => {
+    if (chooseOption) {
+      const cloneConfig = cloneDeep(config);
+      const parent = getParent(chooseOption.id, cloneConfig);
+      const index = parent.findIndex((item) => item.id === chooseOption.id);
+      parent.splice(index, 1);
+      onChoose();
+      onChange(cloneConfig);
+    }
+  };
+
+  return id === (chooseOption && chooseOption.id) ? (
+    <DeleteOutlined className="editor-delete" onClick={handleOnDelete} />
   ) : null;
 };
 

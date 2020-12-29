@@ -7,11 +7,9 @@ import { map } from 'lodash';
 
 interface ISortableItem {
   config: ControlModel[];
-  onDelete: (params?: any) => void;
-  chosenId?: string;
 }
 
-const SortableItem: FC<ISortableItem> = ({ chosenId, config, onDelete }) => {
+const SortableItem: FC<ISortableItem> = ({ config }) => {
   return (
     <>
       {map(config, (child: ControlModel) => {
@@ -24,7 +22,7 @@ const SortableItem: FC<ISortableItem> = ({ chosenId, config, onDelete }) => {
             data-id={child.id}
             data-type={child.name}
           >
-            <DeleteSortable id={child.id} chooseId={chosenId} onClick={onDelete} />
+            <DeleteSortable id={child.id} />
             <Form.Item
               label={options.label}
               name={options.field}
