@@ -1,3 +1,4 @@
+import { ControlModel } from '@/control/type';
 import _ from 'lodash';
 
 /**
@@ -6,7 +7,7 @@ import _ from 'lodash';
  * return {Array}  数组类型
  */
 const indexToArray = (pathStr: string | number) =>
-  `${pathStr}`.split('-').map(n => +n);
+  `${pathStr}`.split('-').map((n) => +n);
 
 /**
  *
@@ -17,7 +18,7 @@ const indexToArray = (pathStr: string | number) =>
 const getCloneItem = (index: string | number, cards: {}[]) => {
   const arr = indexToArray(index);
   let result: any;
-  arr.forEach(n => {
+  arr.forEach((n) => {
     result = cards[n];
     cards = result.children;
   });
@@ -26,26 +27,36 @@ const getCloneItem = (index: string | number, cards: {}[]) => {
 
 /**
  * 根据下标获取父节点
- * @param {String}   index  下标路径
- * @param {Array}    cards  treeData
  * @return {object}  返回详情对象
  */
-const getItem = (pathIndex: string | number, cards: any[]) => {
-  const arr = indexToArray(pathIndex);
-  // 嵌套节点删除
-  let parent: any;
-  if (arr.length === 0) {
-    return cards;
-  }
-  arr.forEach((item, index) => {
-    if (index === 0) {
-      parent = cards[item];
-    } else {
-      parent = parent.children[item];
+// const getItem = (pathIndex: string | number, cards: any[]) => {
+//   const arr = indexToArray(pathIndex);
+//   // 嵌套节点删除
+//   let parent: any;
+//   if (arr.length === 0) {
+//     return cards;
+//   }
+//   arr.forEach((item, index) => {
+//     if (index === 0) {
+//       parent = cards[item];
+//     } else {
+//       parent = parent.children[item];
+//     }
+//   });
+//   if (parent.children) return parent.children;
+//   return parent;
+// };
+
+const getItem = (id: string, config: ControlModel[]) => {
+  let parent;
+  config.forEach((item) => {
+    if (item.id === id) {
+      parent = item;
+    } else if (item.children) {
+      getItem(id, item.children);
     }
   });
-  if (parent.children) return parent.children;
-  return parent;
+  return parent || config;
 };
 
 const getParent = (pathIndex: string | number, cards: any[]) => {
@@ -128,7 +139,7 @@ const setInfo = (arrPath: string | number, treeData: any[], param: any) => {
  */
 const isPath = (pathIndex: string | number) => {
   let result = true;
-  indexToArray(pathIndex).forEach(item => {
+  indexToArray(pathIndex).forEach((item) => {
     if (isNaN(item)) {
       result = false;
       return false;

@@ -23,24 +23,26 @@ interface FormEditorProps {
 const FormProvider: FC = ({ children }) => {
   const [config, setConfig] = useState<ControlModel[]>([
     {
-      id: '2111',
-      name: 'Input',
+      id: '66e29660-4902-11eb-b9bd-5bc395c23989',
+      name: 'Container',
       options: {
-        field: 'WB',
-        label: '文本',
-        required: false,
-        placeholder: '填写数字',
+        label: 'qqq',
+        field: 'RQ',
+        required: true,
+        placeholder: '',
       },
-    },
-    {
-      id: '1111',
-      name: 'Input',
-      options: {
-        field: 'SZ',
-        label: '数字',
-        required: false,
-        placeholder: '填写数字',
-      },
+      children: [
+        {
+          id: '56e29660-4902-11eb-b9bd-5bc395c23989',
+          name: 'Input',
+          options: {
+            label: '日期',
+            field: 'RQq',
+            required: true,
+            placeholder: '',
+          },
+        },
+      ],
     },
   ]);
   const [chooseOption, setChooseOption] = useState<ControlModel>();
@@ -50,9 +52,7 @@ const FormProvider: FC = ({ children }) => {
   }, []);
 
   const handleOnChoose = useCallback(
-    (params: ControlModel) => {
-      console.log(params);
-      
+    (params) => {
       setChooseOption(params);
     },
     [config],
@@ -62,7 +62,7 @@ const FormProvider: FC = ({ children }) => {
     config.forEach((item) => {
       if (item.id === model.id) {
         item.options = { ...model.options };
-      } else if (item.children && item.children.length > 0) {
+      } else if (item.children) {
         loop(item.children, model);
       }
     });

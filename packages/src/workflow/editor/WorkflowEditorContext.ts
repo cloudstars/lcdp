@@ -27,7 +27,7 @@ export interface WorkflowEditorContextType {
     readonly editable: boolean;
     // 节点映射
     readonly nodeMap: {
-        [key: string]: Node<any, any>;
+        [key: string]: any;
     }; 
     // 开始结点数据模型
     nodeModel?: NodeModel;

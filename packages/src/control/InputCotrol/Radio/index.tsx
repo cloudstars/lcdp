@@ -22,13 +22,7 @@ const DatePickerControl: FormControl<InputViewProps, InputConfigProps, any> = {
   View: InputView,
   Config: InputConfig,
   Render: {} as any,
-  //   validate: (ControlModel: ControlModel) => {
-  //     return {
-  //       hasError: false,
-  //       title: '',
-  //       message: '',
-  //     };
-  //   },
+
 };
 
 export default DatePickerControl;

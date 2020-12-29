@@ -23,6 +23,7 @@
   background-color: #ffffff;
   margin-bottom: 6px;
   position: relative;
+  flex: 1;
 }
 .editor-delete {
   font-size: 16px;
@@ -30,6 +31,12 @@
   top: 8px;
   right: 10px;
   cursor: pointer;
+  z-index: 999;
+}
+.editor-container {
+  display: flex;
+  height: 112px;
+  width: 100%;
 }
 
 .wrapper {

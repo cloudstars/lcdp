@@ -2,16 +2,15 @@ import Radio from './InputCotrol/Radio';
 import Input from './InputCotrol/Input';
 import Select from './InputCotrol/Select';
 import DatePicker from './InputCotrol/DatePicker';
+import Container from './InputCotrol/Container';
 
-type ComponentMap = {
-  [key: string]: any;
-};
 class ComponetStore {
-  list: ComponentMap = {
+  list: any = {
     Radio,
     Input,
     Select,
     DatePicker,
+    Container,
   };
 
   [Symbol.iterator]() {

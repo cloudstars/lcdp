@@ -3,6 +3,7 @@ import { OneToOneOutlined } from '@ant-design/icons';
 import SelectorControlView, { DatePickerViewProps } from './view';
 import SelectorControlConfig, { DatePickerConfigProps } from './config';
 import FormControl, { ControlType } from '@/control/type';
+import uniqueId from 'lodash/uniqueId'
 
 /**
  * 日期选择控件
@@ -12,7 +13,7 @@ const DatePickerControl: FormControl<
   DatePickerConfigProps,
   any
 > = {
-  id: '1',
+  id: uniqueId(),
   name: 'DatePicker',
   icon: <OneToOneOutlined />,
   type: ControlType.INPUT,

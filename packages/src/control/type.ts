@@ -86,5 +86,5 @@ export interface ControlModel {
     placeholder?: string;
     [key: string]: any;
   };
-  children?: ControlModel[];
+  children?: ControlModel[] | any;
 }

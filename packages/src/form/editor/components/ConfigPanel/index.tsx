@@ -18,11 +18,9 @@ const ConfigPanel: FC<ConfigProps> = (props) => {
     steModelData(model);
   }, [chooseOption]);
 
-  console.log('render, sider');
-
   return (
     <div>
-      {ModelData ? (
+      {ModelData && chooseOption ? (
         <ModelData.Config
           options={chooseOption}
           onOptionsValuesChange={onConfigChange}

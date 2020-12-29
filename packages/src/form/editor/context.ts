@@ -30,30 +30,17 @@ export interface FormEditorContextType {
   // 设置当前选中的控件
   readonly setCurrentControl?: (params?: ControlModel | undefined) => void;
 }
-
-// // 表单编辑器上下文初始值
-// export const contextInitValue = {
-//   editable: true,
-//   ControlMap: {
-//     [TextControl.id]: TextControl,
-//     [SelectorControl.id]: SelectorControl,
-//   },
-// };
-
-// // 表单编辑器上下文创建
-// export const FormEditorContext = createContext<FormEditorContextType>(contextInitValue);
-
 interface IFormState {
   // 表单配置
-  config: ControlModel[];
+  config: ControlModel[] | [];
   chooseOption?: ControlModel;
-  onChoose: (params: ControlModel) => void;
+  onChoose: (params?: ControlModel) => void;
   onChange: (params: ControlModel[]) => void;
   onConfigChange: (params: ControlModel) => void;
 }
 
 const initialValue = {
-  config: [{ id: '', name: '', field: '', options: { label: '', field: '' } }],
+  config: [],
   onChange: () => {},
   onChoose: () => {},
   onConfigChange: () => {},
