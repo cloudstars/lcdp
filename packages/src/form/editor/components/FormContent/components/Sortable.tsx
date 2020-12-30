@@ -1,19 +1,28 @@
 import React, { FC, useRef } from 'react';
+import { Form } from 'antd';
 import { SortableEvent } from 'sortablejs';
 import ReactSortable from 'react-sortablejs';
 import ComponentStore from '@/control';
 import { ControlModel } from '@/control/type';
-import SortableItem from './SortableItem';
-import { getItem, getParent, setInfo } from '../../../utils';
 import { useFormState } from '../../../context';
 import update from 'immutability-helper';
 import { v1 as uuid } from 'uuid';
 import _ from 'lodash';
 
 import '../index.less';
+import DeleteSortable from './Delete';
+import {
+  indexToArray,
+  getItem,
+  setInfo,
+  isPath,
+  getCloneItem,
+  itemRemove,
+  itemAdd,
+} from '../utils';
 
 interface ISortableWrapper {
-  config: ControlModel[];
+  config?: ControlModel[];
   options?: any;
   className?: string;
 }
@@ -37,43 +46,60 @@ const SortableWrapper: FC<ISortableWrapper> = ({
       to: toNode,
       from: fromNode,
       clone: dragNode,
-    } = evt;   
-    evt.stopPropagation()
+    } = evt;
+
     const toNodeType = toNode.dataset.type;
     const dragNodeType = dragNode.dataset.type;
-    const fromNodeType = fromNode.dataset.type;
     const cloneConfig = _.cloneDeep(formConfig);
     const component = dragNodeType && ComponentStore.getComponent(dragNodeType);
+    console.log(dragNode, dragNodeType, toNodeType, toNode);
+
+    if (dragNodeType === 'Container' && toNodeType === 'Container') return;
+
+    // 组件名或路径
+    const cloneIndex = evt.clone.getAttribute('data-id');
+    // 父节点路径
+    const parentPath = evt.path[0].getAttribute('data-id');
+    // 新路径 为根节点时直接使用index
+    const newPath = parentPath ? `${parentPath}-${newIndex}` : newIndex;
+    // 判断是否为路径 路径执行移动，非路径为新增
+    if (isPath(cloneIndex)) {
+      // 旧的路径index
+      const oldIndex = cloneIndex;
+      // 克隆要移动的元素
+      const dragItem = getCloneItem(oldIndex, cloneConfig);
+      // 比较路径的上下位置 先执行靠下的数据 再执行考上数据
+      if (indexToArray(oldIndex) > indexToArray(newPath)) {
+        // 删除元素 获得新数据
+        let newTreeData = itemRemove(oldIndex, cloneConfig);
+        // 添加拖拽元素
+        newTreeData = itemAdd(newPath, newTreeData, dragItem);
+        // 更新视图
+        onChange(newTreeData);
+        return;
+      }
+      // 添加拖拽元素
+      let newData = itemAdd(newPath, cloneConfig, dragItem);
+      // 删除元素 获得新数据
+      newData = itemRemove(oldIndex, newData);
+      onChange(newData);
+      return;
+    }
+
     const newConfig: ControlModel = {
       id: uuid(),
       name: component.name,
       options: component.defaultOptions || {},
     };
-
-   
-    console.log(evt,config);
-   
-    const toNodeParentId = toNode.dataset.id;
-    const toNodeParent: any = getItem(toNodeParentId, cloneConfig);
-    const fromNodeParentId = fromNode.dataset.id;
-    const fromNodeParent: any = getItem(fromNodeParentId, cloneConfig);
-
-    if (component.name === 'Container') {
+    // 为容器或者弹框时增加子元素
+    if (newConfig.name === 'Container') {
+      // 判断是否包含默认数据
       newConfig.children = [];
     }
 
-    if (dragNodeType === 'Container' && toNodeType === 'Container') return;
-    if (!Array.isArray(toNodeParent)) {
-      if (toNodeType === 'Container' && fromNodeType === 'Container') {  
-        fromNodeParent.children.splice(oldIndex, 1);
-        toNodeParent.children.splice(newIndex, 0, newConfig);
-      } else {
-        toNodeParent.children.splice(newIndex, 0, newConfig);
-      }
-    } else {
-      toNodeParent.splice(newIndex, 0, newConfig);
-    }
-    onChange(cloneConfig);
+    let data = itemAdd(newPath, cloneConfig, newConfig);
+
+    onChange(data);
   };
 
   /***
@@ -81,11 +107,11 @@ const SortableWrapper: FC<ISortableWrapper> = ({
    * @param evt sortablejs实例
    */
   const handleOnUpdate = (evt: SortableEvent | any) => {
-    const { oldIndex, newIndex } = evt;
+    const { newIndex, oldIndex } = evt;
     // 父节点路径
     const parentPath = evt.path[1].getAttribute('data-id');
     // 父元素 根节点时直接调用data
-    let parent = parentPath ? getItem(parentPath, config) : config;
+    let parent: any = parentPath ? getItem(parentPath, formConfig) : formConfig;
     // 当前拖拽元素
     const dragItem = parent[oldIndex];
     // 更新后的父节点
@@ -95,11 +121,9 @@ const SortableWrapper: FC<ISortableWrapper> = ({
         [newIndex, 0, dragItem],
       ],
     });
-
     // 最新的数据 根节点时直接调用data
-    const Data = parentPath ? setInfo(parentPath, config, parent) : parent;
-
-    onChange(Data);
+    const data = parentPath ? setInfo(parentPath, formConfig, parent) : parent;
+    onChange(data);
   };
 
   /***
@@ -109,15 +133,12 @@ const SortableWrapper: FC<ISortableWrapper> = ({
     const { oldIndex } = evt;
     const latestConfig = sortableRef.current.props.config;
     // 父节点路径
-    // const parentPath = evt.path[1].getAttribute('data-id');
-    // console.log(options, latestConfig);
-
+    const parentPath = evt.path[0].getAttribute('data-id');
     // // 父元素 根节点时直接调用data
-    // let parent = parentPath ? getItem(parentPath, latestConfig) : latestConfig;
-
+    let parent = parentPath ? getItem(parentPath, latestConfig) : latestConfig;
     // 当前拖拽元素
     const dragItem = parent[oldIndex];
-    // onChoose(dragItem);
+    onChoose(dragItem);
   };
 
   /***
@@ -128,7 +149,7 @@ const SortableWrapper: FC<ISortableWrapper> = ({
     if (evt.type === 'update') {
       handleOnUpdate(evt);
     }
-    if (evt.type === 'add') {
+    if (evt.type === 'add' && sortable.el === evt.to) {
       handleOnAdd(evt);
     }
   };
@@ -136,28 +157,85 @@ const SortableWrapper: FC<ISortableWrapper> = ({
   /***
    * @description 渲染
    */
+
+  const SortableItem = ({
+    child,
+    itemKey,
+  }: {
+    child: ControlModel;
+    itemKey: string;
+  }) => {
+    const Item = ComponentStore.getComponent(child.name);
+    return (
+      <div
+        className="editor-item"
+        key={child.id}
+        data-id={itemKey}
+        data-type={child.name}
+      >
+        <DeleteSortable id={child.id} />
+        <Form.Item
+          label={child.options.label}
+          name={child.options.field}
+          required={child.options.required}
+        >
+          <Item.View key={child.id} options={child} />
+        </Form.Item>
+      </div>
+    );
+  };
+
+  const loop = (config: ControlModel[], index: string) => {
+    return _.map(config, (child: ControlModel, i) => {
+      const indexs = index === '' ? String(i) : `${index}-${i}`;
+      if (child.children) {
+        return (
+          <ReactSortable
+            key={uuid()}
+            data-id={indexs}
+            data-type="Container"
+            className="editor-container"
+            onChange={handleOnChange}
+            options={{
+              group: {
+                name: 'content',
+                pull: true,
+                put: true,
+              },
+              animation: 150,
+              onChoose: handleOnChoose,
+            }}
+          >
+            {loop(child.children, indexs)}
+          </ReactSortable>
+        );
+      }
+      return (
+        <SortableItem key={uuid()} child={child} itemKey={indexs || 'start'} />
+      );
+    });
+  };
+
   return (
-    <ReactSortable
-      ref={sortableRef}
-      options={{
-        group: {
-          name: 'content',
-          pull: true,
-          put: true,
-        },
-        animation: 150,
-        onChoose: handleOnChoose,
-        onEnd: (evt)=>{console.log(evt,'----');
-        }
-      }}
-      config={config}
-      onChange={handleOnChange}
-      className={className}
-      data-id={options && options.id}
-      data-type={options && options.name}
-    >
-      <SortableItem config={config} />
-    </ReactSortable>
+    <Form layout="vertical">
+      <ReactSortable
+        ref={sortableRef}
+        options={{
+          group: {
+            name: 'content',
+            pull: true,
+            put: true,
+          },
+          animation: 150,
+          onChoose: handleOnChoose,
+        }}
+        config={formConfig}
+        onChange={handleOnChange}
+        style={{ height: '100vh' }}
+      >
+        {loop(formConfig, '')}
+      </ReactSortable>
+    </Form>
   );
 };
 

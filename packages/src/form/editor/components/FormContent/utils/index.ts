@@ -1,9 +1,17 @@
+/*
+ * @Description: In User Settings Edit
+ * @Author: your name
+ * @Date: 2019-10-09 17:50:14
+ * @LastEditTime: 2019-10-12 14:45:21
+ * @LastEditors: Please set LastEditors
+ */
+
 import { ControlModel } from '@/control/type';
 import _ from 'lodash';
 
 /**
  * 将下标数组转为数组
- * @param pathStr 字符串类型的树路径 例：2-3-4
+ * @param {String|Number} pathStr 字符串类型的树路径 例：2-3-4
  * return {Array}  数组类型
  */
 const indexToArray = (pathStr: string | number) =>
@@ -17,60 +25,93 @@ const indexToArray = (pathStr: string | number) =>
  */
 const getCloneItem = (index: string | number, cards: {}[]) => {
   const arr = indexToArray(index);
-  let result: any;
+  let result: any = {};
   arr.forEach((n) => {
     result = cards[n];
     cards = result.children;
   });
   return _.cloneDeep(result);
 };
-
 /**
- * 根据id获取父节点
+ * 根据下标获取父节点
+ * @param {String}   index  下标路径
+ * @param {Array}    cards  treeData
  * @return {object}  返回详情对象
  */
-// const getItem = (pathIndex: string | number, cards: any[]) => {
-//   const arr = indexToArray(pathIndex);
-//   // 嵌套节点删除
-//   let parent: any;
-//   if (arr.length === 0) {
-//     return cards;
-//   }
-//   arr.forEach((item, index) => {
-//     if (index === 0) {
-//       parent = cards[item];
-//     } else {
-//       parent = parent.children[item];
-//     }
-//   });
-//   if (parent.children) return parent.children;
-//   return parent;
-// };
-
-const getItem = (id: string, config: ControlModel[]) => {
-  let parent;
-  config.forEach((item) => {
-    if (item.id === id) {
-      parent = item;
-    } else if (item.children) {
-      getItem(id, item.children);
+const getItem = (pathIndex: string | number, cards: any[]) => {
+  const arr = indexToArray(pathIndex);
+  // 嵌套节点删除
+  let parent: any;
+  if (arr.length === 0) {
+    return cards;
+  }
+  arr.forEach((item, index) => {
+    if (index === 0) {
+      parent = cards[item];
+    } else {
+      parent = parent.children[item];
     }
   });
-  return parent || config;
-};
-
-const getParent = (id: string, config: ControlModel[]) => {
-  let parent;
-  config.forEach((item) => {
-    if (item.id === id) {
-      parent = config;
-    } else if (item.children) {
-      getItem(id, item.children);
-    }
-  });
+  if (parent.children) return parent.children;
   return parent;
 };
 
+const getParent = (pathIndex: string | number, cards: any[]) => {
+  const arr = indexToArray(pathIndex);
+  // 嵌套节点删除
+  let parent: any;
+  arr.pop();
+  if (arr.length === 0) {
+    return cards;
+  }
+  arr.forEach((item, index) => {
+    if (index === 0) {
+      parent = cards[item];
+    } else {
+      parent = parent.children[item];
+    }
+  });
+  if (parent.children) return parent.children;
+  return parent;
+};
+/**
+ * 根据路径删除数据
+ * @param {*} index
+ * @param {*} cards
+ * @return {*}
+ */
+const itemRemove = (index: string | number, cards: any) => {
+  let parent = getParent(index, cards);
+  let arr = indexToArray(index);
+  let getIndex = arr.pop();
+  if (parent.children) {
+    parent.children.splice(getIndex, 1);
+    return cards;
+  }
+  parent.splice(getIndex, 1);
+  return cards;
+};
+/**
+ *
+ * @param {*} index
+ * @param {*} cards
+ * @param {*} item
+ */
+const itemAdd = (
+  index: string | number,
+  cards: ControlModel[],
+  item: ControlModel,
+) => {
+  let parent = getParent(index, cards);
+  let arr = indexToArray(index);
+  let getIndex = arr.pop();
+  if (parent.children) {
+    parent.children.splice(getIndex, 0, item);
+    return cards;
+  }
+  parent.splice(getIndex, 0, item);
+  return cards;
+};
 /**
  * 根据index设置排序
  * @param {Array}  arr   节点路径的数组格式
@@ -107,7 +148,6 @@ const isPath = (pathIndex: string | number) => {
 
   return result;
 };
-
 /**
  * 判断hover的路径是否为自己的子元素
  * @param {String} dragIndex
@@ -125,7 +165,6 @@ const isChildrenPath = (dragIndex: any, hoverIndex: any) => {
   }
   return false;
 };
-
 /**
  * 根据数组路径 生成所有父级别的路径
  * @param {String} index
@@ -152,6 +191,6 @@ export {
   isPath,
   getCloneItem,
   getItem,
-  // itemRemove,
-  // itemAdd,
+  itemRemove,
+  itemAdd,
 };

@@ -42,6 +42,16 @@ const FormProvider: FC = ({ children }) => {
             placeholder: '',
           },
         },
+        {
+          id: '66e29660-4902-11eb-b9bd-5bc395c23989',
+          name: 'Input',
+          options: {
+            label: 'CE',
+            field: 'RQq',
+            required: true,
+            placeholder: '',
+          },
+        },
       ],
     },
   ]);

@@ -19,7 +19,8 @@ const FormFieldsPanel: FC<IPanel> = ({ componentList }) => {
       {componentList.map((item: FormControl) => (
         <div
           key={item.id}
-          data-id={item.id}
+          // data-id={item.id}
+          data-id={item.name}
           data-type={item.name}
           className="formItemPanel"
         >

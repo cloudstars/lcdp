@@ -7,9 +7,10 @@ import { map } from 'lodash';
 
 interface ISortableItem {
   config: ControlModel[];
+  onChange: () => void
 }
 
-const SortableItem: FC<ISortableItem> = ({ config }) => {
+const SortableItem: FC<ISortableItem> = ({ config ,onChange}) => {
   return (
     <>
       {map(config, (child: ControlModel) => {

@@ -15,12 +15,9 @@ const DeleteSortable: FC<IProps> = ({ id }) => {
    */
   const handleOnDelete = () => {
     if (chooseOption) {
-      const cloneConfig = cloneDeep(formConfig);
-      const parent = getParent(chooseOption.id, cloneConfig);
-      
-      const index = parent.findIndex((item) => item.id === chooseOption.id);
-      console.log(parent,index,cloneConfig);
-      
+      // const cloneConfig = cloneDeep(formConfig);
+      // const parent = getParent(chooseOption.id, cloneConfig);
+      // const index = parent.findIndex((item) => item.id === chooseOption.id);
       // parent.splice(index, 1);
       // onChoose();
       // onChange(cloneConfig);

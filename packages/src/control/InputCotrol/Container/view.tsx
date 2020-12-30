@@ -9,11 +9,12 @@ export interface ContainerViewProps extends ControlViewProps {}
 
 const ContainerView: FC<ContainerViewProps> = ({ options }) => {
   return (
-    <Sortable
-      config={options.children}
-      options={options}
-      className="editor-container"
-    />
+    // <Sortable
+    //   config={options.children}
+    //   options={options}
+    //   className="editor-container"
+    // />
+    <></>
   );
 };
 
