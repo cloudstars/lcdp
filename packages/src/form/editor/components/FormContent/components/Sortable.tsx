@@ -14,13 +14,16 @@ import '../index.less';
 
 interface ISortableWrapper {
   config: ControlModel[];
-
+  options?: any;
+  className?: string;
 }
 
 const SortableWrapper: FC<ISortableWrapper> = ({
   config,
+  options,
+  className,
 }) => {
-  const {  onChange, onChoose } = useFormState();
+  const { formConfig, onChange, onChoose } = useFormState();
   const sortableRef = useRef<any>();
 
   /***
@@ -28,36 +31,49 @@ const SortableWrapper: FC<ISortableWrapper> = ({
    * @param evt sortablejs实例
    */
   const handleOnAdd = (evt: SortableEvent | any) => {
-    const { clone: dragNode, to: toNode, newIndex } = evt;
-    if (typeof newIndex !== 'number') return;
+    const {
+      oldIndex = 0,
+      newIndex = 0,
+      to: toNode,
+      from: fromNode,
+      clone: dragNode,
+    } = evt;   
+    evt.stopPropagation()
+    const toNodeType = toNode.dataset.type;
     const dragNodeType = dragNode.dataset.type;
-    const formConfigs = _.cloneDeep(config);
+    const fromNodeType = fromNode.dataset.type;
+    const cloneConfig = _.cloneDeep(formConfig);
     const component = dragNodeType && ComponentStore.getComponent(dragNodeType);
-    if (!component) return;
-
     const newConfig: ControlModel = {
       id: uuid(),
       name: component.name,
       options: component.defaultOptions || {},
     };
 
+   
+    console.log(evt,config);
+   
+    const toNodeParentId = toNode.dataset.id;
+    const toNodeParent: any = getItem(toNodeParentId, cloneConfig);
+    const fromNodeParentId = fromNode.dataset.id;
+    const fromNodeParent: any = getItem(fromNodeParentId, cloneConfig);
+
     if (component.name === 'Container') {
       newConfig.children = [];
     }
 
-    const parentId = toNode.dataset.id;
-    const parent: any = getItem(parentId, formConfigs);
-
-    if (toNode.dataset.type === 'Container') {
-      parent.children.splice(newIndex, 0, newConfig);
-    } else {
-      if (!Array.isArray(parent)) {
-        parent.children.splice(newIndex, 0, newConfig);
+    if (dragNodeType === 'Container' && toNodeType === 'Container') return;
+    if (!Array.isArray(toNodeParent)) {
+      if (toNodeType === 'Container' && fromNodeType === 'Container') {  
+        fromNodeParent.children.splice(oldIndex, 1);
+        toNodeParent.children.splice(newIndex, 0, newConfig);
       } else {
-        parent.splice(newIndex, 0, newConfig);
+        toNodeParent.children.splice(newIndex, 0, newConfig);
       }
+    } else {
+      toNodeParent.splice(newIndex, 0, newConfig);
     }
-    onChange(formConfigs);
+    onChange(cloneConfig);
   };
 
   /***
@@ -66,16 +82,12 @@ const SortableWrapper: FC<ISortableWrapper> = ({
    */
   const handleOnUpdate = (evt: SortableEvent | any) => {
     const { oldIndex, newIndex } = evt;
-
     // 父节点路径
     const parentPath = evt.path[1].getAttribute('data-id');
-
     // 父元素 根节点时直接调用data
     let parent = parentPath ? getItem(parentPath, config) : config;
-
     // 当前拖拽元素
     const dragItem = parent[oldIndex];
-
     // 更新后的父节点
     parent = update(parent, {
       $splice: [
@@ -88,6 +100,24 @@ const SortableWrapper: FC<ISortableWrapper> = ({
     const Data = parentPath ? setInfo(parentPath, config, parent) : parent;
 
     onChange(Data);
+  };
+
+  /***
+   * @description 表单组件选择
+   */
+  const handleOnChoose = (evt: SortableEvent | any) => {
+    const { oldIndex } = evt;
+    const latestConfig = sortableRef.current.props.config;
+    // 父节点路径
+    // const parentPath = evt.path[1].getAttribute('data-id');
+    // console.log(options, latestConfig);
+
+    // // 父元素 根节点时直接调用data
+    // let parent = parentPath ? getItem(parentPath, latestConfig) : latestConfig;
+
+    // 当前拖拽元素
+    const dragItem = parent[oldIndex];
+    // onChoose(dragItem);
   };
 
   /***
@@ -104,23 +134,6 @@ const SortableWrapper: FC<ISortableWrapper> = ({
   };
 
   /***
-   * @description 表单组件选择
-   */
-  const handleOnChoose = (evt: SortableEvent | any) => {
-    const { oldIndex } = evt;
-    const latestConfig = sortableRef.current.props.config;
-    // 父节点路径
-    const parentPath = evt.path[1].getAttribute('data-id');
-
-    // 父元素 根节点时直接调用data
-    let parent = parentPath ? getItem(parentPath, latestConfig) : latestConfig;
-
-    // 当前拖拽元素
-    const dragItem = parent[oldIndex];
-    onChoose(dragItem);
-  };
-
-  /***
    * @description 渲染
    */
   return (
@@ -134,9 +147,14 @@ const SortableWrapper: FC<ISortableWrapper> = ({
         },
         animation: 150,
         onChoose: handleOnChoose,
+        onEnd: (evt)=>{console.log(evt,'----');
+        }
       }}
       config={config}
       onChange={handleOnChange}
+      className={className}
+      data-id={options && options.id}
+      data-type={options && options.name}
     >
       <SortableItem config={config} />
     </ReactSortable>

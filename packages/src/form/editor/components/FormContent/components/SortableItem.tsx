@@ -28,7 +28,7 @@ const SortableItem: FC<ISortableItem> = ({ config }) => {
               name={options.field}
               required={options.required}
             >
-              <Item.View key={child.id} />
+              <Item.View key={child.id} options={child}/>
             </Form.Item>
           </div>
         );

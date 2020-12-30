@@ -80,7 +80,7 @@ const FormProvider: FC = ({ children }) => {
   return (
     <FormStateContext.Provider
       value={{
-        config,
+        formConfig: config,
         chooseOption,
         onChange: handleOnChange,
         onChoose: handleOnChoose,

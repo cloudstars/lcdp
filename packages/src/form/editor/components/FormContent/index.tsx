@@ -1,15 +1,15 @@
 import React, { FC } from 'react';
 import { Form } from 'antd';
 import Sortable from './components/Sortable';
-
-import './index.less';
 import { useFormState } from '../../context';
+import './index.less';
+
 
 const FormContent: FC = () => {
-  const { config } = useFormState();
+  const { formConfig } = useFormState();
   return (
     <Form layout="vertical">
-      <Sortable config={config} />
+      <Sortable config={formConfig} />
     </Form>
   );
 };

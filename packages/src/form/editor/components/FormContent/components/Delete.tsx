@@ -9,18 +9,21 @@ interface IProps {
 }
 
 const DeleteSortable: FC<IProps> = ({ id }) => {
-  const { config, chooseOption, onChange, onChoose } = useFormState();
+  const { formConfig, chooseOption, onChange, onChoose } = useFormState();
   /***
    * @description 表单组件删除
    */
   const handleOnDelete = () => {
     if (chooseOption) {
-      const cloneConfig = cloneDeep(config);
+      const cloneConfig = cloneDeep(formConfig);
       const parent = getParent(chooseOption.id, cloneConfig);
+      
       const index = parent.findIndex((item) => item.id === chooseOption.id);
-      parent.splice(index, 1);
-      onChoose();
-      onChange(cloneConfig);
+      console.log(parent,index,cloneConfig);
+      
+      // parent.splice(index, 1);
+      // onChoose();
+      // onChange(cloneConfig);
     }
   };
 

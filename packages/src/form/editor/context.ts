@@ -32,7 +32,7 @@ export interface FormEditorContextType {
 }
 interface IFormState {
   // 表单配置
-  config: ControlModel[] | [];
+  formConfig: ControlModel[] | [];
   chooseOption?: ControlModel;
   onChoose: (params?: ControlModel) => void;
   onChange: (params: ControlModel[]) => void;
@@ -40,7 +40,7 @@ interface IFormState {
 }
 
 const initialValue = {
-  config: [],
+  formConfig: [],
   onChange: () => {},
   onChoose: () => {},
   onConfigChange: () => {},
