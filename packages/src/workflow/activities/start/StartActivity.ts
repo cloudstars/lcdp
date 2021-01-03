@@ -1,7 +1,7 @@
 import Activity, { ActivityType } from "../Activity";
 import NodeModel from "../NodeModel";
-import StartActivityConfiger, { StartActivityConfigerProps } from "./StartActivityConfiger";
-import StartActivityViewer, { StartActivityViewerProps } from "./StartActivityViewer";
+import StartActivityConfiger, { StartActivityConfigerProps } from "./StartActivityConfigPanel";
+import StartActivityViewer, { StartActivityViewerProps } from "./StartActivityCanvasView";
 
 /**
  * 开始节点配置项

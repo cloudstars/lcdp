@@ -1,12 +1,12 @@
 import React, { forwardRef, useImperativeHandle } from 'react';
-import { NodeConfigerProps, NodeConfigerRef } from '../Node';
+import { ActivityConfigerProps, ActivityConfigerRef } from '../Activity';
 import { Form, Input } from 'antd';
 
 
 /**
  * 开始节点配置器属性
  */
-export interface StartNodeConfigerProps extends NodeConfigerProps {
+export interface StartActivityConfigerProps extends ActivityConfigerProps {
     field1: boolean
 }
 
@@ -14,7 +14,7 @@ export interface StartNodeConfigerProps extends NodeConfigerProps {
 /**
  * 开始节点配置器
 */
-const StartNodeConfiger = forwardRef<NodeConfigerRef, StartNodeConfigerProps>((props, ref) => {
+const StartNodeConfiger = forwardRef<ActivityConfigerRef, StartActivityConfigerProps>((props, ref) => {
     const [ form ] = Form.useForm();
     const { options, onOptionsValuesChange } = props;
 

@@ -1,10 +1,10 @@
 import React from 'react';
-import { NodeViewerProps } from '../Node';
+import { ActivityViewerProps } from '../Activity';
 
 /**
  * 填写节点展示卡属性
  */
-export interface InputNodeViewerProps extends NodeViewerProps {
+export interface InputActivityViewerProps extends ActivityViewerProps {
     field2: string
 }
 
@@ -12,7 +12,7 @@ export interface InputNodeViewerProps extends NodeViewerProps {
 /**
  * 填写节点展示卡
  */
-export default function InputNodeViewer(props: InputNodeViewerProps) {
+export default function InputActivityViewer(props: InputActivityViewerProps) {
     return (
         <div>
             <p>这是一个InputNodeViewer</p>
