@@ -28,11 +28,11 @@ export default interface Activity<
     V extends ActivityViewerProps = ActivityViewerProps, 
     C extends ActivityConfigerProps = ActivityConfigerProps
 > {
-    // 活动分类
-    type: ActivityType;
-
     // 活动的ID（英文）
     id: string;
+
+    // 活动分类
+    type: ActivityType;
 
     // 是否可被选择
     selectable: boolean;

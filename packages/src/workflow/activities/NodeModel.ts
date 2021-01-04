@@ -6,8 +6,8 @@ import { ActivityType } from "./Activity";
 export default interface NodeModel {
     id: string; // 节点ID
     name: string; // 节点名称
-    activityType: ActivityType; // 活动类型
-    type: string; // 节点类型
+    type: ActivityType; // 节点类型
+    activityId: string; // 具体的活动ID
     [option: string]: any;  // 选项
     
     branchs?: this[]; // 分支
