@@ -5,6 +5,7 @@
 /packages/yarn.lock
 /packages/lib
 /umi-test/node_modules
+/node_modules
 /.pnp
 .pnp.js
 

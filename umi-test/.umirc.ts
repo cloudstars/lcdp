@@ -11,7 +11,11 @@ export default defineConfig({
       routes: [
         {
           path: 'form',
-          component: '@/pages/index',
+          component: '@/pages/form',
+        },
+        {
+          path: 'workflow',
+          component: '@/pages/workflow',
         },
       ],
     },

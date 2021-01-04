@@ -22,16 +22,11 @@ import {
 } from '../utils';
 
 interface ISortableWrapper {
-  config?: ControlModel[];
   options?: any;
   className?: string;
 }
 
-const SortableWrapper: FC<ISortableWrapper> = ({
-  config,
-  options,
-  className,
-}) => {
+const SortableWrapper: FC<ISortableWrapper> = ({ options }) => {
   const { formConfig, onChange, onChoose } = useFormState();
   const sortableRef = useRef<any>();
 
@@ -40,13 +35,7 @@ const SortableWrapper: FC<ISortableWrapper> = ({
    * @param evt sortablejs实例
    */
   const handleOnAdd = (evt: SortableEvent | any) => {
-    const {
-      oldIndex = 0,
-      newIndex = 0,
-      to: toNode,
-      from: fromNode,
-      clone: dragNode,
-    } = evt;
+    const { newIndex = 0, to: toNode, from: fromNode, clone: dragNode } = evt;
 
     const toNodeType = toNode.dataset.type;
     const dragNodeType = dragNode.dataset.type;
@@ -130,7 +119,7 @@ const SortableWrapper: FC<ISortableWrapper> = ({
    * @description 表单组件选择
    */
   const handleOnChoose = (evt: SortableEvent | any) => {
-    const { oldIndex } = evt;
+    const { oldIndex, d } = evt;
     const latestConfig = sortableRef.current.props.config;
     // 父节点路径
     const parentPath = evt.path[0].getAttribute('data-id');
@@ -138,6 +127,7 @@ const SortableWrapper: FC<ISortableWrapper> = ({
     let parent = parentPath ? getItem(parentPath, latestConfig) : latestConfig;
     // 当前拖拽元素
     const dragItem = parent[oldIndex];
+
     onChoose(dragItem);
   };
 

@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 import { DeleteOutlined } from '@ant-design/icons';
 import { useFormState } from '@/form/editor/context';
-import { getParent } from '@/form/editor/utils';
+import { deleteItemById } from '@/form/editor/components/FormContent/utils';
 import cloneDeep from 'lodash/cloneDeep';
 
 interface IProps {
@@ -15,12 +15,10 @@ const DeleteSortable: FC<IProps> = ({ id }) => {
    */
   const handleOnDelete = () => {
     if (chooseOption) {
-      // const cloneConfig = cloneDeep(formConfig);
-      // const parent = getParent(chooseOption.id, cloneConfig);
-      // const index = parent.findIndex((item) => item.id === chooseOption.id);
-      // parent.splice(index, 1);
-      // onChoose();
-      // onChange(cloneConfig);
+      const cloneConfig = cloneDeep(formConfig);
+      deleteItemById(chooseOption.id, cloneConfig);
+      onChoose();
+      onChange(cloneConfig);
     }
   };
 

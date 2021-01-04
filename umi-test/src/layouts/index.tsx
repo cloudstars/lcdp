@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
+import { Layout } from 'antd';
 
 const BasicLayout: FC = (props) => {
-  console.log('render----');
 
   return <>{props.children}</>;
 };

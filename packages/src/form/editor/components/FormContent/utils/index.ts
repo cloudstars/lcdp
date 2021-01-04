@@ -182,7 +182,27 @@ const generatePathArr = (index: any) => {
   return arr;
 };
 
+const deleteItemById = (id: string, arr: any) => {
+  let parent: any;
+  const getParentById = (id: string, config: ControlModel[]) => {
+    config.forEach((item) => {
+      if (item.id === id) {
+        parent = config;
+      } else if (item.children) {
+        getParentById(id, item.children);
+      }
+    });
+  };
+  getParentById(id, arr);
+  if (parent) {
+    const index = parent.findIndex((item: { id: string }) => item.id === id);
+    parent.splice(index, 1);
+  }
+  return parent;
+};
+
 export {
+  deleteItemById,
   indexToArray,
   getParent,
   setInfo,
